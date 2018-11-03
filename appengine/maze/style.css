@@ -100,6 +100,12 @@ html[dir="RTL"] button.primary {
 .stop {
   background-position: -21px -21px;
 }
+.help {
+  background-position: -21px -21px;
+}
+.map {
+  background-position: -21px -21px;
+}
 
 #pegmanButton {
   padding: 0;
@@ -182,7 +188,23 @@ html[dir="RTL"] #pegmanButton>span {
 #topBar {
   background-color: #293c5b;
   color: #fff;
+  display: none;
 }
+
+
+
+#mapButtonDiv {
+  z-index: 9999;
+  right: 50px;
+  position: fixed;
+}
+
+#helpButtonDiv {
+  z-index: 9999;
+  right: 150px;
+  position: fixed;
+}
+
 
 #topBar a {
   color: #ddd;
@@ -193,5 +215,7 @@ body {
 }
 
 #divRunButton {
-  margin-top: -70px;
+  bottom: 4%;
+  position: fixed;
+  left: 20%;
 }

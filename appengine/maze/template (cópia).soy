@@ -79,24 +79,6 @@
   </table>
 
   {call .toolbox /}
-
-  <div id="mapButtonDiv">
-     <button id="mapButton" class="primary" title="usa isso pra voltar pra o mapa">
-      <img src="common/1x1.gif" class="run icon21">
-      Map
-      </button>
-  </div>
-
-  <div id="helpButtonDiv">
-     <button id="helpButon" class="primary" title="usa isso pra ajuda">
-      <img src="common/1x1.gif" class="run icon21">
-      Help
-      </button>
-  </div>
-
-
-  
-
   /* a view do blockly vem aqui debora*/
   <div id="blockly"></div>
 
@@ -117,7 +99,6 @@
 
   <div id="pegmanMenu"></div>
 
-{if $ij.level != 0}
   /*Run restart button debora*/
   <div id="divRunButton">
      <button id="runButton" class="primary" title="{msg meaning="Maze.runTooltip" desc="tooltip - Pressing this button runs the computer program the user has written to move the player through the maze."}Makes the player do what the blocks say.{/msg}">
@@ -127,7 +108,6 @@
       <img src="common/1x1.gif" class="stop icon21"> {msg meaning="Games.resetProgram" desc="IBID"}Reset{/msg}
       </button>
   </div>
-{/if}
 
   {call BlocklyGames.soy.dialog /}
   {call BlocklyGames.soy.doneDialog /}
@@ -261,15 +241,17 @@
  */
 {template .toolbox}
   <xml id="toolbox" style="display: none;">
-
-    {if $ij.level > 0}
-    <block type="maze_debora"></block>
-    
     <block type="maze_moveForward"></block>
+    /** insert a new block debora. */
+    <block type="maze_debora"></block>
+    <block type="maze_heading"></block>
+    <block type="maze_comidas"><field name="COM">comerPizza</field></block>
 
     <block type="maze_turn"><field name="DIR">turnLeft</field></block>
     <block type="maze_turn"><field name="DIR">turnRight</field></block>
 
+    
+    {if $ij.level > 2}
       <block type="maze_forever"></block>
       {if $ij.level == 6}
         <block type="maze_if"><field name="DIR">isPathLeft</field></block>
@@ -280,7 +262,6 @@
         {/if}
       {/if}
     {/if}
-
-
+  
   </xml>
 {/template}

@@ -71,13 +71,18 @@ button {
   color: #000;
 }
 button.primary {
-  border: 1px solid #dd4b39;
-  background-color: #dd4b39;
+  border: 1px solid #e96b00;
+  background-color: #e96b00;
   color: #fff;
 }
 button.secondary {
-  border: 1px solid #4d90fe;
-  background-color: #4d90fe;
+  border: 1px solid #ffe200;
+  background-color: #ffe200;
+  color: #000;
+}
+button.third {
+  border: 1px solid #56acbe;
+  background-color: #56acbe;
   color: #fff;
 }
 button.primary>img,

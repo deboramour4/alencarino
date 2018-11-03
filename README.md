@@ -77,3 +77,25 @@ para mudar a cor de "highlighted" (aquele amarelo) ->
 site com unicode de emojis ->
 https://www.charbase.com/block/miscellaneous-symbols-and-pictographs
 
+
+NOVO-------
+encontrar um jeito de divir esse arquivo em vários arquivos e só importar ele.. pq esse dai é enorme.
+
+onde está o core das funcoes moveForward, turnLeft, turnRight ->
+- estão no arquivo maze/js/maze.js pela linha 1472.
+- lá ele diz o que cada função vai fazer
+
+a funcao é injetada no interpretador do js ->
+- no arquivo maze/js/maze.js pela linha 1022. é uma função pequena que faz isso
+
+execução do código gerado pelo usuário ->
+- No arquivo maze/js/maze.js pela linha 1089.
+- Pega os blocos que estão no blockly e transforma em código
+
+
+existem varios estados para o resultado =
+	// Maze.ResultType.UNSET = indefinido:
+	// Maze.ResultType.SUCCESS = solucionou o labirinto
+	// Maze.ResultType.TIMEOUT = quando o programa roda sem fim
+	// Maze.ResultType.ERROR = se qualquer erro acontecer
+	// Maze.ResultType.FAILURE = se o programa terminar, mas não resolver o labirinto

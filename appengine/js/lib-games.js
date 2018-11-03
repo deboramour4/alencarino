@@ -192,7 +192,7 @@ BlocklyGames.MAX_LEVEL = 10;
  * User's level (e.g. 5).
  */
 BlocklyGames.LEVEL =
-    BlocklyGames.getNumberParamFromUrl('level', 1, BlocklyGames.MAX_LEVEL);
+    BlocklyGames.getNumberParamFromUrl('level', 0, BlocklyGames.MAX_LEVEL);
 
 /**
  * Common startup tasks for all apps.
