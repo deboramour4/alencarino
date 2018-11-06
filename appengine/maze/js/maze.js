@@ -70,6 +70,7 @@ Maze.SKINS = [
     sprite: 'maze/pegman.png',
     tiles: 'maze/tiles_pegman.png',
     marker: 'maze/marker.png',
+    obstacle: 'maze/obstacle.png',
     background: 'maze/bg_pegman.png',
     graph: '#ccc',
     look: '#000',
@@ -81,6 +82,7 @@ Maze.SKINS = [
     sprite: 'maze/astro.png',
     tiles: 'maze/tiles_astro.png',
     marker: 'maze/marker.png',
+    obstacle: 'maze/obstacle.png',
     background: 'maze/bg_astro.jpg',
     // Coma star cluster, photo by George Hatfield, used with permission.
     graph: '#ccc',
@@ -93,6 +95,7 @@ Maze.SKINS = [
     sprite: 'maze/panda.png',
     tiles: 'maze/tiles_panda.png',
     marker: 'maze/marker.png',
+    obstacle: 'maze/obstacle.png',
     background: 'maze/bg_panda.jpg',
     // Spring canopy, photo by Rupert Fleetingly, CC licensed for reuse.
     graph: '#ccc',
@@ -313,15 +316,6 @@ Maze.tile_SHAPES = {
 Maze.drawMap = function() {
 
   if (BlocklyGames.LEVEL == 0) {
-    /* Dimensoes do mapa*/
-    // var map = document.getElementById('mapDiv');
-    // map.setAttribute('width', screen.width*0.3);
-    // map.setAttribute('height', screen.height*0.15);
-    // map.style.top =  0 + 'px';
-    // map.style.left = 0 + 'px';
-    // map.style.position = 'fixed';
-
-
     // Dimensoes liveview
     var svg = document.getElementById('svgMaze');
     svg.setAttribute('width', screen.width*0.8);
@@ -378,11 +372,8 @@ Maze.drawMap = function() {
       svg.appendChild(tile);
     }
 
+    // Draw the grid lines.
     if (Maze.SKIN.graph) {
-      // Draw the grid lines.
-      // The grid lines are offset so that the lines pass through the centre of
-      // each square.  A half-pixel offset is also added to as standard SVG
-      // practice to avoid blurriness.
       var offset = Maze.SQUARE_SIZE;
 
       for (var k = 0; k < Maze.ROWS; k++) {
@@ -407,7 +398,6 @@ Maze.drawMap = function() {
   }
 
 
- 
 
   // Draw the tiles making up the maze map.
 
@@ -467,6 +457,23 @@ Maze.drawMap = function() {
       tile.setAttribute('y', (y - top) * Maze.SQUARE_SIZE);
       svg.appendChild(tile);
       tileId++;
+
+      if (Maze.map[y][x] == Maze.SquareType.OBSTACLE) {
+        // Add obstacle.
+        var obstacle = document.createElementNS(Blockly.SVG_NS, 'image');
+        obstacle.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
+            Maze.SKIN.obstacle);
+        obstacle.setAttribute('height', 34 + 10);
+        obstacle.setAttribute('width', 20 + 10);
+        svg.appendChild(obstacle);
+
+        // // Move the obstacle into position.
+        obstacle.setAttribute('x', Maze.SQUARE_SIZE * (x + 0.5) -
+            obstacle.getAttribute('width') / 2);
+        obstacle.setAttribute('y', Maze.SQUARE_SIZE * (y + 0.6) -
+            obstacle.getAttribute('height'));
+      }
+
     }
   }
 
