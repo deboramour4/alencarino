@@ -280,6 +280,10 @@ Maze.startDirection = Maze.DirectionType.EAST;
  */
 Maze.pidList = [];
 
+
+//Make easier to begginers to connect blocks
+Blockly.SNAP_RADIUS *= 2;
+
 // Map each possible shape to a sprite.
 // Input: Binary string representing Centre/North/West/South/East squares.
 // Output: [x, y] coordinates of each tile's sprite in tiles.png.
@@ -647,11 +651,9 @@ Maze.init = function() {
 
   BlocklyGames.bindClick('runButton', Maze.runButtonClick);
   BlocklyGames.bindClick('resetButton', Maze.resetButtonClick);
+  BlocklyGames.bindClick('mapButton', Maze.showMapDialog);
 
-  if (BlocklyGames.LEVEL == 1) {
-    // Make connecting blocks easier for beginners.
-    Blockly.SNAP_RADIUS *= 2;
-  }
+
   if (BlocklyGames.LEVEL == 10) {
     if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
                                           BlocklyGames.LEVEL)) {
@@ -694,7 +696,20 @@ Maze.init = function() {
 
 
 
-
+Maze.showMapDialog = function(e){
+  // Prevent double-clicks or double-taps.
+  if (BlocklyInterface.eventSpam(e)) {
+    return;
+  }
+  // Show map modal dialog.
+  var content = document.getElementById('dialogMap');
+  var style = {
+    'width': '30%',
+    'left': '35%',
+    'top': '12em'
+  };
+  BlocklyDialogs.showDialog(content, null, false, true, style, null);
+};
 
 
 

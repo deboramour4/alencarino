@@ -87,18 +87,20 @@
   {call .toolbox /}
 
   <div id="mapButtonDiv">
-     <a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=0&skin=0"><button id="mapButton" class="primary" title="usa isso pra voltar pra o mapa">
+      <button id="mapButton" class="primary" title="usa isso pra voltar pra o mapa">
       <img src="common/1x1.gif" class="map icon21">
-      Map
+      Fases
       </button>
-      </a>
+      
   </div>
 
   <div id="helpButtonDiv">
+    <a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=0&skin=0">
      <button id="helpButon" class="primary" title="usa isso pra ajuda">
       <img src="common/1x1.gif" class="help icon21">
-      Help
+      Ajuda
       </button>
+    </a>
   </div>
 
 
@@ -128,10 +130,10 @@
   /*Run restart button debora*/
   <div id="divRunButton">
      <button id="runButton" class="primary" title="{msg meaning="Maze.runTooltip" desc="tooltip - Pressing this button runs the computer program the user has written to move the player through the maze."}Makes the player do what the blocks say.{/msg}">
-      <img src="common/1x1.gif" class="run icon21"> {msg meaning="Games.runProgram" desc="IBID"}Run Program{/msg}
+      <img src="common/1x1.gif" class="run icon21"> {msg meaning="Games.runProgram" desc="IBID"}Executar{/msg}
       </button>
       <button id="resetButton" class="primary" style="display: none" title="{msg meaning="Maze.resetTooltip" desc="tooltip - Pressing this button restores the player to the start position and enables the user's program to be run again."}Put the player back at the start of the maze.{/msg}">
-      <img src="common/1x1.gif" class="stop icon21"> {msg meaning="Games.resetProgram" desc="IBID"}Reset{/msg}
+      <img src="common/1x1.gif" class="stop icon21"> {msg meaning="Games.resetProgram" desc="IBID"}Retornar{/msg}
       </button>
   </div>
 {/if}
@@ -140,6 +142,17 @@
   {call BlocklyGames.soy.doneDialog /}
   {call BlocklyGames.soy.abortDialog /}
   {call BlocklyGames.soy.storageDialog /}
+
+  <div id="dialogMap" class="dialogHiddenContent">
+      <table><tr><td>
+        <img src="common/help.png">
+      </td><td>&nbsp;</td><td>
+        {msg meaning="Maze.helpWallFollow" desc="callout - This advises the user to solve a maze by keeping his/her left hand in contact with the wall while proceeding through it.  The final sentence is a warning that only advanced programmers should attempt this problem, as beginners tend to get frustrated."}
+          Can you solve this complicated maze? Try following the left-hand wall. Advanced programmers only!
+        {/msg}
+        {call BlocklyGames.soy.ok /}
+      </td></tr></table>
+    </div>
 
   {if $ij.level == 1}
     <div id="dialogHelpStack" class="dialogHiddenContent">
@@ -270,18 +283,29 @@
   <xml id="toolbox" style="display: none;">
 
     {if $ij.level > 0}
-    <block type="maze_moveForward"></block>
-    <block type="maze_turn"><field name="DIR">turnRight</field></block>
+      <block type="maze_moveForward"></block>
+      <block type="maze_catchObject"></block>
 
-      {if $ij.level == 5}
-        <block type="maze_if"><field name="DIR">isPathLeft</field></block>
-        <block type="maze_forever"></block>
-      {elseif $ij.level > 5}
-        <block type="maze_if"></block>
-        <block type="maze_ifElse"></block>
-        <block type="maze_forever"></block>
+      {if $ij.level > 1}
+        <block type="maze_jumpForward"></block>
+    
+        {if $ij.level > 2}
+          <block type="maze_turn"><field name="DIR">turnRight</field></block>
+
+          {if $ij.level == 5}
+            <block type="maze_ifCustom"></block>
+    
+          {elseif $ij.level == 6}
+            <block type="maze_forever"></block>
+
+          {elseif $ij.level > 6}
+            <block type="maze_ifCustom"></block>
+            <block type="maze_forever"></block>
+
+          {/if}
+
+        {/if}
       {/if}
-
     {/if}
 
 

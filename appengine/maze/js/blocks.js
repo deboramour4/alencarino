@@ -78,37 +78,63 @@ Blockly.JavaScript['maze_moveForward'] = function(block) {
   return 'moveForward(\'block_id_' + block.id + '\');\n';
 };
 
-//Custom blockly created debora --------------------------------------------------------------
-Blockly.Blocks['maze_debora'] = {
-  /**
-   * Block for moving forward.
-   * @this Blockly.Block
-   */
+//Blocos customizados  --------------------------------------------------------------
+Blockly.Blocks['maze_catchObject'] = {
   init: function() {
     this.jsonInit({
-      "message0": "brasil morre",
+      "message0": "pegar objeto",
       "previousStatement": null,
       "nextStatement": null,
       "colour": Maze.Blocks.LOOPS_HUE,
-      "tooltip": "E é rapido que vai morre"
+      "tooltip": "Pega a peça que o robô está em cima."
     });
   }
 };
+Blockly.JavaScript['maze_catchObject'] = function(block) {
+  return 'catchObject();\n';
+};
 
-Blockly.JavaScript['maze_debora'] = function(block) {
-  // Generate JavaScript for moving forward.
-  return 'moveDebora();\n';
+
+Blockly.Blocks['maze_jumpForward'] = {
+  init: function() {
+    this.jsonInit({
+      "message0": "pular",
+      "previousStatement": null,
+      "nextStatement": null,
+      "colour": Maze.Blocks.MOVEMENT_HUE,
+      "tooltip": "Faz o robô pular para frente, avançando dois blocos de uma vez."
+    });
+  }
+};
+Blockly.JavaScript['maze_jumpForward'] = function(block) {
+  return 'jumpForward(\'block_id_' + block.id + '\');\n';
+};
+
+
+Blockly.Blocks['maze_ifCustom'] = {
+  init: function() {
+    this.setColour(Maze.Blocks.LOGIC_HUE);
+    this.appendDummyInput()
+        .appendField('se é o certo');
+    this.appendStatementInput('DO')
+        .appendField(BlocklyGames.getMsg('Maze_doCode'));
+    this.setPreviousStatement(true);
+    this.setTooltip('Checa se o objeto pegado é o certo.');
+  }
+};
+Blockly.JavaScript['maze_ifCustom'] = function(block) {
+  var branch = Blockly.JavaScript.statementToCode(block, 'DO');
+  if (Blockly.JavaScript.INFINITE_LOOP_TRAP) {
+    branch = Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g,
+        '\'block_id_' + block.id + '\'') + branch;
+  }
+  return 'if (isTheRightOne()) {\n' + branch + '}\n';
 };
 
 
 Blockly.Blocks['maze_skyColor'] = {
-  /**
-   * Block for turning left or right.
-   * @this Blockly.Block
-   */
   init: function() {
     var CORES = [['manhã', 'ceuAzul'], ['tarde', 'ceuLaranja'], ['noite', 'ceuPreto'], ['chovendo', 'ceuCinza']];
-    // Append arrows to direction messages.
     CORES[0][0] += ' \ud83c\udf05';
     CORES[1][0] += ' \ud83c\udf04';
     CORES[2][0] += ' \ud83c\udf0c';
@@ -123,36 +149,10 @@ Blockly.Blocks['maze_skyColor'] = {
     this.setNextStatement(true);
     this.setTooltip('Escolha a cor que você preferir para o céu da cidade.');
   }
-
 };
-
 Blockly.JavaScript['maze_skyColor'] = function(block) {
-  // Generate JavaScript for turning left or right.
   var ceu = block.getFieldValue('COR');
-  alert(ceu + '(\'block_id_' + block.id + '\');\n')
   return ceu + '(\'block_id_' + block.id + '\');\n';
-};
-
-
-Blockly.Blocks['maze_heading'] = {
-  /**
-   * Block for moving bird in a direction.
-   * @this Blockly.Block
-   */
-  init: function() {
-    this.setColour(Maze.Blocks.MOVEMENT_HUE);
-    this.appendDummyInput()
-        .appendField("heading")
-        .appendField(new Blockly.FieldAngle('90'), 'ANGLE');
-    this.setPreviousStatement(true);
-    this.setTooltip("Testando esse negocio de angulo aqui");
-  }
-};
-
-Blockly.JavaScript['maze_heading'] = function(block) {
-  // Generate JavaScript for moving bird in a direction.
-  var dir = parseFloat(block.getFieldValue('ANGLE'));
-  return 'heading(' + dir + ', \'block_id_' + block.id + '\');\n';
 };
 //end ------------------------------------------------------------------------------
 
