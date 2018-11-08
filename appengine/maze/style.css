@@ -10,10 +10,9 @@
 }*/
 #capacityBubble {
   position: absolute;
-  margin-top: -0.5em;
-  left: 10px;
-  top: 375px;
+  left: 280px;
   width: 380px;
+  bottom: 100px;
 }
 html[dir="RTL"] #capacityBubble {
   left: auto;
@@ -91,7 +90,7 @@ html[dir="RTL"] button.primary {
   width: 21px;
   background-image: url(icons.png);
 }
-.link {
+.map {
   background-position: 0px 0px;
 }
 .run {
@@ -101,10 +100,7 @@ html[dir="RTL"] button.primary {
   background-position: -21px -21px;
 }
 .help {
-  background-position: -21px -21px;
-}
-.map {
-  background-position: -21px -21px;
+  background-position: -21px 0px;
 }
 
 #pegmanButton {

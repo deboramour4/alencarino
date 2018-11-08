@@ -101,34 +101,36 @@ Blockly.JavaScript['maze_debora'] = function(block) {
 };
 
 
-Blockly.Blocks['maze_comidas'] = {
+Blockly.Blocks['maze_skyColor'] = {
   /**
    * Block for turning left or right.
    * @this Blockly.Block
    */
   init: function() {
-    var COMIDAS = [['pizza', 'comerPizza'], ['hamburger', 'comerHamburger']];
+    var CORES = [['manhã', 'ceuAzul'], ['tarde', 'ceuLaranja'], ['noite', 'ceuPreto'], ['chovendo', 'ceuCinza']];
     // Append arrows to direction messages.
-    COMIDAS[0][0] += ' \ud83c\udf55';
-    COMIDAS[1][0] += ' \ud83c\udf54';
+    CORES[0][0] += ' \ud83c\udf05';
+    CORES[1][0] += ' \ud83c\udf04';
+    CORES[2][0] += ' \ud83c\udf0c';
+    CORES[3][0] += ' \ud83c\udf01';
 
     this.setColour(10);
     this.appendDummyInput()
-        .appendField("comer")
-        .appendField(new Blockly.FieldDropdown(COMIDAS), 'COM');
+        .appendField("cor do céu")
+        .appendField(new Blockly.FieldDropdown(CORES), 'COR');
 
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setTooltip('Amo comer');
+    this.setTooltip('Escolha a cor que você preferir para o céu da cidade.');
   }
 
 };
 
-Blockly.JavaScript['maze_comidas'] = function(block) {
+Blockly.JavaScript['maze_skyColor'] = function(block) {
   // Generate JavaScript for turning left or right.
-  var com = block.getFieldValue('COM');
-  alert(com + '(\'block_id_' + block.id + '\');\n')
-  return com + '(\'block_id_' + block.id + '\');\n';
+  var ceu = block.getFieldValue('COR');
+  alert(ceu + '(\'block_id_' + block.id + '\');\n')
+  return ceu + '(\'block_id_' + block.id + '\');\n';
 };
 
 

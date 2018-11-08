@@ -49,7 +49,7 @@ BlocklyInterface.nextLevel = function() {
 };
 
 Maze.MAX_BLOCKS = [Infinity, // Level 0.
-    Infinity, Infinity, 2, 5, 5, 5, 5, 10, 7, 10][BlocklyGames.LEVEL];
+    Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity][BlocklyGames.LEVEL];
 
 // Crash type constants.
 Maze.CRASH_STOP = 1;
@@ -68,10 +68,10 @@ Maze.SKINS = [
   // crashType: Behaviour when player crashes (stop, spin, or fall).
   {
     sprite: 'maze/pegman.png',
-    tiles: 'maze/tiles_pegman.png',
+    tiles: 'maze/tiles_pegman@1x.png',
     marker: 'maze/marker.png',
     obstacle: 'maze/obstacle.png',
-    background: 'maze/bg_pegman.png',
+    background: 'maze/background@1x.png',
     graph: '#ccc',
     look: '#000',
     winSound: ['maze/win.mp3', 'maze/win.ogg'],
@@ -146,21 +146,21 @@ Maze.map = [
   [0, 0, 4, 1, 4, 0, 0],
   [0, 0, 0, 0, 0, 0, 0]],
 // Level 2.
- [[0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 1, 3, 0, 0],
-  [0, 0, 2, 1, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0]],
+ [[0, 0, 1, 3, 1, 0, 0],
+  [0, 0, 1, 1, 1, 0, 0],
+  [0, 0, 4, 4, 4, 0, 0],
+  [0, 0, 1, 1, 1, 0, 0],
+  [0, 0, 4, 4, 4, 0, 0],
+  [0, 0, 1, 2, 1, 0, 0],
+  [0, 0, 1, 1, 1, 0, 0]],
 // Level 3.
- [[0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 2, 1, 1, 1, 1, 3],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0]],
+ [[1, 1, 1, 1, 1, 1, 1],
+  [1, 4, 1, 1, 1, 4, 1],
+  [1, 1, 1, 2, 1, 1, 1],
+  [1, 1, 0, 1, 0, 1, 1],
+  [1, 1, 0, 4, 0, 1, 1],
+  [1, 1, 4, 3, 4, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1]],
 // Level 4.
 /**
  * Note, the path continues past the start and the goal in both directions.
@@ -169,35 +169,35 @@ Maze.map = [
  * the maze, 'mowing the lawn' as Neil calls it.
  */
  [[0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 0, 3, 1],
-  [0, 0, 0, 0, 1, 1, 0],
-  [0, 0, 0, 1, 1, 0, 0],
-  [0, 0, 1, 1, 0, 0, 0],
-  [0, 2, 1, 0, 0, 0, 0]],
+  [0, 1, 1, 4, 1, 1, 0],
+  [0, 1, 3, 1, 4, 1, 0],
+  [0, 4, 1, 0, 1, 4, 0],
+  [0, 2, 4, 1, 4, 1, 0],
+  [0, 1, 1, 4, 1, 1, 0],
+  [0, 0, 0, 0, 0, 0, 0]],
 // Level 5.
  [[0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 3, 0],
-  [0, 0, 0, 0, 0, 1, 0],
-  [0, 0, 0, 0, 0, 1, 0],
-  [0, 0, 0, 0, 0, 1, 0],
-  [0, 0, 0, 0, 0, 1, 0],
-  [0, 0, 0, 2, 1, 1, 0]],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 4, 3, 0, 0],
+  [0, 0, 1, 1, 1, 0, 0],
+  [0, 0, 4, 4, 2, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0]],
 // Level 6.
  [[0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 1, 1, 1, 0],
-  [0, 1, 0, 0, 0, 1, 0],
-  [0, 1, 1, 3, 0, 1, 0],
-  [0, 0, 0, 0, 0, 1, 0],
-  [0, 2, 1, 1, 1, 1, 0],
+  [0, 4, 0, 0, 0, 4, 0],
+  [4, 3, 1, 1, 1, 4, 4],
+  [0, 1, 0, 2, 0, 1, 0],
+  [4, 4, 4, 0, 4, 4, 4],
+  [0, 4, 0, 0, 0, 4, 0],
   [0, 0, 0, 0, 0, 0, 0]],
 // Level 7.
- [[0, 0, 0, 0, 0, 1, 1],
-  [0, 2, 1, 1, 1, 1, 0],
-  [0, 0, 0, 0, 0, 1, 1],
-  [0, 1, 1, 3, 0, 1, 0],
-  [0, 1, 0, 1, 0, 1, 0],
-  [0, 1, 1, 1, 1, 1, 1],
+ [[0, 0, 0, 0, 0, 0, 0],
+  [0, 1, 4, 4, 1, 3, 0],
+  [0, 4, 0, 1, 0, 1, 0],
+  [0, 1, 4, 4, 1, 4, 0],
+  [0, 4, 0, 0, 0, 0, 0],
+  [0, 2, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0]],
 // Level 8.
  [[0, 0, 0, 0, 0, 0, 0],
@@ -616,8 +616,8 @@ Maze.init = function() {
   if (BlocklyGames.LEVEL == 0) {
     defaultXml =
       '<xml>' +
-      '  <block movable="false" type="maze_debora" x="0" y="30"></block>' +
-      '  <block movable="false" type="maze_comidas" x="0" y="60"></block>' +
+      '  <block movable="false" type="maze_skyColor" x="-20" y="30"></block>' +
+      '  <block movable="false" type="maze_skyColor" x="-20" y="55"></block>' +
       '</xml>' ;
     } else {
       defaultXml =

@@ -16,26 +16,32 @@
 {template .messages}
   {call BlocklyGames.soy.messages /}
   <div style="display: none">
-    <span id="Maze_moveForward">{msg meaning="Maze.moveForward" desc="block text - Imperative or infinitive of a verb for a person moving (walking) in the direction he/she is facing."}move forward{/msg}</span>
-    <span id="Maze_turnLeft">{msg meaning="Maze.turnLeft" desc="[[Translating:Blockly#Drop-Down_Menus dropdown]] - Imperative or infinitive of a verb for a person turning his head and body one quarter rotation counter-clockwise.  Prefer a translation that has text in common with the translation of 'turn right'.  See [[Translating:Blockly#Drop-Down_Menus]]."}turn left{/msg}</span>
-    <span id="Maze_turnRight">{msg meaning="Maze.turnRight" desc="[[Translating:Blockly#Drop-Down_Menus dropdown]] - Imperative or infinitive of a verb for a person turning his head and body one quarter rotation clockwise.  Prefer a translation that has text in common with the translation of 'turn left'.  See [[Translating:Blockly#Drop-Down_Menus]]."}turn right{/msg}</span>
-    <span id="Maze_doCode">{{msg meaning="Maze.doCode" desc="block text - Imperative or infinitive of a verb preceding one or more commands to a person.  This is part of [https://github.com/google/blockly/wiki/Loops#repeat repeat] and [https://github.com/google/blockly/wiki/IfElse#If_blocks if] blocks.\n{lb}{lb}Identical|Do{rb}{rb}"}}do{{/msg}}</span>
-    <span id="Maze_elseCode">{{msg meaning="Maze.elseCode" desc="block text - Conjunction meaning 'otherwise', introducing commands to be performed if a previous condition was not true, as in 'if x>3, do this, else do that'.  See [https://github.com/google/blockly/wiki/IfElse#If-Else_blocks].\n{lb}{lb}Identical|Else{rb}{rb}"}}else{{/msg}}</span>
-    // The helpIfElse definition was copied up here ahead of when it is needed
-    // so that it is adjacent to the previous definition.
-    <span id="Maze_helpIfElse">{msg meaning="Maze.helpIfElse" desc="callout - This is shown when the 'if-else' block is introduced.  For 'if-else' concatenate the words for 'if' and 'else/otherwise'."}If-else blocks will do one thing or the other.{/msg}</span>
-    <span id="Maze_pathAhead">{msg meaning="Maze.pathAhead" desc="[[Translating:Blockly#Drop-Down_Menus dropdown]] - Condensed form of 'if there is a path ahead', as in: 'if path ahead, go forward'.  Prefer translation that has text in common with 'if path to the left' and 'if path to the right'."}if path ahead{/msg}</span>
-    <span id="Maze_pathLeft">{msg meaning="Maze.pathLeft" desc="[[Translating:Blockly#Drop-Down_Menus dropdown]] - Condensed form of 'if there is a path to the left', as in: 'if path to the left, turn left'."}if path to the left{/msg}</span>
-    <span id="Maze_pathRight">{msg meaning="Maze.pathRight" desc="[[Translating:Blockly#Drop-Down_Menus dropdown]] - Condensed form of 'if there is a path to the right', as in: 'if path to the right, turn right'."}if path to the right{/msg}</span>
-    <span id="Maze_repeatUntil">{msg meaning="Maze.repeatUntil" desc="block text - Imperative or infinitive of a verb to repeat the following commands.  The phrase is followed by the symbol denoting the end of the maze."}repeat until{/msg}</span>
-    <span id="Maze_moveForwardTooltip">{msg meaning="Maze.moveForwardTooltip" desc="tooltip - Moves the icon on the screen representing the player forward one square on the maze board."}Moves the player forward one space.{/msg}</span>
-    <span id="Maze_turnTooltip">{msg meaning="Maze.turnTooltip" desc="tooltip - Turns the icon on the screen representing the player 90 degrees counter-clockwise (left) or clockwise (right)."}Turns the player left or right by 90 degrees.{/msg}</span>
-    <span id="Maze_ifTooltip">{msg meaning="Maze.ifTooltip" desc="tooltip - 'path' refers to a path through a maze."}If there is a path in the specified direction, then do some actions.{/msg}</span>
-    <span id="Maze_ifelseTooltip">{msg meaning="Maze.ifelseTooltip" desc="tooltip - 'path' refers to a path through a maze."}If there is a path in the specified direction, then do the first block of actions. Otherwise, do the second block of actions.{/msg}</span>
-    <span id="Maze_whileTooltip">{msg meaning="Maze.whileTooltip" desc="tooltip - Repeat the enclosed commands until the maze has been successfully completed (the end point reached)."}Repeat the enclosed actions until finish point is reached.{/msg}</span>
-    <span id="Maze_capacity0">{msg meaning="Maze.capacity0" desc="warning - No more blocks may be added until some are removed.  Please include '%0' in the translated string.  It will be replaced with '0' and made bold."}You have %0 blocks left.{/msg}</span>
-    <span id="Maze_capacity1">{{msg meaning="Maze.capacity1" desc="warning - Only one more block may be added. Please include '%1' in the translated string. It will be replaced with '1' and made bold.\n\nSee also:\n* {lb}{lb}msg-blockly|Maze.capacity2{rb}{rb}"}}You have %1 block left.{{/msg}}</span>
-    <span id="Maze_capacity2">{{msg meaning="Maze.capacity2" desc="warning - Only %2 more blocks may be used, where %2 is an integer greater than 1.\n\nSee also:\n* {lb}{lb}msg-blockly|Maze.capacity1{rb}{rb}"}}You have %2 blocks left.{{/msg}}</span>
+    <span id="Maze_moveForward">{msg meaning="Maze.moveForward" desc="block text - Ação de uma pessoa em movimento (caminhando) na direção em que está virada."}ande{/msg}</span>
+
+    <span id="Maze_turnLeft">{msg meaning="Maze.turnLeft" desc="[[Translating:Blockly#Drop-Down_Menus dropdown]] - Ação de uma pessoa virando sua cabeça e corpo em um ângulo perpendicular ao atual. Veja [[Translating:Blockly#Drop-Down_Menus]]."}vire à esquerda{/msg}</span>
+    <span id="Maze_turnRight">{msg meaning="Maze.turnRight" desc="[[Translating:Blockly#Drop-Down_Menus dropdown]] - Ação de uma pessoa virando sua cabeça e corpo em um ângulo perpendicular ao atual. Veja [[Translating:Blockly#Drop-Down_Menus]]."}vire à direita{/msg}</span>
+
+    <span id="Maze_doCode">{{msg meaning="Maze.doCode" desc="block text -  Imperativo ou infinitivo de um verbo que precede um ou mais comandos para uma pessoa. Isto é parte de [https://github.com/google/blockly/wiki/Loops#repeat repeat] e [https://github.com/google/blockly/wiki/IfElse#If_blocks if] blocks.\n{lb}{lb}Identical|Do{rb}{rb}"}}faça{{/msg}}</span>
+    <span id="Maze_elseCode">{{msg meaning="Maze.elseCode" desc="block text - Conjunção significando 'caso contrário', introduzindo comandos a serem executados se uma condição anterior não fosse verdadeira, como em 'se x> 3 , faça isso, senão faça isso'.  Veja [https://github.com/google/blockly/wiki/IfElse#If-Else_blocks].\n{lb}{lb}Identical|Else{rb}{rb}"}}senão{{/msg}}</span>
+    <span id="Maze_helpIfElse">{msg meaning="Maze.helpIfElse" desc="callout - Isso é apresentado quando o bloco 'se-senão' é introduzido. Para que o 'se-senão' concatene as palavras para 'se' e 'senão/caso contrário'."}Os blocos se-senão vão fazer uma coisa ou outra.{/msg}</span>
+
+    <span id="Maze_pathAhead">{msg meaning="Maze.pathAhead" desc="[[Translating:Blockly#Drop-Down_Menus dropdown]] - Forma resumida de 'se houver um caminho à frente'."}se tem estrada à frente{/msg}</span>
+    <span id="Maze_pathLeft">{msg meaning="Maze.pathLeft" desc="[[Translating:Blockly#Drop-Down_Menus dropdown]] - Forma resumida de 'se houver um caminho à esquerda'."}se tem estrada à esquerda{/msg}</span>
+    <span id="Maze_pathRight">{msg meaning="Maze.pathRight" desc="[[Translating:Blockly#Drop-Down_Menus dropdown]] - Forma resumida de 'se houver um caminho à direita'."}se tem estrada à direita{/msg}</span>
+
+    <span id="Maze_repeatUntil">{msg meaning="Maze.repeatUntil" desc="block text - Ação de repetir os comandos seguintes ao bloco. A frase é seguida pelo símbolo que indica o fim do labirinto." }repita até{/msg}</span>
+
+    <span id="Maze_moveForwardTooltip">{msg meaning="Maze.moveForwardTooltip" desc="tooltip - Move o personagem para frente um quadrado no mapa."}Faz o robô andar para frente uma vez.{/msg}</span>
+    <span id="Maze_turnTooltip">{msg meaning="Maze.turnTooltip" desc="tooltip - Gira o personagem 90 graus no sentido anti-horário (esquerda) ou no sentido horário (direita)."}Gira o robô para a esquerda ou direita.{/msg}</span>
+    <span id="Maze_ifTooltip">{msg meaning="Maze.ifTooltip" desc="tooltip - 'path' refere-se a um caminho através de um labirinto."}Se tiver uma estrada nesta direção, então o robô faz estas ações.{/msg}</span>
+    <span id="Maze_ifelseTooltip">{msg meaning="Maze.ifelseTooltip" desc="tooltip - 'path' refere-se a um caminho através de um labirinto."} Se tiver uma estrada nesta direção, então o robô faz o primeiro bloco de ações. Caso contrário, ele faz o segundo bloco de ações.{/msg}</span>
+    <span id="Maze_whileTooltip">{msg meaning="Maze.whileTooltip" desc="tooltip - Repita as ações definidas até chegar ao ponto final do mapa."}O robô vai repetir as ações dentro do bloco até que encontre o ponto final do mapa.{/msg}</span>
+
+    <span id="Maze_capacity0">{msg meaning="Maze.capacity0" desc="warning - Nenhum outro bloco pode ser adicionado até que alguns sejam removidos. Por favor inclua '%0' na string traduzida. Ele será substituído por ' 0 'e ficará em negrito."}Você não pode usar mais blocos.{/msg}</span>
+
+    <span id="Maze_capacity1">{{msg meaning="Maze.capacity1" desc="warning - Apenas um bloco pode ser adicionado. Por favor inclua '%1' na string traduzida. Ele será substituído por '1'e ficará em negrito.\n\nSee also:\n* {lb}{lb}msg-blockly|Maze.capacity2{rb}{rb}"}}Você só pode usar mais %1 bloco.{{/msg}}</span>
+
+    <span id="Maze_capacity2">{{msg meaning="Maze.capacity2" desc="warning - Apenas um bloco pode ser adicionado. Por favor inclua '%2' na string traduzida. Ele será substituído por '2'e ficará em negrito.\n\nSee also:\n* {lb}{lb}msg-blockly|Maze.capacity1{rb}{rb}"}}Você só pode usar mais %2 blocos.{{/msg}}</span>
   </div>
 {/template}
 
@@ -50,7 +56,7 @@
         <h1>
           {call BlocklyGames.soy.titleSpan}
             {param appName}
-              {msg meaning="Games.maze" desc="IBID"}Maze{/msg}
+              {msg meaning="Games.maze" desc="IBID"}Projeto Integrado 2{/msg}
             {/param}
           {/call}
 
@@ -66,7 +72,7 @@
       <td class="farSide">
         /* debora <select id="languageMenu"></select>*/
         
-        <button id="linkButton" title="{msg meaning="Games.linkTooltip" desc="IBID"}Save and link to blocks.{/msg}">
+        <button id="linkButton" title="{msg meaning="Games.linkTooltip" desc="IBID"}Salvar and link to blocks.{/msg}">
           <img src="common/1x1.gif" class="link icon21">
         </button>
        
@@ -81,15 +87,16 @@
   {call .toolbox /}
 
   <div id="mapButtonDiv">
-     <button id="mapButton" class="primary" title="usa isso pra voltar pra o mapa">
-      <img src="common/1x1.gif" class="run icon21">
+     <a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=0&skin=0"><button id="mapButton" class="primary" title="usa isso pra voltar pra o mapa">
+      <img src="common/1x1.gif" class="map icon21">
       Map
       </button>
+      </a>
   </div>
 
   <div id="helpButtonDiv">
      <button id="helpButon" class="primary" title="usa isso pra ajuda">
-      <img src="common/1x1.gif" class="run icon21">
+      <img src="common/1x1.gif" class="help icon21">
       Help
       </button>
   </div>
@@ -263,22 +270,18 @@
   <xml id="toolbox" style="display: none;">
 
     {if $ij.level > 0}
-    <block type="maze_debora"></block>
-    
     <block type="maze_moveForward"></block>
-
-    <block type="maze_turn"><field name="DIR">turnLeft</field></block>
     <block type="maze_turn"><field name="DIR">turnRight</field></block>
 
-      <block type="maze_forever"></block>
-      {if $ij.level == 6}
+      {if $ij.level == 5}
         <block type="maze_if"><field name="DIR">isPathLeft</field></block>
-      {elseif $ij.level > 6}
+        <block type="maze_forever"></block>
+      {elseif $ij.level > 5}
         <block type="maze_if"></block>
-        {if $ij.level > 8}
-          <block type="maze_ifElse"></block>
-        {/if}
+        <block type="maze_ifElse"></block>
+        <block type="maze_forever"></block>
       {/if}
+
     {/if}
 
 

@@ -21,8 +21,8 @@
     // (case-insensitive) or identical to the one in this file (not
     // recommended), or an error will be raised during generation of qqq.json.
     // The source-language text in the applications' definitions is ignored.
-    <span id="Games_name">{msg meaning="Games.name" desc="The project name."}Blockly Games{/msg}</span>
-    <span id="Games_puzzle">{{msg meaning="Games.puzzle" desc="title - Specifies that this is Blockly's '''Puzzle''' game.  Use the word for a jigsaw puzzle.\n{lb}{lb}Identical|Puzzle{rb}{rb}"}}Puzzle{{/msg}}</span>
+    <span id="Games_name">{msg meaning="Games.name" desc="The project name."}Versão Alfa{/msg}</span>
+    <span id="Games_puzzle">{{msg meaning="Games.puzzle" desc="title - Specifies that this is Blockly's '''Puzzle''' game.  Use the word for a jigsaw puzzle.\n{lb}{lb}Identical|Puzzle{rb}{rb}"}}Atividade{{/msg}}</span>
     <span id="Games_maze">{{msg meaning="Games.maze" desc="title - Specifies that this is Blockly's '''Maze''' game.\n{lb}{lb}Identical|Maze{rb}{rb}"}}Maze{{/msg}}</span>
     <span id="Games_bird">{{msg meaning="Games.bird" desc="title - Specifies that this is Blockly's '''Bird''' game.\n{lb}{lb}Identical|Bird{rb}{rb}"}}Bird{{/msg}}</span>
     <span id="Games_turtle">{{msg meaning="Games.turtle" desc="title - Specifies that this is Blockly's '''Turtle''' game.\n{lb}{lb}Identical|Turtle{rb}{rb}"}}Turtle{{/msg}}</span>
@@ -32,21 +32,22 @@
     <span id="Games_pond">{{msg meaning="Games.pond" desc="title - Specifies that this is Blockly's '''Pond''' game.\n{lb}{lb}Identical|Pond{rb}{rb}"}}Pond{{/msg}}</span>
     <span id="Games_genetics">{{msg meaning="Games.genetics" desc="title - Specifies that this is Blockly's '''Genetics''' game.\n{lb}{lb}Identical|Genetics{rb}{rb}"}}Genetics{{/msg}}</span>
 
-    <span id="Games_linesOfCode1">{msg meaning="Games.linesOfCode1" desc="alert - Displayed when a level is complete."}You solved this level with 1 line of JavaScript:{/msg}</span>
-    <span id="Games_linesOfCode2">{msg meaning="Games.linesOfCode2" desc="alert - Displayed when a level is complete.  %1 is an integer greater than 1."}You solved this level with %1 lines of JavaScript:{/msg}</span>
-    <span id="Games_nextLevel">{msg meaning="Games.nextLevel" desc="alert - This is displayed when the user solves the level, inviting them to procede to the next level of difficulty.  %1 is an integer greater than 1."}Are you ready for level %1?{/msg}</span>
-    <span id="Games_finalLevel">{msg meaning="Games.finalLevel" desc="alert - This is displayed when the user solves the most difficult level and is going to go to the next game."}Are you ready for the next challenge?{/msg}</span>
-    <span id="Games_submitTitle">{{msg meaning="Games.submitTitle" desc="Label in front of a field where the user is requested to type a title for their work.\n{lb}{lb}Identical|Title{rb}{rb}"}}Title:{{/msg}}</span>
+    <span id="Games_linesOfCode1">{msg meaning="Games.linesOfCode1" desc="alert - Displayed when a level is complete."}Você resolveu esse problema com %1 linha de JavaScript:{/msg}</span>
+    <span id="Games_linesOfCode2">{msg meaning="Games.linesOfCode2" desc="alert - Displayed when a level is complete.  %1 is an integer greater than 1."}Você resolveu esse problema com %1 linhas de JavaScript:{/msg}</span>
+    <span id="Games_nextLevel">{msg meaning="Games.nextLevel" desc="alert - This is displayed when the user solves the level, inviting them to procede to the next level of difficulty.  %1 is an integer greater than 1."}Está preparado para o nível %1?{/msg}</span>
+    <span id="Games_finalLevel">{msg meaning="Games.finalLevel" desc="alert - This is displayed when the user solves the most difficult level and is going to go to the next game."}Você é demais!{/msg}</span>
+    <span id="Games_submitTitle">{{msg meaning="Games.submitTitle" desc="Label in front of a field where the user is requested to type a title for their work.\n{lb}{lb}Identical|Title{rb}{rb}"}}Nome do projeto:{{/msg}}</span>
 
     // Buttons and tooltips.
     <span id="Games_linkTooltip">{msg meaning="Games.linkTooltip" desc="tooltip - Pressing this button will cause the current program to be saved and for a URL to be shown to later retrieve it."}Save and link to blocks.{/msg}</span>
-    <span id="Games_runTooltip">{msg meaning="Games.runTooltip" desc="tooltip - Pressing this button runs the computer program the user has written."}Run the program you wrote.{/msg}</span>
-    <span id="Games_runProgram">{msg meaning="Games.runProgram" desc="button label - Pressing this button runs the computer program the user has written."}Run Program{/msg}</span>
-    <span id="Games_resetTooltip">{msg meaning="Games.resetTooltip" desc="tooltip - Pressing this button restores the player to the start position and enables the user's program to be run again."}Stop the program and reset the level.{/msg}</span>
-    <span id="Games_resetProgram">{{msg meaning="Games.resetProgram" desc="button label - Pressing this button causes the output of the program to be erased but does not delete the user's program).\n{lb}{lb}Identical|Reset{rb}{rb}"}}Reset{{/msg}}</span>
-    <span id="Games_help">{{msg meaning="Games.help" desc="button label - Pressing this button shows help information.\n{lb}{lb}Identical|Help{rb}{rb}"}}Help{{/msg}}</span>
+    <span id="Games_runTooltip">{msg meaning="Games.runTooltip" desc="tooltip - Pressing this button runs the computer program the user has written."}Execute os comandos que você escolheu.{/msg}</span>
+    <span id="Games_runProgram">{msg meaning="Games.runProgram" desc="button label - Pressing this button runs the computer program the user has written."}Executar{/msg}</span>
+    <span id="Games_resetTooltip">{msg meaning="Games.resetTooltip" desc="tooltip - Pressing this button restores the player to the start position and enables the user's program to be run again."}Pare o programa e reinicie a fase.{/msg}</span>
+    <span id="Games_resetProgram">{{msg meaning="Games.resetProgram" desc="button label - Pressing this button causes the output of the program to be erased but does not delete the user's program).\n{lb}{lb}Identical|Reset{rb}{rb}"}}Retornar{{/msg}}</span>
+
+    <span id="Games_help">{{msg meaning="Games.help" desc="button label - Pressing this button shows help information.\n{lb}{lb}Identical|Help{rb}{rb}"}}Ajuda{{/msg}}</span>
     <span id="Games_dialogOk">{{msg meaning="Games.dialogOk" desc="button label - Pressing this button closes help information.\n{lb}{lb}Identical|OK{rb}{rb}"}}OK{{/msg}}</span>
-    <span id="Games_dialogCancel">{{msg meaning="Games.dialogCancel" desc="button label - Pressing this button cancels a proposed action.\n{lb}{lb}Identical|Cancel{rb}{rb}"}}Cancel{{/msg}}</span>
+    <span id="Games_dialogCancel">{{msg meaning="Games.dialogCancel" desc="button label - Pressing this button cancels a proposed action.\n{lb}{lb}Identical|Cancel{rb}{rb}"}}Cancelar{{/msg}}</span>
 
     // Categories.  Games can use these names or their own.
     <span id="Games_catLogic">{{msg meaning="Games.catLogic" desc="category - Blocks related to [https://github.com/google/blockly/wiki/Logic logic].\n{lb}{lb}Identical|Logic{rb}{rb}"}}Logic{{/msg}}</span>
@@ -59,11 +60,11 @@
     <span id="Games_catProcedures">{{msg meaning="Games.catProcedures" desc="category - Blocks related to [https://en.wikipedia.org/wiki/Subroutine defining or using procedures/functions].\n{lb}{lb}Identical|Functions{rb}{rb}"}}Functions{/msg}</span>
 
     // Messages related to loading/storing user programs.
-    <span id="Games_httpRequestError">{msg meaning="Games.httpRequestError" desc="alert - The URL is invalid or a server error occurred.  This message will be followed by technical information useful to engineers trying to understand the problem."}There was a problem with the request.{/msg}</span>
+    <span id="Games_httpRequestError">{msg meaning="Games.httpRequestError" desc="alert - The URL is invalid or a server error occurred.  This message will be followed by technical information useful to engineers trying to understand the problem."}Houve um problema com a requisição.{/msg}</span>
     <span id="Games_linkAlert">{msg meaning="Games.linkAlert" desc="alert - After the user has pressed a button to save his/her program, this provides the URL (%1) to retrieve the program.  The characters '\n\n' indicate that a blank line will be displayed before the URL (in English).  Leave those in unless you move %1 to the beginning or middle of the text, in which case you should use your judgment about where blank lines would be most useful.\n\nParameters:\n* %1 - URL of saved program."}Share your blocks with this link:\n\n%1{/msg}</span>
-    <span id="Games_hashError">{{msg meaning="Games.hashError" desc="alert - A request to retrieve a stored program does not have a valid URL. %1 is the invalid portion of the URL."}}Sorry, '%1' doesn't correspond with any saved program.{{/msg}}</span>
-    <span id="Games_xmlError">{msg meaning="Games.xmlError" desc="alert - There was a problem loading a file previously saved by the user.  The most likely reason for the problem is that it was created with an earlier, incompatible version of Blockly.  This message will be followed by technical information useful to engineers trying to understand the problem."}Could not load your saved file. Perhaps it was created with a different version of Blockly?{/msg}</span>
-    <span id="Games_submitted">{msg meaning="Games.submitted" desc="alert - After the user has submitted his/her program to the gallery, it must wait for approval.  Please make this message funny!"}Thank you for this program!  If our staff of trained monkeys like it, they will publish it to the gallery within a couple of days.{/msg}</span>
+    <span id="Games_hashError">{{msg meaning="Games.hashError" desc="alert - A request to retrieve a stored program does not have a valid URL. %1 is the invalid portion of the URL."}}Desculpa, mas '%1' não corresponde a nenhum programa salvo.{{/msg}}</span>
+    <span id="Games_xmlError">{msg meaning="Games.xmlError" desc="alert - There was a problem loading a file previously saved by the user.  The most likely reason for the problem is that it was created with an earlier, incompatible version of Blockly.  This message will be followed by technical information useful to engineers trying to understand the problem."}Não foi possível carregar seu arquivo salvo. Será que ele foi criado com uma versão diferente do Blockly?{/msg}</span>
+    <span id="Games_submitted">{msg meaning="Games.submitted" desc="alert - After the user has submitted his/her program to the gallery, it must wait for approval.  Please make this message funny!"}Obrigado por ajudar meu amigo!{/msg}</span>
 
     // Default variable names.
     <span id="Games_listVariable">{{msg meaning="Games.listVariable" desc="variable name - Default [https://github.com/google/blockly/wiki/Variables variable] representing a [https://github.com/google/blockly/wiki/Lists list].  This should be a single word, preferably short.\n{lb}{lb}Identical|List{rb}{rb}"}}list{{/msg}}</span>
@@ -127,13 +128,13 @@
  */
 {template .doneDialog private="true"}
   <div id="dialogDone" class="dialogHiddenContent">
-    <div style="font-size: large; margin: 1em;">{{msg meaning="Games.congratulations" desc="alert - This is displayed when the user solves the level.\n{lb}{lb}Identical|Congratulation{rb}{rb}"}}Congratulations!{{/msg}}</div>
+    <div style="font-size: large; margin: 1em;">{{msg meaning="Games.congratulations" desc="alert - This is displayed when the user solves the level.\n{lb}{lb}Identical|Congratulation{rb}{rb}"}}Se garantiu!{{/msg}}</div>
     <div id="dialogLinesText" style="font-size: large; margin: 1em;"></div>
     <pre id="containerCode"></pre>
     <div id="dialogDoneText" style="font-size: large; margin: 1em;"></div>
     <div id="dialogDoneButtons" class="farSide" style="padding: 1ex 3ex 0">
       <button id="doneCancel">
-        {{msg meaning="Games.dialogCancel" desc="IBID"}}Cancel{{/msg}}
+        {{msg meaning="Games.dialogCancel" desc="IBID"}}Cancelar{{/msg}}
       </button>
       <button id="doneOk" class="secondary">
         {{msg meaning="Games.dialogOk" desc="IBID"}}OK{{/msg}}
@@ -148,11 +149,11 @@
 {template .abortDialog private="true"}
   <div id="dialogAbort" class="dialogHiddenContent">
     {msg meaning="Games.helpAbort" desc="callout - This dialog gives the user the option to skip this level."}
-      This level is extremely difficult. Would you like to skip it and go onto the next game? You can always come back later.
+      Esse nível parece muito difícil. Você acha melhor tentar um outro e voltar depois?
     {/msg}
     <div class="farSide" style="padding: 1ex 3ex 0">
       <button id="abortCancel">
-        {{msg meaning="Games.dialogCancel" desc="IBID"}}Cancel{{/msg}}
+        {{msg meaning="Games.dialogCancel" desc="IBID"}}Cancelar{{/msg}}
       </button>
       <button id="abortOk" class="secondary">
         {{msg meaning="Games.dialogOk" desc="IBID"}}OK{{/msg}}
