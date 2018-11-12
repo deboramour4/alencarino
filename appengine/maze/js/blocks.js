@@ -82,7 +82,7 @@ Blockly.JavaScript['maze_moveForward'] = function(block) {
 Blockly.Blocks['maze_catchObject'] = {
   init: function() {
     this.jsonInit({
-      "message0": "pegar objeto",
+      "message0": "pegue objeto",
       "previousStatement": null,
       "nextStatement": null,
       "colour": Maze.Blocks.LOOPS_HUE,
@@ -98,7 +98,7 @@ Blockly.JavaScript['maze_catchObject'] = function(block) {
 Blockly.Blocks['maze_jumpForward'] = {
   init: function() {
     this.jsonInit({
-      "message0": "pular",
+      "message0": "pule",
       "previousStatement": null,
       "nextStatement": null,
       "colour": Maze.Blocks.MOVEMENT_HUE,
@@ -151,6 +151,48 @@ Blockly.Blocks['maze_skyColor'] = {
   }
 };
 Blockly.JavaScript['maze_skyColor'] = function(block) {
+  var ceu = block.getFieldValue('COR');
+  return ceu + '(\'block_id_' + block.id + '\');\n';
+};
+
+Blockly.Blocks['maze_wallColor'] = {
+  init: function() {
+    var CORES = [['vermelho', 'ceuAzul'], ['verde', 'ceuLaranja'], ['azul', 'ceuPreto'], ['branco', 'ceuCinza']];
+
+    this.setColour(197);
+    this.appendDummyInput()
+        .appendField("cor das casas")
+        .appendField(new Blockly.FieldDropdown(CORES), 'COR');
+
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip('Escolha a cor que você preferir para as paredes.');
+  }
+};
+Blockly.JavaScript['maze_wallColor'] = function(block) {
+  var ceu = block.getFieldValue('COR');
+  return ceu + '(\'block_id_' + block.id + '\');\n';
+};
+
+Blockly.Blocks['maze_chooseToy'] = {
+  init: function() {
+    var CORES = [['', 'ceuAzul'], ['', 'ceuLaranja'], ['', 'ceuPreto'], ['', 'ceuCinza']];
+    CORES[0][0] += ' \ud83d\udcd2';
+    CORES[1][0] += ' \ud83c\udfc0';
+    CORES[2][0] += ' \ud83c\udf92';
+    CORES[3][0] += ' \ud83c\udfa9';
+
+    this.setColour(300);
+    this.appendDummyInput()
+        .appendField("segurar um")
+        .appendField(new Blockly.FieldDropdown(CORES), 'COR');
+
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip('Escolha algo legal para segurar.');
+  }
+};
+Blockly.JavaScript['maze_chooseToy'] = function(block) {
   var ceu = block.getFieldValue('COR');
   return ceu + '(\'block_id_' + block.id + '\');\n';
 };

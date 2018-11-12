@@ -64,13 +64,12 @@
             {param level: $ij.level /}
             {param maxLevel: $ij.maxLevel /}
             {param lang: $ij.lang /}
-            {param suffix}&skin={$ij.skin}{/param}
           {/call}
 
         </h1>
       </td>
-      <td class="farSide">
-        /* debora <select id="languageMenu"></select>*/
+      /* <td class="farSide">
+         debora <select id="languageMenu"></select>
         
         <button id="linkButton" title="{msg meaning="Games.linkTooltip" desc="IBID"}Salvar and link to blocks.{/msg}">
           <img src="common/1x1.gif" class="link icon21">
@@ -80,7 +79,7 @@
           <img src="common/1x1.gif">
           <span id="pegmanButtonArrow"></span>
         </button>
-      </td>
+      </td> */
     </tr>
   </table>
 
@@ -91,11 +90,10 @@
       <img src="common/1x1.gif" class="map icon21">
       Fases
       </button>
-      
   </div>
 
   <div id="helpButtonDiv">
-    <a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=0&skin=0">
+    <a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=0">
      <button id="helpButon" class="primary" title="usa isso pra ajuda">
       <img src="common/1x1.gif" class="help icon21">
       Ajuda
@@ -143,16 +141,26 @@
   {call BlocklyGames.soy.abortDialog /}
   {call BlocklyGames.soy.storageDialog /}
 
-  <div id="dialogMap" class="dialogHiddenContent">
-      <table><tr><td>
-        <img src="common/help.png">
-      </td><td>&nbsp;</td><td>
-        {msg meaning="Maze.helpWallFollow" desc="callout - This advises the user to solve a maze by keeping his/her left hand in contact with the wall while proceeding through it.  The final sentence is a warning that only advanced programmers should attempt this problem, as beginners tend to get frustrated."}
-          Can you solve this complicated maze? Try following the left-hand wall. Advanced programmers only!
-        {/msg}
-        {call BlocklyGames.soy.ok /}
-      </td></tr></table>
+  <div id="dialogMap" class="dialogHiddenContent" style="height: 100%">
+    <center>
+      <table style="width:60%;">
+        <tr>
+          <td colspan="4"><center>
+            <a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=1&skin=0"><button class="third">Início</button></a></center>
+          </td>
+        </tr>
+        <tr>
+          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=1"><button class="primary">Fase 1</button></td></a>
+          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=2"><button class="primary">Fase 2</button></td></a>
+          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=3"><button class="primary">Fase 3</button></td></a>
+          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=4"><button class="primary">Fase 4</button></td></a>
+        </tr>
+      </table>
+    </center>
+    <div style="right: 0;position: absolute;bottom: 0;">
+      {call BlocklyGames.soy.ok /}
     </div>
+  </div>
 
   {if $ij.level == 1}
     <div id="dialogHelpStack" class="dialogHiddenContent">

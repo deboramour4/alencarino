@@ -72,40 +72,17 @@ Maze.SKINS = [
     marker: 'maze/marker.png',
     obstacle: 'maze/obstacle.png',
     background: 'maze/background@1x.png',
-    graph: '#ccc',
+    // graph: '#ccc',
+    graph: false,
     look: '#000',
     winSound: ['maze/win.mp3', 'maze/win.ogg'],
     crashSound: ['maze/fail_pegman.mp3', 'maze/fail_pegman.ogg'],
     crashType: Maze.CRASH_STOP
-  },
-  {
-    sprite: 'maze/astro.png',
-    tiles: 'maze/tiles_astro.png',
-    marker: 'maze/marker.png',
-    obstacle: 'maze/obstacle.png',
-    background: 'maze/bg_astro.jpg',
-    // Coma star cluster, photo by George Hatfield, used with permission.
-    graph: '#ccc',
-    look: '#fff',
-    winSound: ['maze/win.mp3', 'maze/win.ogg'],
-    crashSound: ['maze/fail_astro.mp3', 'maze/fail_astro.ogg'],
-    crashType: Maze.CRASH_SPIN
-  },
-  {
-    sprite: 'maze/panda.png',
-    tiles: 'maze/tiles_panda.png',
-    marker: 'maze/marker.png',
-    obstacle: 'maze/obstacle.png',
-    background: 'maze/bg_panda.jpg',
-    // Spring canopy, photo by Rupert Fleetingly, CC licensed for reuse.
-    graph: '#ccc',
-    look: '#000',
-    winSound: ['maze/win.mp3', 'maze/win.ogg'],
-    crashSound: ['maze/fail_panda.mp3', 'maze/fail_panda.ogg'],
-    crashType: Maze.CRASH_FALL
   }
 ];
-Maze.SKIN_ID = BlocklyGames.getNumberParamFromUrl('skin', 0, Maze.SKINS.length);
+
+Maze.SKIN_ID = 0;
+
 Maze.SKIN = Maze.SKINS[Maze.SKIN_ID];
 
 /**
@@ -139,40 +116,34 @@ Maze.map = [
   [0, 0, 0, 0, 0, 0, 0]],
 // Level 1.
  [[0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 4, 3, 4, 0, 0],
-  [0, 0, 4, 1, 4, 0, 0],
-  [0, 0, 4, 1, 4, 0, 0],
-  [0, 0, 4, 2, 4, 0, 0],
-  [0, 0, 4, 1, 4, 0, 0],
+  [0, 0, 0, 3, 0, 0, 0],
+  [0, 0, 1, 1, 1, 0, 0],
+  [0, 0, 4, 1, 4, 1, 0],
+  [0, 0, 1, 2, 1, 0, 0],
+  [0, 1, 1, 1, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0]],
 // Level 2.
- [[0, 0, 1, 3, 1, 0, 0],
+ [[0, 0, 0, 3, 0, 0, 0],
+  [0, 0, 0, 1, 0, 0, 0],
+  [0, 1, 4, 4, 4, 0, 0],
   [0, 0, 1, 1, 1, 0, 0],
-  [0, 0, 4, 4, 4, 0, 0],
-  [0, 0, 1, 1, 1, 0, 0],
-  [0, 0, 4, 4, 4, 0, 0],
+  [0, 0, 4, 4, 4, 1, 0],
   [0, 0, 1, 2, 1, 0, 0],
-  [0, 0, 1, 1, 1, 0, 0]],
+  [0, 0, 0, 1, 0, 0, 0]],
 // Level 3.
- [[1, 1, 1, 1, 1, 1, 1],
-  [1, 4, 1, 1, 1, 4, 1],
-  [1, 1, 1, 2, 1, 1, 1],
-  [1, 1, 0, 1, 0, 1, 1],
-  [1, 1, 0, 4, 0, 1, 1],
-  [1, 1, 4, 3, 4, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1]],
+ [[0, 0, 0, 0, 0, 0, 0],
+  [0, 4, 1, 1, 1, 4, 0],
+  [0, 1, 1, 2, 1, 1, 0],
+  [0, 1, 0, 1, 0, 1, 0],
+  [0, 1, 0, 4, 0, 1, 0],
+  [0, 1, 4, 3, 4, 1, 0],
+  [0, 0, 0, 0, 0, 0, 0]],
 // Level 4.
-/**
- * Note, the path continues past the start and the goal in both directions.
- * This is intentionally done so users see the maze is about getting from
- * the start to the goal and not necessarily about moving over every part of
- * the maze, 'mowing the lawn' as Neil calls it.
- */
  [[0, 0, 0, 0, 0, 0, 0],
   [0, 1, 1, 4, 1, 1, 0],
-  [0, 1, 3, 1, 4, 1, 0],
+  [0, 1, 3, 1, 3, 1, 0],
   [0, 4, 1, 0, 1, 4, 0],
-  [0, 2, 4, 1, 4, 1, 0],
+  [0, 2, 3, 1, 3, 1, 0],
   [0, 1, 1, 4, 1, 1, 0],
   [0, 0, 0, 0, 0, 0, 0]],
 // Level 5.
@@ -273,7 +244,7 @@ Maze.result = Maze.ResultType.UNSET;
 /**
  * Starting direction.
  */
-Maze.startDirection = Maze.DirectionType.EAST;
+Maze.startDirection = Maze.DirectionType.NORTH;
 
 /**
  * PIDs of animation tasks currently executing.
@@ -314,24 +285,24 @@ Maze.tile_SHAPES = {
  * Create and layout all the nodes for the path, scenery, Pegman, and goal.
  */
 
- //Tamanho da topBar (Se tiver) debora
- var topBarHeight = 0;
+//Height of the top navigation bar  (if needed)
+var topBarHeight = 0;
 
 Maze.drawMap = function() {
 
   if (BlocklyGames.LEVEL == 0) {
-    // Dimensoes liveview
+    // Liveview Dimentions
     var svg = document.getElementById('svgMaze');
-    svg.setAttribute('width', screen.width*0.8);
+    svg.setAttribute('width', screen.width*0.75);
     svg.setAttribute('height', screen.height - topBarHeight);
-    svg.style.left = (screen.width*0.2) + 'px';
+    svg.style.left = (screen.width*0.25) + 'px';
     svg.style.position = 'fixed';
 
-    // Desenhando quadrado maior da liveview 
+    // Draw the square of liveview 
     var square = document.createElementNS(Blockly.SVG_NS, 'rect');
-    square.setAttribute('width', screen.width*0.8);
+    square.setAttribute('width', screen.width*0.75);
     square.setAttribute('height', screen.height - topBarHeight);
-    square.style.left = (screen.width*0.2) + 'px';
+    square.style.left = (screen.width*0.25) + 'px';
     square.style.position = 'fixed';
     square.setAttribute('fill', '#56acbe');
     square.setAttribute('stroke-width', 1);
@@ -340,18 +311,16 @@ Maze.drawMap = function() {
 
   } else {
 
-    /* Dimensoes liveview*/
+    //Liveview Dimentions
     var svg = document.getElementById('svgMaze');
     svg.setAttribute('width', screen.width/2);
     svg.setAttribute('height', screen.height - topBarHeight);
     svg.style.left = (screen.width/2) + 'px';
     svg.style.position = 'fixed';
-    //svg.setAttribute('viewBox', '0 0 ' + scale + ' ' + scale);
 
-    /* Dimensoes liveview*/
     var scale = Math.max(Maze.ROWS, Maze.COLS) * Maze.SQUARE_SIZE;
     
-    // Desenhando quadrado maior da liveview 
+    // Draw the square of liveview 
     var square = document.createElementNS(Blockly.SVG_NS, 'rect');
     square.setAttribute('width', screen.width/2);
     square.setAttribute('height', screen.height - topBarHeight);
@@ -366,12 +335,14 @@ Maze.drawMap = function() {
       var tile = document.createElementNS(Blockly.SVG_NS, 'image');
       tile.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
           Maze.SKIN.background);
-      tile.setAttribute('width', screen.width/2 + 100); //30 por causa do aspect ratio debora
-      tile.setAttribute('height', screen.height - topBarHeight);
-      tile.style.left = (screen.width/2) + 'px';
+      // tile.setAttribute('width', screen.width/2 + 100);
+      // tile.setAttribute('height', screen.height - topBarHeight);
+      tile.setAttribute('width', 673); 
+      tile.setAttribute('height', 647);
+      tile.style.left = (screen.width/2)  + 'px';
       tile.style.position = 'fixed';
 
-      tile.setAttribute('x', 0);
+      tile.setAttribute('x', - 12);
       tile.setAttribute('y', 0);
       svg.appendChild(tile);
     }
@@ -467,8 +438,8 @@ Maze.drawMap = function() {
         var obstacle = document.createElementNS(Blockly.SVG_NS, 'image');
         obstacle.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
             Maze.SKIN.obstacle);
-        obstacle.setAttribute('height', 34 + 10);
-        obstacle.setAttribute('width', 20 + 10);
+        obstacle.setAttribute('height', 50);
+        obstacle.setAttribute('width', 50);
         svg.appendChild(obstacle);
 
         // // Move the obstacle into position.
@@ -476,6 +447,22 @@ Maze.drawMap = function() {
             obstacle.getAttribute('width') / 2);
         obstacle.setAttribute('y', Maze.SQUARE_SIZE * (y + 0.6) -
             obstacle.getAttribute('height'));
+      }
+
+      if (Maze.map[y][x] == Maze.SquareType.FINISH) {
+        // Add obstacle.
+        var finish = document.createElementNS(Blockly.SVG_NS, 'image');
+        finish.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
+            Maze.SKIN.marker);
+        finish.setAttribute('height', 50);
+        finish.setAttribute('width', 50);
+        svg.appendChild(finish);
+
+        // // Move the obstacle into position.
+        finish.setAttribute('x', Maze.SQUARE_SIZE * (x + 0.5) -
+            finish.getAttribute('width') / 2);
+        finish.setAttribute('y', Maze.SQUARE_SIZE * (y + 0.6) -
+            finish.getAttribute('height'));
       }
 
     }
@@ -486,8 +473,8 @@ Maze.drawMap = function() {
   finishMarker.setAttribute('id', 'finish');
   finishMarker.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
       Maze.SKIN.marker);
-  finishMarker.setAttribute('height', 34 + 10);
-  finishMarker.setAttribute('width', 20 +10);
+  finishMarker.setAttribute('height', 50);
+  finishMarker.setAttribute('width', 50);
   svg.appendChild(finishMarker);
 
   // Pegman's clipPath element, whose (x, y) is reset by Maze.displayPegman
@@ -525,45 +512,17 @@ Maze.init = function() {
 
   BlocklyInterface.init();
 
-  // Setup the Pegman menu.
-  var pegmanImg = document.querySelector('#pegmanButton>img');
-  pegmanImg.style.backgroundImage = 'url(' + Maze.SKIN.sprite + ')';
-  var pegmanMenu = document.getElementById('pegmanMenu');
-  var handlerFactory = function(n) {
-    return function() {
-      Maze.changePegman(n);
-    };
-  };
-  for (var i = 0; i < Maze.SKINS.length; i++) {
-    if (i == Maze.SKIN_ID) {
-      continue;
-    }
-    var div = document.createElement('div');
-    var img = document.createElement('img');
-    img.src = 'common/1x1.gif';
-    img.style.backgroundImage = 'url(' + Maze.SKINS[i].sprite + ')';
-    div.appendChild(img);
-    pegmanMenu.appendChild(div);
-    Blockly.bindEvent_(div, 'mousedown', null, handlerFactory(i));
-  }
-  Blockly.bindEvent_(window, 'resize', null, Maze.hidePegmanMenu);
-  var pegmanButton = document.getElementById('pegmanButton');
-  Blockly.bindEvent_(pegmanButton, 'mousedown', null, Maze.showPegmanMenu);
-  var pegmanButtonArrow = document.getElementById('pegmanButtonArrow');
-  var arrow = document.createTextNode(Blockly.FieldDropdown.ARROW_CHAR);
-  pegmanButtonArrow.appendChild(arrow);
-
-  //Mudando o valor do top, left e width do workspace debora
+  //Useless
   var rtl = BlocklyGames.isRtl();
   var blocklyDiv = document.getElementById('blockly');
   var visualization = document.getElementById('visualization');
 
-  //Dimensoes e posicao workspace
+  //Position and dimentions of workspace
   var onresize = function(e) {
     if (BlocklyGames.LEVEL == 0) {
       blocklyDiv.style.top = 0 + 'px';
       blocklyDiv.style.height = (screen.height) + 'px';
-      blocklyDiv.style.width = (screen.width*0.2) + 'px';
+      blocklyDiv.style.width = (screen.width*0.25) + 'px';
     } else {
       blocklyDiv.style.top =(topBarHeight) + 'px';
       blocklyDiv.style.height = (screen.height - topBarHeight) + 'px';
@@ -580,12 +539,13 @@ Maze.init = function() {
 
   var toolbox = document.getElementById('toolbox');
 
+  //Check if it's the level 0 (HUB) or not
   var TOOLS_ON = true;
   if (BlocklyGames.LEVEL == 0) {
     TOOLS_ON = false
   }
 
-  //Mudando preferencisas do workspace (ver a documentação do blockly) debora
+  //Change settings of workspace
   BlocklyGames.workspace = Blockly.inject('blockly',
       {'media': 'third-party/blockly/media/',
         'grid':
@@ -598,30 +558,33 @@ Maze.init = function() {
        'toolbox': toolbox,
        'trashcan': TOOLS_ON,
        'scrollbars':TOOLS_ON,
-       'zoom': {'startScale': 1.4}
+       'zoom': {'startScale': 1.7}
        });
 
   BlocklyGames.workspace.getAudioManager().load(Maze.SKIN.winSound, 'win');
   BlocklyGames.workspace.getAudioManager().load(Maze.SKIN.crashSound, 'fail');
 
   // Not really needed, there are no user-defined functions or variables.
-  Blockly.JavaScript.addReservedWords('moveForward,moveBackward,' +
+  Blockly.JavaScript.addReservedWords('moveForward,moveBackward,jumpForward, jumpBackward' +
       'turnRight,turnLeft,isPathForward,isPathRight,isPathBackward,isPathLeft');
 
+  //Hide toolbox if it's level 0
   if (BlocklyGames.LEVEL == 0) {
     var blocklyFlyoutBackground = document.getElementsByClassName('blocklyFlyoutBackground');
     blocklyFlyoutBackground[0].style.display = "none"
   }
   
+  //Call drawMap() function and draw liveView
   Maze.drawMap();
 
-  var defaultXml
-
+  var defaultXml;
   if (BlocklyGames.LEVEL == 0) {
+    //Default blocks in the level 0 (HUB)
     defaultXml =
       '<xml>' +
       '  <block movable="false" type="maze_skyColor" x="-20" y="30"></block>' +
-      '  <block movable="false" type="maze_skyColor" x="-20" y="55"></block>' +
+      '  <block movable="false" type="maze_wallColor" x="-20" y="55"></block>' +
+      '  <block movable="false" type="maze_chooseToy" x="-20" y="80"></block>' +
       '</xml>' ;
     } else {
       defaultXml =
@@ -630,7 +593,6 @@ Maze.init = function() {
       'type="maze_moveForward" x="30" y="30"></block>' +
       '</xml>' ;
     }
-  
   BlocklyInterface.loadBlocks(defaultXml, false);
 
   // Locate the start and finish squares.
@@ -643,33 +605,33 @@ Maze.init = function() {
       }
     }
   }
-
+  
   Maze.reset(true);
+
+  //Add listeners
   BlocklyGames.workspace.addChangeListener(function() {Maze.updateCapacity();});
-
   document.body.addEventListener('mousemove', Maze.updatePegSpin_, true);
-
   BlocklyGames.bindClick('runButton', Maze.runButtonClick);
   BlocklyGames.bindClick('resetButton', Maze.resetButtonClick);
   BlocklyGames.bindClick('mapButton', Maze.showMapDialog);
 
 
   if (BlocklyGames.LEVEL == 10) {
-    if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
-                                          BlocklyGames.LEVEL)) {
-      // Level 10 gets an introductory modal dialog.
-      // Skip the dialog if the user has already won.
-      var content = document.getElementById('dialogHelpWallFollow');
-      var style = {
-        'width': '30%',
-        'left': '35%',
-        'top': '12em'
-      };
-      BlocklyDialogs.showDialog(content, null, false, true, style,
-          BlocklyDialogs.stopDialogKeyDown);
-      BlocklyDialogs.startDialogKeyDown();
-      setTimeout(BlocklyDialogs.abortOffer, 5 * 60 * 1000);
-    }
+    // if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
+    //                                       BlocklyGames.LEVEL)) {
+    //   // Level 10 gets an introductory modal dialog.
+    //   // Skip the dialog if the user has already won.
+    //   var content = document.getElementById('dialogHelpWallFollow');
+    //   var style = {
+    //     'width': '30%',
+    //     'left': '35%',
+    //     'top': '12em'
+    //   };
+    //   BlocklyDialogs.showDialog(content, null, false, true, style,
+    //       BlocklyDialogs.stopDialogKeyDown);
+    //   BlocklyDialogs.startDialogKeyDown();
+    //   setTimeout(BlocklyDialogs.abortOffer, 5 * 60 * 1000);
+    // }
   } else {
     // All other levels get interactive help.  But wait 5 seconds for the
     // user to think a bit before they are told what to do.
@@ -695,23 +657,21 @@ Maze.init = function() {
 };
 
 
-
+// Show map modal dialog.
 Maze.showMapDialog = function(e){
   // Prevent double-clicks or double-taps.
   if (BlocklyInterface.eventSpam(e)) {
     return;
   }
-  // Show map modal dialog.
   var content = document.getElementById('dialogMap');
   var style = {
-    'width': '30%',
-    'left': '35%',
-    'top': '12em'
+    'width': '60%',
+    'left': '20%',
+    'top': '4 em',
+    'height': '80%'
   };
   BlocklyDialogs.showDialog(content, null, false, true, style, null);
 };
-
-
 
 
 
@@ -897,20 +857,6 @@ Maze.levelHelp = function(opt_event) {
 };
 
 
-
-
-
-/**
- * Reload with a different Pegman skin.
- * @param {number} newSkin ID of new skin.
- */
-Maze.changePegman = function(newSkin) {
-  Maze.saveToStorage();
-  window.location = window.location.protocol + '//' +
-      window.location.host + window.location.pathname +
-      '?lang=' + BlocklyGames.LANG + '&level=' + BlocklyGames.LEVEL +
-      '&skin=' + newSkin;
-};
 
 /**
  * Save the blocks for a one-time reload.
@@ -1107,46 +1053,68 @@ Maze.resetButtonClick = function(e) {
 Maze.initInterpreter = function(interpreter, scope) {
   // API
   var wrapper;
+
   wrapper = function(id) {
     Maze.move(0, id);
   };
   interpreter.setProperty(scope, 'moveForward',
       interpreter.createNativeFunction(wrapper));
+
   wrapper = function(id) {
     Maze.move(2, id);
   };
   interpreter.setProperty(scope, 'moveBackward',
       interpreter.createNativeFunction(wrapper));
+// debora -----------------------------------------------------------------
+  wrapper = function(id) {
+    Maze.jump(0, id);
+  };
+  interpreter.setProperty(scope, 'jumpForward',
+      interpreter.createNativeFunction(wrapper));
+
+  wrapper = function(id) {
+    Maze.jump(2, id);
+  };
+  interpreter.setProperty(scope, 'jumpBackward',
+      interpreter.createNativeFunction(wrapper));
+// debora -----------------------------------------------------------------
+
   wrapper = function(id) {
     Maze.turn(0, id);
   };
   interpreter.setProperty(scope, 'turnLeft',
       interpreter.createNativeFunction(wrapper));
+
   wrapper = function(id) {
     Maze.turn(1, id);
   };
   interpreter.setProperty(scope, 'turnRight',
       interpreter.createNativeFunction(wrapper));
+
   wrapper = function(id) {
-    return Maze.isPath(0, id);
+    return Maze.isPath(0, id, false);
   };
   interpreter.setProperty(scope, 'isPathForward',
       interpreter.createNativeFunction(wrapper));
+
   wrapper = function(id) {
-    return Maze.isPath(1, id);
+    return Maze.isPath(1, id, false);
   };
   interpreter.setProperty(scope, 'isPathRight',
       interpreter.createNativeFunction(wrapper));
+
   wrapper = function(id) {
-    return Maze.isPath(2, id);
+    return Maze.isPath(2, id, false);
   };
   interpreter.setProperty(scope, 'isPathBackward',
       interpreter.createNativeFunction(wrapper));
+
   wrapper = function(id) {
-    return Maze.isPath(3, id);
+    return Maze.isPath(3, id, false);
   };
   interpreter.setProperty(scope, 'isPathLeft',
       interpreter.createNativeFunction(wrapper));
+
   wrapper = function() {
     return Maze.notDone();
   };
@@ -1247,6 +1215,29 @@ Maze.animate = function() {
                     [Maze.pegmanX - 1, Maze.pegmanY, Maze.pegmanD * 4]);
       Maze.pegmanX--;
       break;
+      // debora -----------------------------------------
+    case 'jump_north':
+      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
+                    [Maze.pegmanX, Maze.pegmanY - 2, Maze.pegmanD * 4]);
+      Maze.pegmanY = Maze.pegmanY-2;
+      break;
+    case 'jump_east':
+      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
+                    [Maze.pegmanX + 2, Maze.pegmanY, Maze.pegmanD * 4]);
+      Maze.pegmanX = Maze.pegmanX+2;
+      break;
+    case 'jump_south':
+      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
+                    [Maze.pegmanX, Maze.pegmanY + 2, Maze.pegmanD * 4]);
+      Maze.pegmanY = Maze.pegmanY+2;
+      break;
+    case 'jump_west':
+      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
+                    [Maze.pegmanX - 2, Maze.pegmanY, Maze.pegmanD * 4]);
+      Maze.pegmanX = Maze.pegmanX-2;
+      break;
+      //debora ------------------------------------------
+
     case 'look_north':
       Maze.scheduleLook(Maze.DirectionType.NORTH);
       break;
@@ -1565,7 +1556,7 @@ Maze.constrainDirection16 = function(d) {
  * @throws {false} If Pegman collides with a wall.
  */
 Maze.move = function(direction, id) {
-  if (!Maze.isPath(direction, null)) {
+  if (!Maze.isPath(direction, null, false)) {
     Maze.log.push(['fail_' + (direction ? 'backward' : 'forward'), id]);
     throw false;
   }
@@ -1588,6 +1579,42 @@ Maze.move = function(direction, id) {
     case Maze.DirectionType.WEST:
       Maze.pegmanX--;
       command = 'west';
+      break;
+  }
+  Maze.log.push([command, id]);
+};
+
+/**
+ * Attempt to jump pegman forward or backward.
+ * @param {number} direction Direction to move (0 = forward, 2 = backward).
+ * @param {string} id ID of block that triggered this action.
+ * @throws {true} If the end of the maze is reached.
+ * @throws {false} If Pegman collides with a wall.
+ */
+Maze.jump = function(direction, id) {
+  if (!Maze.isPath(direction, null, true)) {
+    Maze.log.push(['fail_' + (direction ? 'backward' : 'forward'), id]);
+    throw false;
+  }
+  // If moving backward, flip the effective direction.
+  var effectiveDirection = Maze.pegmanD + direction;
+  var command;
+  switch (Maze.constrainDirection4(effectiveDirection)) {
+    case Maze.DirectionType.NORTH:
+      Maze.pegmanY = Maze.pegmanY-2;
+      command = 'jump_north';
+      break;
+    case Maze.DirectionType.EAST:
+      Maze.pegmanX = Maze.pegmanX+2;
+      command = 'jump_east';
+      break;
+    case Maze.DirectionType.SOUTH:
+      Maze.pegmanY = Maze.pegmanY+2;
+      command = 'jump_south';
+      break;
+    case Maze.DirectionType.WEST:
+      Maze.pegmanX = Maze.pegmanX-2;
+      command = 'jump_west';
       break;
   }
   Maze.log.push([command, id]);
@@ -1617,9 +1644,11 @@ Maze.turn = function(direction, id) {
  *     (0 = forward, 1 = right, 2 = backward, 3 = left).
  * @param {?string} id ID of block that triggered this action.
  *     Null if called as a helper function in Maze.move().
+ * @param {?string} isJump to identify if it's called from a jump block.
+ *     Null if called in isPathFoward.. etc.
  * @return {boolean} True if there is a path.
  */
-Maze.isPath = function(direction, id) {
+Maze.isPath = function(direction, id, isJump) {
   var effectiveDirection = Maze.pegmanD + direction;
   var square;
   var command;
@@ -1646,7 +1675,12 @@ Maze.isPath = function(direction, id) {
   if (id) {
     Maze.log.push([command, id]);
   }
-  return square !== Maze.SquareType.WALL && square !== undefined;
+
+  if (isJump) {
+    return square !== Maze.SquareType.WALL && square !== undefined;
+  } else {
+    return square !== Maze.SquareType.WALL && square !== undefined && square !== Maze.SquareType.OBSTACLE;
+  }
 };
 
 /**
