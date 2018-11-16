@@ -56,7 +56,7 @@
         <h1>
           {call BlocklyGames.soy.titleSpan}
             {param appName}
-              {msg meaning="Games.maze" desc="IBID"}Projeto Integrado 2{/msg}
+              {msg meaning="Games.maze" desc="IBID"}🎮{/msg}
             {/param}
           {/call}
 
@@ -93,12 +93,10 @@
   </div>
 
   <div id="helpButtonDiv">
-    <a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=0">
-     <button id="helpButon" class="primary" title="usa isso pra ajuda">
+     <button id="helpButton" class="primary" title="usa isso pra ajuda">
       <img src="common/1x1.gif" class="help icon21">
       Ajuda
       </button>
-    </a>
   </div>
 
 
@@ -124,7 +122,6 @@
 
   <div id="pegmanMenu"></div>
 
-{if $ij.level != 0}
   /*Run restart button debora*/
   <div id="divRunButton">
      <button id="runButton" class="primary" title="{msg meaning="Maze.runTooltip" desc="tooltip - Pressing this button runs the computer program the user has written to move the player through the maze."}Makes the player do what the blocks say.{/msg}">
@@ -134,7 +131,6 @@
       <img src="common/1x1.gif" class="stop icon21"> {msg meaning="Games.resetProgram" desc="IBID"}Retornar{/msg}
       </button>
   </div>
-{/if}
 
   {call BlocklyGames.soy.dialog /}
   {call BlocklyGames.soy.doneDialog /}
@@ -143,17 +139,18 @@
 
   <div id="dialogMap" class="dialogHiddenContent" style="height: 100%">
     <center>
-      <table style="width:60%;">
+      <table style="width:60%;" >
         <tr>
           <td colspan="4"><center>
-            <a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=1&skin=0"><button class="third">Início</button></a></center>
+            <a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=0"><button class="third">Início</button></a>
+            </center>
           </td>
         </tr>
         <tr>
-          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=1"><button class="primary">Fase 1</button></td></a>
-          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=2"><button class="primary">Fase 2</button></td></a>
-          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=3"><button class="primary">Fase 3</button></td></a>
-          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=4"><button class="primary">Fase 4</button></td></a>
+          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=1"><button class="primary">Fase 1</button></a></td>
+          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=2"><button class="primary">Fase 2</button></a></td>
+          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=3"><button class="primary">Fase 3</button></a></td>
+          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=4"><button class="primary">Fase 4</button></a></td>
         </tr>
       </table>
     </center>
@@ -162,6 +159,31 @@
     </div>
   </div>
 
+
+  <div id="dialogHelp" class="dialogHiddenContent" style="height: 100%">
+    <center>
+      <table style="width:60%;" >
+        <tr>
+          <td colspan="4"><center>
+            <a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=0"><button class="third">Início</button></a>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=1"><button class="primary">Fase 1</button></a></td>
+          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=2"><button class="primary">Fase 2</button></a></td>
+          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=3"><button class="primary">Fase 3</button></a></td>
+          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=4"><button class="primary">Fase 4</button></a></td>
+        </tr>
+      </table>
+    </center>
+    <div style="right: 0;position: absolute;bottom: 0;">
+      {call BlocklyGames.soy.ok /}
+    </div>
+  </div>
+
+
+
   {if $ij.level == 1}
     <div id="dialogHelpStack" class="dialogHiddenContent">
       <table><tr><td>
@@ -169,7 +191,7 @@
       </td><td>&nbsp;</td><td>
         {msg meaning="Maze.helpStack" desc="callout - The word words for 'stack' and 'blocks' should be the same as for stacking children's blocks. Use the imperative verb form appropriate for speaking to a child, gender unspecified.  If no gender-neutral singular/familiar form exists but a gender-neutral plural/formal form exists, use that instead.  Be sure to use the same translation of 'move forward' as above."}Stack a couple of 'move forward' blocks together to help me reach the goal.{/msg}
       </td><td valign="top">
-        <img src="maze/help_stack.png" class="mirrorImg" height=63 width=136>
+        <img src="maze/img/help_stack.png" class="mirrorImg" height=63 width=136>
       </td></tr></table>
     </div>
     <div id="dialogHelpOneTopBlock" class="dialogHiddenContent">
@@ -186,7 +208,7 @@
       </td><td rowspan=2>
         <img src="common/help.png">
       </td></tr><tr><td>
-        <div><img src="maze/help_run.png" class="mirrorImg" height=27 width=141></div>
+        <div><img src="maze/img/help_run.png" class="mirrorImg" height=27 width=141></div>
       </td></tr></table>
     </div>
   {elseif $ij.level == 2}
@@ -196,14 +218,14 @@
       </td><td rowspan=2>
         <img src="common/help.png">
       </td></tr><tr><td>
-        <div><img src="maze/help_run.png" class="mirrorImg" height=27 width=141></div>
+        <div><img src="maze/img/help_run.png" class="mirrorImg" height=27 width=141></div>
       </td></tr></table>
     </div>
   {elseif $ij.level == 3 or $ij.level == 4}
     {if $ij.level == 3}
       <div id="dialogHelpRepeat" class="dialogHiddenContent">
         <table><tr><td>
-          <img src="maze/help_up.png">
+          <img src="maze/img/help_up.png">
         </td><td>
           {msg meaning="Maze.helpRepeat" desc="callout - This is shown when the 'repeat' block is introduced.  The word 'path' refers to a path through a maze, and 'block' refers to a child's building block."}Reach the end of this path using only two blocks. Use 'repeat' to run a block more than once.{/msg}
         </td><td>
@@ -220,7 +242,7 @@
     </div>
     <div id="dialogHelpRepeatMany" class="dialogHiddenContent">
       <table><tr><td>
-        <img src="maze/help_up.png">
+        <img src="maze/img/help_up.png">
       </td><td>
         {msg meaning="Maze.helpRepeatMany" desc="callout - This is a hint that the user should place a second block inside of a a 'repeat' block."}You can fit more than one block inside a 'repeat' block.{/msg}
       </td><td>
@@ -234,13 +256,13 @@
       </td><td width="95%">
         {{msg meaning="Maze.helpSkins" desc="callout - This is a hint that the user can change the appearance of the player that moves within the maze."}}Choose your favourite player from this menu.{{/msg}}
       </td><td>
-        <img src="maze/help_up.png">
+        <img src="maze/img/help_up.png">
       </td></tr></table>
     </div>
   {elseif $ij.level == 6}
     <div id="dialogHelpIf" class="dialogHiddenContent">
       <table><tr><td>
-        <img src="maze/help_up.png">
+        <img src="maze/img/help_up.png">
       </td><td>
         {msg meaning="Maze.helpIf" desc="callout - This is shown when the 'if' block is introduced.  An example of an 'if' block is: 'if there is a path to the left, turn left'."}An 'if' block will do something only if the condition is true. Try turning left if there is a path to the left.{/msg}
       </td><td>
@@ -250,7 +272,7 @@
   {elseif $ij.level == 7}
     <div id="dialogHelpMenu" class="dialogHiddenContent">
       <table><tr><td>
-        <img src="maze/help_up.png">
+        <img src="maze/img/help_up.png">
       </td><td id="helpMenuText">
         {msg meaning="Maze.helpMenu" desc="callout - %1 will be replaced with an image of the dropdown menu that the user needs to click."}Click on %1 in the 'if' block to change its condition.{/msg}
       </td><td>
@@ -260,7 +282,7 @@
   {elseif $ij.level == 9}
     <div id="dialogHelpIfElse" class="dialogHiddenContent">
       <table><tr><td>
-        <img src="maze/help_down.png">
+        <img src="maze/img/help_down.png">
       </td><td>
         {msg meaning="Maze.helpIfElse" desc="IBID"}
           If-else blocks will do one thing or the other.

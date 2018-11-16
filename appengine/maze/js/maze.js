@@ -41,8 +41,7 @@ BlocklyInterface.nextLevel = function() {
   if (BlocklyGames.LEVEL < BlocklyGames.MAX_LEVEL) {
     window.location = window.location.protocol + '//' +
         window.location.host + window.location.pathname +
-        '?lang=' + BlocklyGames.LANG + '&level=' + (BlocklyGames.LEVEL + 1) +
-        '&skin=' + Maze.SKIN_ID;
+        '?lang=' + BlocklyGames.LANG + '&level=' + (BlocklyGames.LEVEL + 1);
   } else {
     BlocklyInterface.indexPage();
   }
@@ -67,16 +66,16 @@ Maze.SKINS = [
   // crashSound: List of sounds (in various formats) for player crashes.
   // crashType: Behaviour when player crashes (stop, spin, or fall).
   {
-    sprite: 'maze/pegman.png',
-    tiles: 'maze/tiles_pegman@1x.png',
-    marker: 'maze/marker.png',
-    obstacle: 'maze/obstacle.png',
-    background: 'maze/background@1x.png',
+    sprite: 'maze/img/pegman_robot.png',
+    tiles: 'maze/img/tiles_pegman@1x.png',
+    marker: 'maze/img/marker.png',
+    obstacle: 'maze/img/obstacle.png',
+    background: 'maze/img/background@1x.png',
     // graph: '#ccc',
     graph: false,
     look: '#000',
-    winSound: ['maze/win.mp3', 'maze/win.ogg'],
-    crashSound: ['maze/fail_pegman.mp3', 'maze/fail_pegman.ogg'],
+    winSound: ['maze/sounds/win.mp3', 'maze/sounds/win.ogg'],
+    crashSound: ['maze/sounds/fail_pegman.mp3', 'maze/sounds/fail_pegman.ogg'],
     crashType: Maze.CRASH_STOP
   }
 ];
@@ -110,7 +109,7 @@ Maze.map = [
  [[0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
+  [0, 2, 0, 0, 3, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0]],
@@ -493,7 +492,7 @@ Maze.drawMap = function() {
   pegmanIcon.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
       Maze.SKIN.sprite);
   pegmanIcon.setAttribute('height', Maze.PEGMAN_HEIGHT);
-  pegmanIcon.setAttribute('width', Maze.PEGMAN_WIDTH * 21); // 49 * 21 = 1029
+  pegmanIcon.setAttribute('width', Maze.PEGMAN_WIDTH * 45); // 49 * 45 (sprites) = 2205
   pegmanIcon.setAttribute('clip-path', 'url(#pegmanClipPath)');
   svg.appendChild(pegmanIcon);
 };
@@ -550,8 +549,8 @@ Maze.init = function() {
       {'media': 'third-party/blockly/media/',
         'grid':
          {'spacing': '30',
-          'length': '5',
-          'colour': '#000',
+          'length': '1',
+          'colour': '#bbb',
           'snap': true
         },
        'maxBlocks': Maze.MAX_BLOCKS,
@@ -614,6 +613,7 @@ Maze.init = function() {
   BlocklyGames.bindClick('runButton', Maze.runButtonClick);
   BlocklyGames.bindClick('resetButton', Maze.resetButtonClick);
   BlocklyGames.bindClick('mapButton', Maze.showMapDialog);
+  BlocklyGames.bindClick('helpButton', Maze.showHelpDialog);
 
 
   if (BlocklyGames.LEVEL == 10) {
@@ -673,6 +673,22 @@ Maze.showMapDialog = function(e){
   BlocklyDialogs.showDialog(content, null, false, true, style, null);
 };
 
+
+// Show help modal dialog.
+Maze.showHelpDialog = function(e){
+  // Prevent double-clicks or double-taps.
+  if (BlocklyInterface.eventSpam(e)) {
+    return;
+  }
+  var content = document.getElementById('dialogHelp');
+  var style = {
+    'width': '60%',
+    'left': '30%',
+    'top': '3em',
+    'height': '60%'
+  };
+  BlocklyDialogs.showDialog(content, null, false, true, style, null);
+};
 
 
 /**
@@ -870,52 +886,52 @@ Maze.saveToStorage = function() {
   }
 };
 
-/**
- * Display the Pegman skin-change menu.
- * @param {!Event} e Mouse, touch, or resize event.
- */
-Maze.showPegmanMenu = function(e) {
-  var menu = document.getElementById('pegmanMenu');
-  if (menu.style.display == 'block') {
-    // Menu is already open.  Close it.
-    Maze.hidePegmanMenu(e);
-    return;
-  }
-  // Prevent double-clicks or double-taps.
-  if (BlocklyInterface.eventSpam(e)) {
-    return;
-  }
-  var button = document.getElementById('pegmanButton');
-  button.classList.add('buttonHover');
-  menu.style.top = (button.offsetTop + button.offsetHeight) + 'px';
-  menu.style.left = button.offsetLeft + 'px';
-  menu.style.display = 'block';
-  Maze.pegmanMenuMouse_ =
-      Blockly.bindEvent_(document.body, 'mousedown', null, Maze.hidePegmanMenu);
-  // Close the skin-changing hint if open.
-  var hint = document.getElementById('dialogHelpSkins');
-  if (hint && hint.className != 'dialogHiddenContent') {
-    BlocklyDialogs.hideDialog(false);
-  }
-  Maze.showPegmanMenu.activatedOnce = true;
-};
+// /**
+//  * Display the Pegman skin-change menu.
+//  * @param {!Event} e Mouse, touch, or resize event.
+//  */
+// Maze.showPegmanMenu = function(e) {
+//   var menu = document.getElementById('pegmanMenu');
+//   if (menu.style.display == 'block') {
+//     // Menu is already open.  Close it.
+//     Maze.hidePegmanMenu(e);
+//     return;
+//   }
+//   // Prevent double-clicks or double-taps.
+//   if (BlocklyInterface.eventSpam(e)) {
+//     return;
+//   }
+//   var button = document.getElementById('pegmanButton');
+//   button.classList.add('buttonHover');
+//   menu.style.top = (button.offsetTop + button.offsetHeight) + 'px';
+//   menu.style.left = button.offsetLeft + 'px';
+//   menu.style.display = 'block';
+//   Maze.pegmanMenuMouse_ =
+//       Blockly.ndndEvent_(document.body, 'mousedown', null, Maze.hidePegmanMenu);
+//   // Close the skin-changing hint if open.
+//   var hint = document.getElementById('dialogHelpSkins');
+//   if (hint && hint.className != 'dialogHiddenContent') {
+//     BlocklyDialogs.hideDialog(false);
+//   }
+//   Maze.showPegmanMenu.activatedOnce = true;
+// };
 
-/**
- * Hide the Pegman skin-change menu.
- * @param {!Event} e Mouse, touch, or resize event.
- */
-Maze.hidePegmanMenu = function(e) {
-  // Prevent double-clicks or double-taps.
-  if (BlocklyInterface.eventSpam(e)) {
-    return;
-  }
-  document.getElementById('pegmanMenu').style.display = 'none';
-  document.getElementById('pegmanButton').classList.remove('buttonHover');
-  if (Maze.pegmanMenuMouse_) {
-    Blockly.unbindEvent_(Maze.pegmanMenuMouse_);
-    delete Maze.pegmanMenuMouse_;
-  }
-};
+// /**
+//  * Hide the Pegman skin-change menu.
+//  * @param {!Event} e Mouse, touch, or resize event.
+//  */
+// Maze.hidePegmanMenu = function(e) {
+//   // Prevent double-clicks or double-taps.
+//   if (BlocklyInterface.eventSpam(e)) {
+//     return;
+//   }
+//   document.getElementById('pegmanMenu').style.display = 'none';
+//   document.getElementById('pegmanButton').classList.remove('buttonHover');
+//   if (Maze.pegmanMenuMouse_) {
+//     Blockly.unbindEvent_(Maze.pegmanMenuMouse_);
+//     delete Maze.pegmanMenuMouse_;
+//   }
+// };
 
 /**
  * Reset the maze to the start position and kill any pending animation tasks.
@@ -1257,13 +1273,11 @@ Maze.animate = function() {
       Maze.scheduleFail(false);
       break;
     case 'left':
-      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
-                    [Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4 - 4]);
+      Maze.scheduleTurn(0);
       Maze.pegmanD = Maze.constrainDirection4(Maze.pegmanD - 1);
       break;
     case 'right':
-      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
-                    [Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4 + 4]);
+      Maze.scheduleTurn(1);
       Maze.pegmanD = Maze.constrainDirection4(Maze.pegmanD + 1);
       break;
     case 'finish':
@@ -1314,27 +1328,91 @@ Maze.updatePegSpin_ = function(e) {
  * @param {!Array.<number>} startPos X, Y and direction starting points.
  * @param {!Array.<number>} endPos X, Y and direction ending points.
  */
+// Maze.schedule = function(startPos, endPos) {
+//   var deltas = [(endPos[0] - startPos[0]) / 4,
+//                 (endPos[1] - startPos[1]) / 4,
+//                 (endPos[2] - startPos[2]) / 4];
+
+//   Maze.displayPegman(startPos[0] + deltas[0],
+//                      startPos[1] + deltas[1],
+//                      Maze.constrainDirection16(startPos[2] + deltas[2]));
+
+//   Maze.pidList.push(setTimeout(function() {
+//       Maze.displayPegman(startPos[0] + deltas[0] * 2,
+//           startPos[1] + deltas[1] * 2,
+//           Maze.constrainDirection16(startPos[2] + deltas[2] * 2));
+//     }, Maze.stepSpeed));
+
+//   Maze.pidList.push(setTimeout(function() {
+//       Maze.displayPegman(startPos[0] + deltas[0] * 3,
+//           startPos[1] + deltas[1] * 3,
+//           Maze.constrainDirection16(startPos[2] + deltas[2] * 3));
+//     }, Maze.stepSpeed * 2));
+
+//   Maze.pidList.push(setTimeout(function() {
+//       Maze.displayPegman(endPos[0], endPos[1],
+//           Maze.constrainDirection16(endPos[2]));
+//     }, Maze.stepSpeed * 3));
+// };
+
+
 Maze.schedule = function(startPos, endPos) {
   var deltas = [(endPos[0] - startPos[0]) / 4,
                 (endPos[1] - startPos[1]) / 4,
                 (endPos[2] - startPos[2]) / 4];
+  //debora
+  var sprite = Maze.pegmanD + (Maze.pegmanD + 1) + 20
+
   Maze.displayPegman(startPos[0] + deltas[0],
                      startPos[1] + deltas[1],
-                     Maze.constrainDirection16(startPos[2] + deltas[2]));
+                     sprite);
+
   Maze.pidList.push(setTimeout(function() {
       Maze.displayPegman(startPos[0] + deltas[0] * 2,
           startPos[1] + deltas[1] * 2,
-          Maze.constrainDirection16(startPos[2] + deltas[2] * 2));
+          sprite+1);
     }, Maze.stepSpeed));
+
   Maze.pidList.push(setTimeout(function() {
       Maze.displayPegman(startPos[0] + deltas[0] * 3,
           startPos[1] + deltas[1] * 3,
-          Maze.constrainDirection16(startPos[2] + deltas[2] * 3));
+          sprite);
     }, Maze.stepSpeed * 2));
+  
   Maze.pidList.push(setTimeout(function() {
       Maze.displayPegman(endPos[0], endPos[1],
           Maze.constrainDirection16(endPos[2]));
     }, Maze.stepSpeed * 3));
+};
+
+
+/**
+ * Display animation for Turn pegman left or right.
+ * @param {number} dir Direction to turn (0 = left, 1 = right).
+ */
+Maze.scheduleTurn = function(dir) {
+  var sprite
+
+  if (dir) {
+    // Right turn (clockwise).
+    sprite = (Maze.pegmanD * 4) + 1 +1
+  } else {
+    // Left turn (counterclockwise).
+    if (Maze.pegmanD == Maze.DirectionType.EAST || Maze.pegmanD == Maze.DirectionType.WEST){
+      sprite = (Maze.pegmanD * 4) - 1 -1
+    } else {
+      sprite = 16 - (Maze.pegmanD * 4) - 1 -1
+    }
+  }
+
+  Maze.pidList.push(setTimeout(function() {
+    Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite);
+  }, Maze.stepSpeed));
+
+  Maze.pidList.push(setTimeout(function() {
+    Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4);
+  }, Maze.stepSpeed * 2));
+
 };
 
 /**
@@ -1442,6 +1520,30 @@ Maze.scheduleFinish = function(sound) {
 };
 
 /**
+ * Schedule the animations and sound for a victory dance.
+ * @param {boolean} sound Play the victory sound.
+ */
+Maze.scheduleWalk = function(sound) {
+  var direction16 = Maze.constrainDirection16(Maze.pegmanD * 4);
+
+  var sprite = Maze.pegmanD + (Maze.pegmanD + 1) + 20 //20+0+1 = 21, sprite location
+
+  Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite);
+
+  Maze.stepSpeed = 100;  // Slow down victory animation a bit.
+
+  Maze.pidList.push(setTimeout(function() {
+    Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite+1);
+    }, Maze.stepSpeed));
+  Maze.pidList.push(setTimeout(function() {
+    Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite);
+    }, Maze.stepSpeed * 2));
+  Maze.pidList.push(setTimeout(function() {
+      Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite+1);
+    }, Maze.stepSpeed * 3));
+};
+
+/**
  * Display Pegman at the specified location, facing the specified direction.
  * @param {number} x Horizontal grid (or fraction thereof).
  * @param {number} y Vertical grid (or fraction thereof).
@@ -1450,10 +1552,12 @@ Maze.scheduleFinish = function(sound) {
  */
 Maze.displayPegman = function(x, y, d, opt_angle) {
   var pegmanIcon = document.getElementById('pegman');
+
   pegmanIcon.setAttribute('x',
       x * Maze.SQUARE_SIZE - d * Maze.PEGMAN_WIDTH + 1);
   pegmanIcon.setAttribute('y',
       Maze.SQUARE_SIZE * (y + 0.5) - Maze.PEGMAN_HEIGHT / 2 - 8);
+
   if (opt_angle) {
     pegmanIcon.setAttribute('transform', 'rotate(' + opt_angle + ', ' +
         (x * Maze.SQUARE_SIZE + Maze.SQUARE_SIZE / 2) + ', ' +
