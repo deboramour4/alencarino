@@ -492,7 +492,7 @@ Maze.drawMap = function() {
   pegmanIcon.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
       Maze.SKIN.sprite);
   pegmanIcon.setAttribute('height', Maze.PEGMAN_HEIGHT);
-  pegmanIcon.setAttribute('width', Maze.PEGMAN_WIDTH * 45); // 49 * 45 (sprites) = 2205
+  pegmanIcon.setAttribute('width', Maze.PEGMAN_WIDTH * 41); // 49 * 45 (sprites) = 2205
   pegmanIcon.setAttribute('clip-path', 'url(#pegmanClipPath)');
   svg.appendChild(pegmanIcon);
 };
@@ -613,7 +613,7 @@ Maze.init = function() {
   BlocklyGames.bindClick('runButton', Maze.runButtonClick);
   BlocklyGames.bindClick('resetButton', Maze.resetButtonClick);
   BlocklyGames.bindClick('mapButton', Maze.showMapDialog);
-  BlocklyGames.bindClick('helpButton', Maze.showHelpDialog);
+  // BlocklyGames.bindClick('helpButton', Maze.showHelpDialog);
 
 
   if (BlocklyGames.LEVEL == 10) {
@@ -948,19 +948,19 @@ Maze.reset = function(first) {
   Maze.pegmanX = Maze.start_.x;
   Maze.pegmanY = Maze.start_.y;
 
-  if (first) {
-    Maze.pegmanD = Maze.startDirection + 1;
-    Maze.scheduleFinish(false);
-    Maze.pidList.push(setTimeout(function() {
-      Maze.stepSpeed = 100;
-      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
-                    [Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4 - 4]);
-      Maze.pegmanD++;
-    }, Maze.stepSpeed * 5));
-  } else {
+  // if (first) {
+  //   Maze.pegmanD = Maze.startDirection + 1;
+  //   Maze.scheduleFinish(false);
+  //   Maze.pidList.push(setTimeout(function() {
+  //     Maze.stepSpeed = 100;
+  //     Maze.scheduleWalk([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
+  //                   [Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4 - 4]);
+  //     Maze.pegmanD++;
+  //   }, Maze.stepSpeed * 5));
+  // } else {
     Maze.pegmanD = Maze.startDirection;
-    Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4);
-  }
+    Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 2);
+  // }
 
   // Move the finish icon into position.
   var finishIcon = document.getElementById('finish');
@@ -1212,43 +1212,43 @@ Maze.animate = function() {
 
   switch (action[0]) {
     case 'north':
-      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
+      Maze.scheduleWalk([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
                     [Maze.pegmanX, Maze.pegmanY - 1, Maze.pegmanD * 4]);
       Maze.pegmanY--;
       break;
     case 'east':
-      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
+      Maze.scheduleWalk([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
                     [Maze.pegmanX + 1, Maze.pegmanY, Maze.pegmanD * 4]);
       Maze.pegmanX++;
       break;
     case 'south':
-      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
+      Maze.scheduleWalk([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
                     [Maze.pegmanX, Maze.pegmanY + 1, Maze.pegmanD * 4]);
       Maze.pegmanY++;
       break;
     case 'west':
-      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
+      Maze.scheduleWalk([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
                     [Maze.pegmanX - 1, Maze.pegmanY, Maze.pegmanD * 4]);
       Maze.pegmanX--;
       break;
       // debora -----------------------------------------
     case 'jump_north':
-      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
+      Maze.scheduleJump([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
                     [Maze.pegmanX, Maze.pegmanY - 2, Maze.pegmanD * 4]);
       Maze.pegmanY = Maze.pegmanY-2;
       break;
     case 'jump_east':
-      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
+      Maze.scheduleJump([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
                     [Maze.pegmanX + 2, Maze.pegmanY, Maze.pegmanD * 4]);
       Maze.pegmanX = Maze.pegmanX+2;
       break;
     case 'jump_south':
-      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
+      Maze.scheduleJump([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
                     [Maze.pegmanX, Maze.pegmanY + 2, Maze.pegmanD * 4]);
       Maze.pegmanY = Maze.pegmanY+2;
       break;
     case 'jump_west':
-      Maze.schedule([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
+      Maze.scheduleJump([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
                     [Maze.pegmanX - 2, Maze.pegmanY, Maze.pegmanD * 4]);
       Maze.pegmanX = Maze.pegmanX-2;
       break;
@@ -1328,40 +1328,16 @@ Maze.updatePegSpin_ = function(e) {
  * @param {!Array.<number>} startPos X, Y and direction starting points.
  * @param {!Array.<number>} endPos X, Y and direction ending points.
  */
-// Maze.schedule = function(startPos, endPos) {
-//   var deltas = [(endPos[0] - startPos[0]) / 4,
-//                 (endPos[1] - startPos[1]) / 4,
-//                 (endPos[2] - startPos[2]) / 4];
-
-//   Maze.displayPegman(startPos[0] + deltas[0],
-//                      startPos[1] + deltas[1],
-//                      Maze.constrainDirection16(startPos[2] + deltas[2]));
-
-//   Maze.pidList.push(setTimeout(function() {
-//       Maze.displayPegman(startPos[0] + deltas[0] * 2,
-//           startPos[1] + deltas[1] * 2,
-//           Maze.constrainDirection16(startPos[2] + deltas[2] * 2));
-//     }, Maze.stepSpeed));
-
-//   Maze.pidList.push(setTimeout(function() {
-//       Maze.displayPegman(startPos[0] + deltas[0] * 3,
-//           startPos[1] + deltas[1] * 3,
-//           Maze.constrainDirection16(startPos[2] + deltas[2] * 3));
-//     }, Maze.stepSpeed * 2));
-
-//   Maze.pidList.push(setTimeout(function() {
-//       Maze.displayPegman(endPos[0], endPos[1],
-//           Maze.constrainDirection16(endPos[2]));
-//     }, Maze.stepSpeed * 3));
-// };
-
-
-Maze.schedule = function(startPos, endPos) {
+Maze.scheduleWalk = function(startPos, endPos) {
   var deltas = [(endPos[0] - startPos[0]) / 4,
                 (endPos[1] - startPos[1]) / 4,
                 (endPos[2] - startPos[2]) / 4];
-  //debora
-  var sprite = Maze.pegmanD + (Maze.pegmanD + 1) + 20
+  //Choose sprite to show
+  var sprite = Maze.pegmanD + (Maze.pegmanD + 1) + 12
+  var directionSprite = Maze.pegmanD * 2;
+  //alert ("Sprite = "+sprite+"\nSprite+1 = "+(sprite+1)+"\nUltimo = "+(Maze.constrainDirection16(endPos[2])))
+
+  Maze.stepSpeed = 200; 
 
   Maze.displayPegman(startPos[0] + deltas[0],
                      startPos[1] + deltas[1],
@@ -1380,11 +1356,40 @@ Maze.schedule = function(startPos, endPos) {
     }, Maze.stepSpeed * 2));
   
   Maze.pidList.push(setTimeout(function() {
-      Maze.displayPegman(endPos[0], endPos[1],
-          Maze.constrainDirection16(endPos[2]));
+      Maze.displayPegman(endPos[0], endPos[1], directionSprite);
     }, Maze.stepSpeed * 3));
 };
 
+Maze.scheduleJump = function(startPos, endPos) {
+  var deltas = [(endPos[0] - startPos[0]) / 4,
+                (endPos[1] - startPos[1]) / 4,
+                (endPos[2] - startPos[2]) / 4];
+  //Choose sprite to show
+  var sprite = (Maze.pegmanD * 3) + 21
+
+  Maze.stepSpeed = 200; 
+
+  Maze.displayPegman(startPos[0] + deltas[0],
+                     startPos[1] + deltas[1],
+                     sprite);
+
+  Maze.pidList.push(setTimeout(function() {
+      Maze.displayPegman(startPos[0] + deltas[0] * 2,
+          startPos[1] + deltas[1] * 2,
+          sprite+1);
+    }, Maze.stepSpeed));
+
+  Maze.pidList.push(setTimeout(function() {
+      Maze.displayPegman(startPos[0] + deltas[0] * 3,
+          startPos[1] + deltas[1] * 3,
+          sprite+1);
+    }, Maze.stepSpeed * 2));
+  
+  Maze.pidList.push(setTimeout(function() {
+      Maze.displayPegman(endPos[0], endPos[1],
+          sprite+2);
+    }, Maze.stepSpeed * 3));
+};
 
 /**
  * Display animation for Turn pegman left or right.
@@ -1395,13 +1400,13 @@ Maze.scheduleTurn = function(dir) {
 
   if (dir) {
     // Right turn (clockwise).
-    sprite = (Maze.pegmanD * 4) + 1 +1
+    sprite = (Maze.pegmanD * 2) + 1 
   } else {
     // Left turn (counterclockwise).
     if (Maze.pegmanD == Maze.DirectionType.EAST || Maze.pegmanD == Maze.DirectionType.WEST){
-      sprite = (Maze.pegmanD * 4) - 1 -1
+      sprite = (Maze.pegmanD * 2) - 1 
     } else {
-      sprite = 16 - (Maze.pegmanD * 4) - 1 -1
+      sprite = 8 - (Maze.pegmanD * 2) - 1 
     }
   }
 
@@ -1410,7 +1415,7 @@ Maze.scheduleTurn = function(dir) {
   }, Maze.stepSpeed));
 
   Maze.pidList.push(setTimeout(function() {
-    Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4);
+    Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 2);
   }, Maze.stepSpeed * 2));
 
 };
@@ -1440,61 +1445,33 @@ Maze.scheduleFail = function(forward) {
     deltaX = -deltaX;
     deltaY = -deltaY;
   }
-  if (Maze.SKIN.crashType == Maze.CRASH_STOP) {
     // Bounce bounce.
+    var sprite = Maze.pegmanD + 33
+
+    //Maze.stepSpeed = 300; 
+
     deltaX /= 4;
     deltaY /= 4;
-    var direction16 = Maze.constrainDirection16(Maze.pegmanD * 4);
+    var directionSprite = Maze.pegmanD * 2;
+
     Maze.displayPegman(Maze.pegmanX + deltaX,
                        Maze.pegmanY + deltaY,
-                       direction16);
+                       directionSprite);
     BlocklyGames.workspace.getAudioManager().play('fail', 0.5);
     Maze.pidList.push(setTimeout(function() {
       Maze.displayPegman(Maze.pegmanX,
                          Maze.pegmanY,
-                         direction16);
+                         directionSprite);
       }, Maze.stepSpeed));
     Maze.pidList.push(setTimeout(function() {
       Maze.displayPegman(Maze.pegmanX + deltaX,
                          Maze.pegmanY + deltaY,
-                         direction16);
+                         sprite);
       BlocklyGames.workspace.getAudioManager().play('fail', 0.5);
     }, Maze.stepSpeed * 2));
     Maze.pidList.push(setTimeout(function() {
-        Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, direction16);
-      }, Maze.stepSpeed * 3));
-  } else {
-    // Add a small random delta away from the grid.
-    var deltaZ = (Math.random() - 0.5) * 10;
-    var deltaD = (Math.random() - 0.5) / 2;
-    deltaX += (Math.random() - 0.5) / 4;
-    deltaY += (Math.random() - 0.5) / 4;
-    deltaX /= 8;
-    deltaY /= 8;
-    var acceleration = 0;
-    if (Maze.SKIN.crashType == Maze.CRASH_FALL) {
-      acceleration = 0.01;
-    }
-    Maze.pidList.push(setTimeout(function() {
-      BlocklyGames.workspace.getAudioManager().play('fail', 0.5);
-    }, Maze.stepSpeed * 2));
-    var setPosition = function(n) {
-      return function() {
-        var direction16 = Maze.constrainDirection16(Maze.pegmanD * 4 +
-                                                    deltaD * n);
-        Maze.displayPegman(Maze.pegmanX + deltaX * n,
-                           Maze.pegmanY + deltaY * n,
-                           direction16,
-                           deltaZ * n);
-        deltaY += acceleration;
-      };
-    };
-    // 100 frames should get Pegman offscreen.
-    for (var i = 1; i < 100; i++) {
-      Maze.pidList.push(setTimeout(setPosition(i),
-          Maze.stepSpeed * i / 2));
-    }
-  }
+        Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite);
+      }, Maze.stepSpeed * 3));  
 };
 
 /**
@@ -1516,30 +1493,6 @@ Maze.scheduleFinish = function(sound) {
     }, Maze.stepSpeed * 2));
   Maze.pidList.push(setTimeout(function() {
       Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, direction16);
-    }, Maze.stepSpeed * 3));
-};
-
-/**
- * Schedule the animations and sound for a victory dance.
- * @param {boolean} sound Play the victory sound.
- */
-Maze.scheduleWalk = function(sound) {
-  var direction16 = Maze.constrainDirection16(Maze.pegmanD * 4);
-
-  var sprite = Maze.pegmanD + (Maze.pegmanD + 1) + 20 //20+0+1 = 21, sprite location
-
-  Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite);
-
-  Maze.stepSpeed = 100;  // Slow down victory animation a bit.
-
-  Maze.pidList.push(setTimeout(function() {
-    Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite+1);
-    }, Maze.stepSpeed));
-  Maze.pidList.push(setTimeout(function() {
-    Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite);
-    }, Maze.stepSpeed * 2));
-  Maze.pidList.push(setTimeout(function() {
-      Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite+1);
     }, Maze.stepSpeed * 3));
 };
 
