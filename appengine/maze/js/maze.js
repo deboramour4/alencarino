@@ -241,6 +241,14 @@ Maze.ResultType = {
 Maze.result = Maze.ResultType.UNSET;
 
 /**
+ * Catched object counter.
+ * One for the actual match and one for the whole level.
+ * The totalLevelObjectsCatched doesn't change to 0 when reset button is pressed
+ */
+Maze.objectsCatched = 0;
+Maze.totalLevelObjectsCatched = 0;
+
+/**
  * Starting direction.
  */
 Maze.startDirection = Maze.DirectionType.NORTH;
@@ -948,6 +956,10 @@ Maze.reset = function(first) {
   Maze.pegmanX = Maze.start_.x;
   Maze.pegmanY = Maze.start_.y;
 
+  //Change number of objects catched in current code o zero
+  Maze.objectsCatched = 0
+  //alert("objectsCatched to 0")
+
   // if (first) {
   //   Maze.pegmanD = Maze.startDirection + 1;
   //   Maze.scheduleFinish(false);
@@ -1093,6 +1105,12 @@ Maze.initInterpreter = function(interpreter, scope) {
   };
   interpreter.setProperty(scope, 'jumpBackward',
       interpreter.createNativeFunction(wrapper));
+
+  wrapper = function(id) {
+    return Maze.catchObject(id);
+  };
+  interpreter.setProperty(scope, 'catchObject',
+      interpreter.createNativeFunction(wrapper));
 // debora -----------------------------------------------------------------
 
   wrapper = function(id) {
@@ -1170,6 +1188,8 @@ Maze.execute = function() {
     }
     Maze.result = Maze.notDone() ?
         Maze.ResultType.FAILURE : Maze.ResultType.SUCCESS;
+    //alert(Maze.result)
+
   } catch (e) {
     // A boolean is thrown for normal termination.
     // Abnormal termination is a user error.
@@ -1251,6 +1271,19 @@ Maze.animate = function() {
       Maze.scheduleJump([Maze.pegmanX, Maze.pegmanY, Maze.pegmanD * 4],
                     [Maze.pegmanX - 2, Maze.pegmanY, Maze.pegmanD * 4]);
       Maze.pegmanX = Maze.pegmanX-2;
+      break;
+
+    case 'catch_north':
+      Maze.scheduleCatch();
+      break;
+    case 'catch_east':
+      Maze.scheduleCatch();
+      break;
+    case 'catch_south':
+      Maze.scheduleCatch();
+      break;
+    case 'catch_west':
+      Maze.scheduleCatch();
       break;
       //debora ------------------------------------------
 
@@ -1564,6 +1597,17 @@ Maze.scheduleLook = function(d) {
 };
 
 /**
+ * Display the animation of catch object at Pegman's current location,
+ * in the specified direction.
+ * @param {!Maze.DirectionType} d Direction (0 - 3).
+ */
+Maze.scheduleCatch = function() {
+  //Choose sprite to show
+  var sprite = Maze.pegmanD  + 37
+
+  Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite);
+};
+/**
  * Schedule one of the 'look' icon's waves to appear, then disappear.
  * @param {!Element} path Element to make appear.
  * @param {number} delay Milliseconds to wait before making wave appear.
@@ -1741,11 +1785,65 @@ Maze.isPath = function(direction, id, isJump) {
 };
 
 /**
+ * Check if there's something to catch at that square
+ * If it has something, catch it
+ * @return {boolean} True if something was catched, false if not.
+ */
+Maze.catchObject = function(id) {
+  var actualSquare = Maze.map[Maze.pegmanY][Maze.pegmanX];
+  var command;
+
+  switch (Maze.pegmanD) {
+    case Maze.DirectionType.NORTH:
+      command = 'catch_north';
+      break;
+    case Maze.DirectionType.EAST:
+      command = 'catch_east';
+      break;
+    case Maze.DirectionType.SOUTH:
+      command = 'catch_south';
+      break;
+    case Maze.DirectionType.WEST:
+      command = 'catch_west';
+      break;
+  }
+
+  if (id) {
+    Maze.log.push([command, id]);
+    //alert("here 0")
+  }
+
+  //if (BlocklyGames.LEVEL == 1) {
+    if (actualSquare == Maze.SquareType.FINISH) {
+      Maze.objectsCatched++
+      Maze.totalLevelObjectsCatched++
+      return true
+   // } else {
+  //    return false
+   // }
+  }
+
+};
+
+
+/**
  * Is the player at the finish marker?
  * @return {boolean} True if not done, false if done.
  */
 Maze.notDone = function() {
-  return Maze.pegmanX != Maze.finish_.x || Maze.pegmanY != Maze.finish_.y;
+  var catchedAllObjects = false
+
+  if (BlocklyGames.LEVEL <= 3) {
+    catchedAllObjects = Maze.objectsCatched == 1 ? true : false;
+  } else {
+    catchedAllObjects = Maze.objectsCatched == 2 ? true : false;
+  }
+
+  var correctX = Maze.pegmanX == Maze.finish_.x ? true : false;
+  var correctY = Maze.pegmanY == Maze.finish_.y ? true : false;
+
+  alert("correctX "+correctX+"\ncorrectY "+correctY+"\ncatchedAllObjects "+catchedAllObjects)
+  return !correctX || !correctY || !catchedAllObjects;
 };
 
 window.addEventListener('load', Maze.init);

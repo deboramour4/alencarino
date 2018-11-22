@@ -91,7 +91,7 @@ Blockly.Blocks['maze_catchObject'] = {
   }
 };
 Blockly.JavaScript['maze_catchObject'] = function(block) {
-  return 'catchObject();\n';
+  return 'catchObject(\'block_id_' + block.id + '\');\n';
 };
 
 
