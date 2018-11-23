@@ -94,8 +94,7 @@
 
   <div id="helpButtonDiv">
      <button id="helpButton" class="primary" title="usa isso pra ajuda">
-      <img src="common/1x1.gif" class="help icon21">
-      Ajuda
+      <img src="common/1x1.gif" class="help icon21"> Ajuda
       </button>
   </div>
 
@@ -139,8 +138,8 @@
 
   <div id="dialogMap" class="dialogHiddenContent" style="height: 100%">
     <center>
-      <table style="width:60%;" >
-        <tr>
+      <table style="width:100%;" >
+        /*<tr>
           <td colspan="4"><center>
             <a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=0"><button class="third">Início</button></a>
             </center>
@@ -151,6 +150,13 @@
           <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=2"><button class="primary">Fase 2</button></a></td>
           <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=3"><button class="primary">Fase 3</button></a></td>
           <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=4"><button class="primary">Fase 4</button></a></td>
+        </tr>*/
+        <tr>
+          <td colspan="4">
+            <center>
+              <img src="maze/img/map_buttons.png" class="mapModalImage">
+            </center>
+          </td>
         </tr>
       </table>
     </center>
@@ -162,18 +168,21 @@
 
   <div id="dialogHelp" class="dialogHiddenContent" style="height: 100%">
     <center>
-      <table style="width:60%;" >
+      <table style="width:100%;" >
         <tr>
-          <td colspan="4"><center>
-            <a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=0"><button class="third">Início</button></a>
+          <td colspan="4">
+            <center>
+            {if $ij.level == 1}
+              <img src="maze/img/level_help_1.png" class="helpModalImage">
+            {elseif $ij.level == 2}              
+              <img src="maze/img/level_help_2.png" class="helpModalImage">
+            {elseif $ij.level == 3}
+              <img src="maze/img/level_help_3.png" class="helpModalImage">
+            {elseif $ij.level == 4}
+              <img src="maze/img/level_help_4.png" class="helpModalImage">
+            {/if}
             </center>
           </td>
-        </tr>
-        <tr>
-          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=1"><button class="primary">Fase 1</button></a></td>
-          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=2"><button class="primary">Fase 2</button></a></td>
-          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=3"><button class="primary">Fase 3</button></a></td>
-          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=4"><button class="primary">Fase 4</button></a></td>
         </tr>
       </table>
     </center>

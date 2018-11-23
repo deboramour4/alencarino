@@ -33,12 +33,12 @@ goog.require('BlocklyGames');
 /**
  * Common HSV hue for all movement blocks.
  */
-Maze.Blocks.MOVEMENT_HUE = 197;
+Maze.Blocks.MOVEMENT_HUE = 208;
 
 /**
  * HSV hue for loop block.
  */
-Maze.Blocks.LOOPS_HUE = 300;
+Maze.Blocks.LOOPS_HUE = 340;
 
 /**
  * Common HSV hue for all logic blocks.
@@ -64,7 +64,7 @@ Blockly.Blocks['maze_moveForward'] = {
    */
   init: function() {
     this.jsonInit({
-      "message0": BlocklyGames.getMsg('Maze_moveForward'),
+      "message0": "dê um passo",
       "previousStatement": null,
       "nextStatement": null,
       "colour": Maze.Blocks.MOVEMENT_HUE,
@@ -82,7 +82,7 @@ Blockly.JavaScript['maze_moveForward'] = function(block) {
 Blockly.Blocks['maze_catchObject'] = {
   init: function() {
     this.jsonInit({
-      "message0": "pegue objeto",
+      "message0": "pegue o objeto",
       "previousStatement": null,
       "nextStatement": null,
       "colour": Maze.Blocks.LOOPS_HUE,
@@ -206,8 +206,8 @@ Blockly.Blocks['maze_turn'] = {
    */
   init: function() {
     var DIRECTIONS =
-        [[BlocklyGames.getMsg('Maze_turnLeft'), 'turnLeft'],
-         [BlocklyGames.getMsg('Maze_turnRight'), 'turnRight']];
+        [['gire para esquerda', 'turnLeft'],
+         ['gire para direita', 'turnRight']];
     // Append arrows to direction messages.
     DIRECTIONS[0][0] += Maze.Blocks.LEFT_TURN;
     DIRECTIONS[1][0] += Maze.Blocks.RIGHT_TURN;

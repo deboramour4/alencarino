@@ -1,6 +1,6 @@
 body {
   background-color: #fff;
-  font-family: sans-serif;
+  font-family: 'Quicksand', sans-serif;
   margin-top: 0;
 }
 h1 {
@@ -63,12 +63,14 @@ html[dir="RTL"] .mirrorImg {
 /* Buttons */
 button {
   margin: 5px;
-  padding: 10px;
-  border-radius: 4px;
+  padding: 15px;
+  border-radius: 15px;
   border: 1px solid #ddd;
   font-size: large;
   background-color: #eee;
   color: #000;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
 }
 button.primary {
   border: 1px solid #e96b00;
@@ -98,9 +100,11 @@ button:hover:not(:disabled)>img {
 }
 button:active:not(:disabled) {
   border: 1px solid #888 !important;
+  cursor: pointer;
 }
 button:hover:not(:disabled) {
-  box-shadow: 2px 2px 5px #888;
+  box-shadow: 2px 2px 5px #444;
+  cursor: pointer;
 }
 
 /* Dialogs */
