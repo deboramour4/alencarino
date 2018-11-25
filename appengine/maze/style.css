@@ -76,34 +76,11 @@ img[src$="help_down.png"] {
 }
 
 /* Buttons */
-button.primary {
-  /* Can't use "text-align: start" due to IE. */
-  text-align: left;
-}
 html[dir="RTL"] button.primary {
   text-align: right;
 }
 
 /* Sprited icons. */
-.icon21 {
-  height: 21px;
-  width: 21px;
-  margin-right: 10px;
-  background-image: url(img/icons.png);
-}
-.map {
-  background-position: 0px 0px;
-}
-.run {
-  background-position: 0px -21px;
-}
-.stop {
-  background-position: -21px -21px;
-}
-.help {
-  background-position: -21px 0px;
-}
-
 #pegmanButton {
   padding: 0;
   position: relative;
@@ -218,6 +195,10 @@ body {
   bottom: 3.5%;
   position: fixed;
   left: 32%;
+}
+
+#resetButton {
+  display: none;
 }
 
 

@@ -63,48 +63,55 @@ html[dir="RTL"] .mirrorImg {
 /* Buttons */
 button {
   margin: 5px;
-  padding: 15px;
-  border-radius: 15px;
-  border: 1px solid #ddd;
-  font-size: large;
-  background-color: #eee;
-  color: #000;
-  font-family: 'Quicksand', sans-serif;
-  font-weight: 700;
-}
-button.primary {
-  border: 1px solid #e96b00;
-  background-color: #e96b00;
+  border: 0px solid #ddd;
+  width: 6em;
+  height: 4em;
+  background: url(1x1.gif) no-repeat center center;
+  font-family: 'QuickSand', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
   color: #fff;
-}
-button.secondary {
-  border: 1px solid #ffe200;
-  background-color: #ffe200;
-  color: #000;
-}
-button.third {
-  border: 1px solid #56acbe;
-  background-color: #56acbe;
-  color: #fff;
-}
-button.primary>img,
-button.secondary>img {
-  opacity: 1;
-}
-button>img {
-  opacity: 0.6;
-  vertical-align: text-bottom;
-}
-button:hover:not(:disabled)>img {
-  opacity: 1;
+  text-align: center;
+  outline: 0;
 }
 button:active:not(:disabled) {
-  border: 1px solid #888 !important;
+  border: 0px solid #fff !important;
   cursor: pointer;
 }
 button:hover:not(:disabled) {
-  box-shadow: 2px 2px 5px #444;
+  box-shadow: 0px 0px 0px #fff;
   cursor: pointer;
+}
+
+button.primary {
+  background-image: url(../maze/img/button_bg_primary.png);
+}
+button.secondary {
+  background-image: url(../maze/img/button_bg_secondary.png);
+}
+button.third {
+  background-image: url(../maze/img/button_bg_third.png);
+}
+
+button.primary:hover{
+  background-image: url(../maze/img/button_bg_primary_hover.png);
+}
+button.secondary:hover{
+  background-image: url(../maze/img/button_bg_secondary_hover.png);
+}
+button.third:hover{
+  background-image: url(../maze/img/button_bg_third_hover.png);
+}
+
+
+button.primary:active{
+  background-image: url(../maze/img/button_bg_primary_active.png);
+}
+button.secondary:active{
+  background-image: url(../maze/img/button_bg_secondary_active.png);
+}
+button.third:active{
+  background-image: url(../maze/img/button_bg_third_active.png);
 }
 
 /* Dialogs */
@@ -174,3 +181,5 @@ button:hover:not(:disabled) {
   margin-left: 1em;
   margin-right: 1em;
 }
+
+

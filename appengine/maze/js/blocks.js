@@ -68,7 +68,7 @@ Blockly.Blocks['maze_moveForward'] = {
       "previousStatement": null,
       "nextStatement": null,
       "colour": Maze.Blocks.MOVEMENT_HUE,
-      "tooltip": BlocklyGames.getMsg('Maze_moveForwardTooltip')
+      "tooltip": "Faz o robô andar para frente uma vez."
     });
   }
 };
@@ -117,7 +117,7 @@ Blockly.Blocks['maze_ifCustom'] = {
     this.appendDummyInput()
         .appendField('se é o certo');
     this.appendStatementInput('DO')
-        .appendField(BlocklyGames.getMsg('Maze_doCode'));
+        .appendField("faça");
     this.setPreviousStatement(true);
     this.setTooltip('Checa se o objeto pegado é o certo.');
   }
@@ -206,8 +206,8 @@ Blockly.Blocks['maze_turn'] = {
    */
   init: function() {
     var DIRECTIONS =
-        [['gire para esquerda', 'turnLeft'],
-         ['gire para direita', 'turnRight']];
+        [['gire para  esquerda', 'turnLeft'],
+         ['gire para  direita', 'turnRight']];
     // Append arrows to direction messages.
     DIRECTIONS[0][0] += Maze.Blocks.LEFT_TURN;
     DIRECTIONS[1][0] += Maze.Blocks.RIGHT_TURN;
@@ -216,7 +216,7 @@ Blockly.Blocks['maze_turn'] = {
         .appendField(new Blockly.FieldDropdown(DIRECTIONS), 'DIR');
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setTooltip(BlocklyGames.getMsg('Maze_turnTooltip'));
+    this.setTooltip("Gira o robô para a esquerda ou direita.");
   }
 };
 
@@ -233,9 +233,9 @@ Blockly.Blocks['maze_if'] = {
    */
   init: function() {
     var DIRECTIONS =
-        [[BlocklyGames.getMsg('Maze_pathAhead'), 'isPathForward'],
-         [BlocklyGames.getMsg('Maze_pathLeft'), 'isPathLeft'],
-         [BlocklyGames.getMsg('Maze_pathRight'), 'isPathRight']];
+        [["se tem caminho na frente", 'isPathForward'],
+         ["se tem caminho na esquerda", 'isPathLeft'],
+         ["se tem caminho na direita", 'isPathRight']];
     // Append arrows to direction messages.
     DIRECTIONS[1][0] += Maze.Blocks.LEFT_TURN;
     DIRECTIONS[2][0] += Maze.Blocks.RIGHT_TURN;
@@ -243,8 +243,8 @@ Blockly.Blocks['maze_if'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldDropdown(DIRECTIONS), 'DIR');
     this.appendStatementInput('DO')
-        .appendField(BlocklyGames.getMsg('Maze_doCode'));
-    this.setTooltip(BlocklyGames.getMsg('Maze_ifTooltip'));
+        .appendField("faça");
+    this.setTooltip("Se tiver uma estrada nesta direção, então o robô faz estas ações.");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
   }
@@ -266,9 +266,9 @@ Blockly.Blocks['maze_ifElse'] = {
    */
   init: function() {
     var DIRECTIONS =
-        [[BlocklyGames.getMsg('Maze_pathAhead'), 'isPathForward'],
-         [BlocklyGames.getMsg('Maze_pathLeft'), 'isPathLeft'],
-         [BlocklyGames.getMsg('Maze_pathRight'), 'isPathRight']];
+        [["se tem caminho na frente", 'isPathForward'],
+         ["se tem caminho na esquerda", 'isPathLeft'],
+         ["se tem caminho na direita", 'isPathRight']];
     // Append arrows to direction messages.
     DIRECTIONS[1][0] += Maze.Blocks.LEFT_TURN;
     DIRECTIONS[2][0] += Maze.Blocks.RIGHT_TURN;
@@ -276,10 +276,10 @@ Blockly.Blocks['maze_ifElse'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldDropdown(DIRECTIONS), 'DIR');
     this.appendStatementInput('DO')
-        .appendField(BlocklyGames.getMsg('Maze_doCode'));
+        .appendField("faça");
     this.appendStatementInput('ELSE')
-        .appendField(BlocklyGames.getMsg('Maze_elseCode'));
-    this.setTooltip(BlocklyGames.getMsg('Maze_ifelseTooltip'));
+        .appendField("senão");
+    this.setTooltip("Os blocos se-senão vão fazer uma coisa ou outra.");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
   }
@@ -304,12 +304,12 @@ Blockly.Blocks['maze_forever'] = {
   init: function() {
     this.setColour(Maze.Blocks.LOOPS_HUE);
     this.appendDummyInput()
-        .appendField(BlocklyGames.getMsg('Maze_repeatUntil'))
+        .appendField("repita até")
         .appendField(new Blockly.FieldImage(Maze.SKIN.marker, 12, 16));
     this.appendStatementInput('DO')
-        .appendField(BlocklyGames.getMsg('Maze_doCode'));
+        .appendField("faça");
     this.setPreviousStatement(true);
-    this.setTooltip(BlocklyGames.getMsg('Maze_whileTooltip'));
+    this.setTooltip("O robô vai repetir as ações dentro do bloco até que encontre o ponto final do mapa.");
   }
 };
 

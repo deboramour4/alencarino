@@ -66,6 +66,22 @@ Maze.SKINS = [
   // crashSound: List of sounds (in various formats) for player crashes.
   // crashType: Behaviour when player crashes (stop, spin, or fall).
   {
+    sprite: 'maze/img/robot.png',
+    tiles: 'maze/img/tiles.png',
+    marker: 'maze/img/tire.png',
+    obstacle: 'maze/img/obstacle.png',
+    background: 'maze/img/background@1x.png',
+    objects: ['maze/img/spring.png', 'maze/img/compass.png', 'maze/img/speaker.png', 'maze/img/tire.png'],
+    graph: false,
+    look: '#000',
+    winSound: ['maze/sounds/win.mp3', 'maze/sounds/win.ogg'],
+    crashSound: ['maze/sounds/fail_pegman.mp3', 'maze/sounds/fail_pegman.ogg'],
+    crashType: Maze.CRASH_STOP
+  }
+];
+
+Maze.HUB = [
+  {
     sprite: 'maze/img/pegman_robot.png',
     tiles: 'maze/img/tiles_pegman@1x.png',
     marker: 'maze/img/tire.png',
@@ -202,7 +218,11 @@ Maze.map = [
 Maze.ROWS = Maze.map.length;
 Maze.COLS = Maze.map[0].length;
 
-Maze.SQUARE_SIZE = (screen.width/2)/7 - 5;
+if (BlocklyGames.LEVEL == 0){
+  Maze.SQUARE_SIZE = (screen.width/2)/7;
+} else {
+  Maze.SQUARE_SIZE = (screen.width/2)/7;
+}
 Maze.PEGMAN_HEIGHT = (screen.width/2)/7 + 5;
 Maze.PEGMAN_WIDTH = (screen.width/2)/7 - 5;
 
@@ -298,16 +318,16 @@ Maze.drawMap = function() {
   if (BlocklyGames.LEVEL == 0) {
     // Liveview Dimentions
     var svg = document.getElementById('svgMaze');
-    svg.setAttribute('width', screen.width*0.75);
-    svg.setAttribute('height', screen.height - topBarHeight);
-    svg.style.left = (screen.width*0.25) + 'px';
+    svg.setAttribute('width', window.innerWidth*0.75);
+    svg.setAttribute('height', window.innerHeight - topBarHeight);
+    svg.style.left = (window.innerWidth*0.25) + 'px';
     svg.style.position = 'fixed';
 
     // Draw the square of liveview 
     var square = document.createElementNS(Blockly.SVG_NS, 'rect');
-    square.setAttribute('width', screen.width*0.75);
-    square.setAttribute('height', screen.height - topBarHeight);
-    square.style.left = (screen.width*0.25) + 'px';
+    square.setAttribute('width', window.innerWidth*0.75);
+    square.setAttribute('height', window.innerHeight - topBarHeight);
+    square.style.left = (window.innerWidth*0.25) + 'px';
     square.style.position = 'fixed';
     square.setAttribute('fill', '#56acbe');
     square.setAttribute('stroke-width', 1);
@@ -323,17 +343,17 @@ Maze.drawMap = function() {
 
     //Liveview Dimentions
     var svg = document.getElementById('svgMaze');
-    svg.setAttribute('width', screen.width/2);
-    svg.setAttribute('height', screen.height - topBarHeight);
-    svg.style.left = (screen.width/2) + 'px';
+    svg.setAttribute('width', window.innerWidth/2);
+    svg.setAttribute('height', window.innerHeight - topBarHeight);
+    svg.style.left = (window.innerWidth/2) + 'px';
     svg.style.position = 'fixed';
     var scale = Math.max(Maze.ROWS, Maze.COLS) * Maze.SQUARE_SIZE;
     
     // Draw the square of liveview 
     var square = document.createElementNS(Blockly.SVG_NS, 'rect');
-    square.setAttribute('width', screen.width/2);
-    square.setAttribute('height', screen.height - topBarHeight);
-    square.style.left = (screen.width/2) + 'px';
+    square.setAttribute('width', window.innerWidth/2);
+    square.setAttribute('height', window.innerHeight - topBarHeight);
+    square.style.left = (window.innerWidth/2) + 'px';
     square.style.position = 'fixed';
     square.setAttribute('fill', '#79B962');
     square.setAttribute('stroke-width', 1);
@@ -344,11 +364,11 @@ Maze.drawMap = function() {
       var tile = document.createElementNS(Blockly.SVG_NS, 'image');
       tile.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
           Maze.SKIN.background);
-      // tile.setAttribute('width', screen.width/2 + 100);
-      // tile.setAttribute('height', screen.height - topBarHeight);
+      // tile.setAttribute('width', window.innerWidth/2 + 100);
+      // tile.setAttribute('height', window.innerHeight - topBarHeight);
       tile.setAttribute('width', 673); 
       tile.setAttribute('height', 647);
-      tile.style.left = (screen.width/2)  + 'px';
+      tile.style.left = (window.innerWidth/2)  + 'px';
       tile.style.position = 'fixed';
 
       tile.setAttribute('x', - 12);
@@ -544,12 +564,12 @@ Maze.init = function() {
   var onresize = function(e) {
     if (BlocklyGames.LEVEL == 0) {
       blocklyDiv.style.top = 0 + 'px';
-      blocklyDiv.style.height = (screen.height) + 'px';
-      blocklyDiv.style.width = (screen.width*0.25) + 'px';
+      blocklyDiv.style.height = (window.innerHeight) + 'px';
+      blocklyDiv.style.width = (window.innerWidth*0.25) + 'px';
     } else {
       blocklyDiv.style.top =(topBarHeight) + 'px';
-      blocklyDiv.style.height = (screen.height - topBarHeight) + 'px';
-      blocklyDiv.style.width = (screen.width/2) + 'px'; 
+      blocklyDiv.style.height = (window.innerHeight - topBarHeight) + 'px';
+      blocklyDiv.style.width = (window.innerWidth/2) + 'px'; 
     }
   };
 
@@ -642,9 +662,11 @@ Maze.finish_ = []
   BlocklyGames.workspace.addChangeListener(function() {Maze.updateCapacity();});
   document.body.addEventListener('mousemove', Maze.updatePegSpin_, true);
   BlocklyGames.bindClick('runButton', Maze.runButtonClick);
-  BlocklyGames.bindClick('resetButton', Maze.resetButtonClick);
   BlocklyGames.bindClick('helpButton', Maze.showHelpDialog);
   BlocklyGames.bindClick('mapButton', Maze.showMapDialog);
+  if (BlocklyGames.LEVEL != 0) {
+    BlocklyGames.bindClick('resetButton', Maze.resetButtonClick);
+  }
 
 
   if (BlocklyGames.LEVEL == 10) {
@@ -1051,14 +1073,17 @@ Maze.runButtonClick = function(e) {
     Maze.levelHelp();
     return;
   }
+
   var runButton = document.getElementById('runButton');
-  var resetButton = document.getElementById('resetButton');
-  // Ensure that Reset button is at least as wide as Run button.
-  if (!resetButton.style.minWidth) {
-    resetButton.style.minWidth = runButton.offsetWidth + 'px';
+  if (BlocklyGames.LEVEL != 0) {
+    var resetButton = document.getElementById('resetButton');
+    // Ensure that Reset button is at least as wide as Run button.
+    if (!resetButton.style.minWidth) {
+      resetButton.style.minWidth = runButton.offsetWidth + 'px';
+    }
+    runButton.style.display = 'none';
+    resetButton.style.display = 'inline';
   }
-  runButton.style.display = 'none';
-  resetButton.style.display = 'inline';
   Maze.reset(false);
   Maze.execute();
 };
@@ -1484,6 +1509,8 @@ Maze.scheduleTurn = function(dir) {
     }
   }
 
+  Maze.stepSpeed = 150; 
+
   Maze.pidList.push(setTimeout(function() {
     Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite);
   }, Maze.stepSpeed));
@@ -1528,24 +1555,24 @@ Maze.scheduleFail = function(forward) {
     deltaY /= 4;
     var directionSprite = Maze.pegmanD * 2;
 
-    Maze.displayPegman(Maze.pegmanX + deltaX,
-                       Maze.pegmanY + deltaY,
+    Maze.displayPegman(Maze.pegmanX, //+ deltaX,
+                       Maze.pegmanY, //+ deltaY,
                        directionSprite);
-    BlocklyGames.workspace.getAudioManager().play('fail', 0.5);
-    Maze.pidList.push(setTimeout(function() {
-      Maze.displayPegman(Maze.pegmanX,
-                         Maze.pegmanY,
-                         directionSprite);
-      }, Maze.stepSpeed));
-    Maze.pidList.push(setTimeout(function() {
-      Maze.displayPegman(Maze.pegmanX + deltaX,
-                         Maze.pegmanY + deltaY,
-                         sprite);
+    //BlocklyGames.workspace.getAudioManager().play('fail', 0.5);
+    // Maze.pidList.push(setTimeout(function() {
+    //   Maze.displayPegman(Maze.pegmanX,
+    //                      Maze.pegmanY,
+    //                      directionSprite);
+    //   }, Maze.stepSpeed));
+    // Maze.pidList.push(setTimeout(function() {
+    //   Maze.displayPegman(Maze.pegmanX + deltaX,
+    //                      Maze.pegmanY + deltaY,
+    //                      sprite);
       BlocklyGames.workspace.getAudioManager().play('fail', 0.5);
-    }, Maze.stepSpeed * 2));
+    // }, Maze.stepSpeed));
     Maze.pidList.push(setTimeout(function() {
         Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite);
-      }, Maze.stepSpeed * 3));  
+      }, Maze.stepSpeed * 2));  
 };
 
 /**
@@ -1558,7 +1585,8 @@ Maze.scheduleFinish = function(sound) {
   if (sound) {
     BlocklyGames.workspace.getAudioManager().play('win', 0.5);
   }
-  Maze.stepSpeed = 150;  // Slow down victory animation a bit.
+  Maze.stepSpeed = 150;  
+
   Maze.pidList.push(setTimeout(function() {
     Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, 18);
     }, Maze.stepSpeed));
@@ -1698,10 +1726,11 @@ Maze.constrainDirection16 = function(d) {
  * @throws {false} If Pegman collides with a wall.
  */
 Maze.move = function(direction, id) {
+  var wrongMove = false
   if (!Maze.isPath(direction, null, false)) {
-    Maze.log.push(['fail_' + (direction ? 'backward' : 'forward'), id]);
-    throw false;
+    wrongMove = true
   }
+
   // If moving backward, flip the effective direction.
   var effectiveDirection = Maze.pegmanD + direction;
   var command;
@@ -1724,6 +1753,11 @@ Maze.move = function(direction, id) {
       break;
   }
   Maze.log.push([command, id]);
+
+  if (wrongMove){
+    Maze.log.push(['fail_' + (direction ? 'backward' : 'forward'), id]);
+    throw false;
+  }
 };
 
 /**
@@ -1734,9 +1768,9 @@ Maze.move = function(direction, id) {
  * @throws {false} If Pegman collides with a wall.
  */
 Maze.jump = function(direction, id) {
+  var wrongJump = false
   if (!Maze.isPath(direction, null, true)) {
-    Maze.log.push(['fail_' + (direction ? 'backward' : 'forward'), id]);
-    throw false;
+    wrongJump = true
   }
   // If moving backward, flip the effective direction.
   var effectiveDirection = Maze.pegmanD + direction;
@@ -1759,7 +1793,13 @@ Maze.jump = function(direction, id) {
       command = 'jump_west';
       break;
   }
+
   Maze.log.push([command, id]);
+
+  if (wrongJump){
+    Maze.log.push(['fail_' + (direction ? 'backward' : 'forward'), id]);
+    throw false;
+  }
 };
 
 /**
@@ -1794,23 +1834,27 @@ Maze.isPath = function(direction, id, isJump) {
   var effectiveDirection = Maze.pegmanD + direction;
   var square;
   var command;
+  var numberOfSquares = 1;
+  if (isJump) {
+    numberOfSquares = 2;
+  }
   switch (Maze.constrainDirection4(effectiveDirection)) {
     case Maze.DirectionType.NORTH:
-      square = Maze.map[Maze.pegmanY - 1] &&
-          Maze.map[Maze.pegmanY - 1][Maze.pegmanX];
+      square = Maze.map[Maze.pegmanY - numberOfSquares] &&
+          Maze.map[Maze.pegmanY - numberOfSquares][Maze.pegmanX];
       command = 'look_north';
       break;
     case Maze.DirectionType.EAST:
-      square = Maze.map[Maze.pegmanY][Maze.pegmanX + 1];
+      square = Maze.map[Maze.pegmanY][Maze.pegmanX + numberOfSquares];
       command = 'look_east';
       break;
     case Maze.DirectionType.SOUTH:
-      square = Maze.map[Maze.pegmanY + 1] &&
-          Maze.map[Maze.pegmanY + 1][Maze.pegmanX];
+      square = Maze.map[Maze.pegmanY + numberOfSquares] &&
+          Maze.map[Maze.pegmanY + numberOfSquares][Maze.pegmanX];
       command = 'look_south';
       break;
     case Maze.DirectionType.WEST:
-      square = Maze.map[Maze.pegmanY][Maze.pegmanX - 1];
+      square = Maze.map[Maze.pegmanY][Maze.pegmanX - numberOfSquares];
       command = 'look_west';
       break;
   }
@@ -1818,11 +1862,7 @@ Maze.isPath = function(direction, id, isJump) {
     Maze.log.push([command, id]);
   }
 
-  if (isJump) {
-    return square !== Maze.SquareType.WALL && square !== undefined;
-  } else {
-    return square !== Maze.SquareType.WALL && square !== undefined && square !== Maze.SquareType.OBSTACLE;
-  }
+  return square !== Maze.SquareType.WALL && square !== undefined && square !== Maze.SquareType.OBSTACLE;
 };
 
 /**
