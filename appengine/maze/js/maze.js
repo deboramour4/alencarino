@@ -1731,8 +1731,11 @@ Maze.scheduleCatch = function() {
     var object = document.getElementById("finish"+obj)
     object.style.visibility = "hidden";
   } else {
-    var object = document.getElementById("finish")
-    object.style.visibility = "hidden";
+    var obj = Maze.whichObject()
+    if (obj != -1){
+      var object = document.getElementById("finish")
+      object.style.visibility = "hidden";
+    } 
   }
 };
 
@@ -1751,6 +1754,7 @@ Maze.whichObject = function() {
       }
     }
   } 
+  return -1
 };
 
 /**
