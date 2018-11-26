@@ -189,6 +189,7 @@ html[dir="RTL"] #pegmanButton>span {
 
 body {
   margin: 0;
+  overflow: hidden;
 }
 
 #divRunButton {
@@ -210,10 +211,90 @@ body {
   height: 580px;
 }
 
-#dialog {
-  /*background-color: rgb(206,222,145)*/
+#dialogMap {
+  background: url(img/map_bg.png) no-repeat center;
+  background-size: cover;
+  height: 100%;
+}
+
+
+#dialogHelp {
+  height: 100%;
+}
+
+#divOK {
+  right: 0;
+  position: absolute;
+  bottom: 0;
 }
 
 #pegSpin {
   display: none;
+}
+
+#dialogMap ul{
+
+}
+
+#dialogMap ul li{
+  display: inline;
+  list-style: none;
+}
+
+#dialogMap button {
+  width: 80%
+}
+
+#mapButton1 {
+  top: 25%;
+  left: 15%;
+  position: absolute;
+}
+#mapButton2 {
+  bottom: 28%;
+  left: 25%;
+  position: absolute;
+}
+#mapButton3 {
+  top: 33%;
+  right: 40%;
+  position: absolute;
+}
+#mapButton4 {
+  top: 35%;
+  right: 11%;
+  position: absolute;
+}
+#mapButton5 {
+  bottom: 20%;
+  right: 20%;
+  position: absolute;
+}
+
+
+.locked {
+  position: absolute;
+  margin-left: -5em;
+}
+.not.locked {
+  display: none;
+}
+
+#dialogEnd {
+  display: none;
+  color: #000;
+    border: 1px solid #ccc;
+    position: absolute;
+    border-radius: 8px;
+    box-shadow: 5px 5px 5px #888;
+    background-color: white;
+
+    overflow: hidden;
+    height: 0px;
+    padding-top: 43%;
+    background: url(img/end.png) center top / contain no-repeat rgb(255, 255, 255);
+    margin: 5% 25%;
+    width: 50%;
+    visibility: visible;
+    z-index: 10;
 }

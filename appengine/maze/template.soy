@@ -99,9 +99,9 @@
     {if $ij.level == 0}
        <button id="runButton" class="primary" title="Muda a calçada de Alê do jeito que você programou.">Mudar</button>
     {else}              
-      <button id="runButton" class="primary" title="Faz com que o Ferrão faça o que você programou.">Executar</button>
+      <button id="runButton" class="primary" title="Faz com que o Ferrão faça o que você programou.">Tentar</button>
 
-      <button id="resetButton" class="primary" title="Coloca o jogador de volta no início do caminho.">Recomeçar</button>
+      <button id="resetButton" class="primary" title="Coloca o jogador de volta no início do caminho.">De novo</button>
     {/if}
   </div>
 
@@ -110,39 +110,39 @@
   {call BlocklyGames.soy.abortDialog /}
   {call BlocklyGames.soy.storageDialog /}
 
-  <div id="dialogMap" class="dialogHiddenContent" style="height: 100%">
-    <center>
-      <table style="width:100%;" >
-        <tr>
-          <td colspan="4"><center>
-            <a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=0"><button class="third">Início</button></a>
-            </center>
-          </td>
-        </tr>
-        <tr>
-          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=1"><button class="primary">Fase 1</button></a></td>
-          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=2"><button class="primary">Fase 2</button></a></td>
-          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=3"><button class="primary">Fase 3</button></a></td>
-          <td><a href="file:///home/deboramoura/Downloads/blockly-tests/appengine/maze.html?lang=en&level=4"><button class="primary">Fase 4</button></a></td>
-        </tr>
-        /*<tr>
-          <td colspan="4">
-            <center>
-              <img src="maze/img/map_buttons.png" class="mapModalImage">
-            </center>
-          </td>
-        </tr>*/
-      </table>
-    </center>
-    <div style="right: 0;position: absolute;bottom: 0;">
+  <div id="dialogMap" class="dialogHiddenContent">
+    <ul>
+      <li id="mapButton1" class="buttonMap">
+        <a href="?lang=en&level=0"><button class="third">Início</button></a>
+        <img src="maze/img/lock.png" class="locked">
+      </li>
+      <li id="mapButton2" class="buttonMap">
+        <a href="?lang=en&level=1"><button class="primary">Fase 1</button></a>
+        <img src="maze/img/lock.png" class="locked">
+      </li>
+      <li id="mapButton3" class="buttonMap">
+        <a href="?lang=en&level=2"><button class="primary">Fase 2</button></a>
+        <img src="maze/img/lock.png" class="locked">
+      </li>
+      <li id="mapButton4" class="buttonMap">
+        <a href="?lang=en&level=3"><button class="primary">Fase 3</button></a>
+        <img src="maze/img/lock.png" class="locked">
+      </li>
+      <li id="mapButton5" class="buttonMap">
+        <a href="?lang=en&level=4"><button class="primary">Fase 4</button></a>
+        <img src="maze/img/lock.png" class="locked">
+      </li>
+    </ul>
+
+    <div id="divOK">
       {call BlocklyGames.soy.ok /}
     </div>
   </div>
 
 
-  <div id="dialogHelp" class="dialogHiddenContent" style="height: 100%">
+  <div id="dialogHelp" class="dialogHiddenContent">
     <center>
-      <table style="width:100%;" >
+      <table >
         <tr>
           <td colspan="4">
             <center>
@@ -165,6 +165,12 @@
     </div>
   </div>
 
+  <div id="dialogEnd">
+    <img src="maze/img/end.png" class="helpModalImage">
+    <div style="right: 0;position: absolute;bottom: 0;">
+      {call BlocklyGames.soy.ok /}
+    </div>
+  </div>
 
 
   {if $ij.level == 1}

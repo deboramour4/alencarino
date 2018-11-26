@@ -318,16 +318,16 @@ Maze.drawMap = function() {
   if (BlocklyGames.LEVEL == 0) {
     // Liveview Dimentions
     var svg = document.getElementById('svgMaze');
-    svg.setAttribute('width', window.innerWidth*0.75);
-    svg.setAttribute('height', window.innerHeight - topBarHeight);
-    svg.style.left = (window.innerWidth*0.25) + 'px';
+    svg.setAttribute('width', screen.width*0.75);
+    svg.setAttribute('height', screen.height - topBarHeight);
+    svg.style.left = (screen.width*0.25) + 'px';
     svg.style.position = 'fixed';
 
     // Draw the square of liveview 
     var square = document.createElementNS(Blockly.SVG_NS, 'rect');
-    square.setAttribute('width', window.innerWidth*0.75);
-    square.setAttribute('height', window.innerHeight - topBarHeight);
-    square.style.left = (window.innerWidth*0.25) + 'px';
+    square.setAttribute('width', screen.width*0.75);
+    square.setAttribute('height', screen.height - topBarHeight);
+    square.style.left = (screen.width*0.25) + 'px';
     square.style.position = 'fixed';
     square.setAttribute('fill', '#56acbe');
     square.setAttribute('stroke-width', 1);
@@ -343,17 +343,17 @@ Maze.drawMap = function() {
 
     //Liveview Dimentions
     var svg = document.getElementById('svgMaze');
-    svg.setAttribute('width', window.innerWidth/2);
-    svg.setAttribute('height', window.innerHeight - topBarHeight);
-    svg.style.left = (window.innerWidth/2) + 'px';
+    svg.setAttribute('width', screen.width/2);
+    svg.setAttribute('height', screen.height - topBarHeight);
+    svg.style.left = (screen.width/2) + 'px';
     svg.style.position = 'fixed';
     var scale = Math.max(Maze.ROWS, Maze.COLS) * Maze.SQUARE_SIZE;
     
     // Draw the square of liveview 
     var square = document.createElementNS(Blockly.SVG_NS, 'rect');
-    square.setAttribute('width', window.innerWidth/2);
-    square.setAttribute('height', window.innerHeight - topBarHeight);
-    square.style.left = (window.innerWidth/2) + 'px';
+    square.setAttribute('width', screen.width/2);
+    square.setAttribute('height', screen.height - topBarHeight);
+    square.style.left = (screen.width/2) + 'px';
     square.style.position = 'fixed';
     square.setAttribute('fill', '#79B962');
     square.setAttribute('stroke-width', 1);
@@ -364,11 +364,11 @@ Maze.drawMap = function() {
       var tile = document.createElementNS(Blockly.SVG_NS, 'image');
       tile.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
           Maze.SKIN.background);
-      // tile.setAttribute('width', window.innerWidth/2 + 100);
-      // tile.setAttribute('height', window.innerHeight - topBarHeight);
+      // tile.setAttribute('width', screen.width/2 + 100);
+      // tile.setAttribute('height', screen.height - topBarHeight);
       tile.setAttribute('width', 673); 
       tile.setAttribute('height', 647);
-      tile.style.left = (window.innerWidth/2)  + 'px';
+      tile.style.left = (screen.width/2)  + 'px';
       tile.style.position = 'fixed';
 
       tile.setAttribute('x', - 12);
@@ -564,12 +564,12 @@ Maze.init = function() {
   var onresize = function(e) {
     if (BlocklyGames.LEVEL == 0) {
       blocklyDiv.style.top = 0 + 'px';
-      blocklyDiv.style.height = (window.innerHeight) + 'px';
-      blocklyDiv.style.width = (window.innerWidth*0.25) + 'px';
+      blocklyDiv.style.height = (screen.height) + 'px';
+      blocklyDiv.style.width = (screen.width*0.25) + 'px';
     } else {
       blocklyDiv.style.top =(topBarHeight) + 'px';
-      blocklyDiv.style.height = (window.innerHeight - topBarHeight) + 'px';
-      blocklyDiv.style.width = (window.innerWidth/2) + 'px'; 
+      blocklyDiv.style.height = (screen.height - topBarHeight) + 'px';
+      blocklyDiv.style.width = (screen.width/2) + 'px'; 
     }
   };
 
@@ -717,19 +717,43 @@ Maze.showMapDialog = function(e){
     return;
   }
   var content = document.getElementById('dialogMap');
-  var style = {
-    'width': '55%',
-    'left': '20%',
-    'top': '3em',
-    'height': '80%'
-  };
+  var style = {};
+  var cssText =
+    "overflow: hidden;"+
+    "height: 0;"+
+    "padding-top: 40%;"+
+    "background: url(maze/img/map_bg.png) center/contain no-repeat #d3d993;"+
+    "background-size: contain;"+
+    "margin: 5% 25%;"+
+    "width: 50%;";
   var dialog = document.getElementById('dialog')
-  dialog.style.backgroundColor = 'rgb(206,222,145)'
+  dialog.style.cssText = cssText
 
   BlocklyDialogs.showDialog(content, null, false, true, style, null);
+
+  Maze.disableButtonsMap()
+  Maze.activeButtonsMap()
   
 };
 
+Maze.activeButtonsMap = function(){
+  for(var i = 1; i <= BlocklyGames.LEVEL; i++) {
+    var img = document.getElementsByClassName("locked");
+    img.item(i).classList.add('not'); 
+
+    var anchor = img.item(i).previousSibling;
+    anchor.style.pointerEvents = "auto";
+    anchor.style.cursor = "pointer";
+  }
+}
+Maze.disableButtonsMap = function(){
+  var img = document.getElementsByClassName("locked");
+  for(var i = 0; i < img.length; i++) {
+     var anchor = img.item(i).previousSibling;
+     anchor.style.pointerEvents = "none";
+     anchor.style.cursor = "default"; 
+  } 
+}
 
 // Show help modal dialog.
 Maze.showHelpDialog = function(e){
@@ -738,19 +762,36 @@ Maze.showHelpDialog = function(e){
     return;
   }
   var content = document.getElementById('dialogHelp');
-  var style = {
-    'width': '50%',
-    'left': '25%',
-    'top': '7em',
-    'height': '70%'
-  };
+  var style = {};
 
-   var dialog = document.getElementById('dialog')
-  dialog.style.backgroundColor = 'white'
+  var cssText =
+    "overflow: hidden;"+
+    "height: 0;"+
+    "padding-top: 43%;"+
+    "background: url(maze/img/level_help_"+BlocklyGames.LEVEL+".png) top/contain no-repeat #fff;"+
+    "margin: 5% 25%;"+
+    "width: 50%;";
+  var dialog = document.getElementById('dialog')
+  dialog.style.cssText = cssText
 
   BlocklyDialogs.showDialog(content, null, false, true, style, null);
 };
 
+
+// Show end modal dialog.
+Maze.showEndDialog = function(){
+  var endDialog = document.getElementById('dialogEnd');
+  endDialog.style.display = "block"
+
+  var okButton = endDialog.getElementsByTagName('button')[0]
+  okButton.onclick = function() {hideEnd()};
+}
+
+function hideEnd() {
+  var endDialog = document.getElementById('dialogEnd');
+
+  endDialog.style.display = "none"
+}
 
 /**
  * When the workspace changes, update the help as needed.
@@ -1034,6 +1075,7 @@ Maze.reset = function(first) {
       finishIcon.getAttribute('width') / 2);
       finishIcon.setAttribute('y', Maze.SQUARE_SIZE * (Maze.finish_[i].y + 0.6) -
       finishIcon.getAttribute('height'));
+      finishIcon.style.visibility = "visible";
     }
   } else {
     // Move the finish icon into position.
@@ -1042,6 +1084,7 @@ Maze.reset = function(first) {
     finishIcon.getAttribute('width') / 2);
     finishIcon.setAttribute('y', Maze.SQUARE_SIZE * (Maze.finish_[0].y + 0.6) -
     finishIcon.getAttribute('height'));
+    finishIcon.style.visibility = "visible"
   }
 
   // Make 'look' icon invisible and promote to top.
@@ -1254,8 +1297,6 @@ Maze.execute = function() {
     }
     Maze.result = Maze.notDone() ?
         Maze.ResultType.FAILURE : Maze.ResultType.SUCCESS;
-    //alert(Maze.result)
-
   } catch (e) {
     // A boolean is thrown for normal termination.
     // Abnormal termination is a user error.
@@ -1382,7 +1423,16 @@ Maze.animate = function() {
     case 'finish':
       Maze.scheduleFinish(true);
       BlocklyInterface.saveToLocalStorage();
-      setTimeout(BlocklyDialogs.congratulations, 1000);
+
+      if (BlocklyGames.LEVEL >= 4) {
+        Maze.showEndDialog()
+      } else {
+        setTimeout(BlocklyDialogs.congratulations, 1000);
+      }
+
+      var cssText = "";
+      var dialog = document.getElementById('dialog')
+      dialog.style.cssText = cssText
   }
 
   Maze.pidList.push(setTimeout(Maze.animate, Maze.stepSpeed * 5));
@@ -1434,8 +1484,7 @@ Maze.scheduleWalk = function(startPos, endPos) {
   //Choose sprite to show
   var sprite = Maze.pegmanD + (Maze.pegmanD + 1) + 12
   var directionSprite = Maze.pegmanD * 2;
-  //alert ("Sprite = "+sprite+"\nSprite+1 = "+(sprite+1)+"\nUltimo = "+(Maze.constrainDirection16(endPos[2])))
-
+  
   Maze.stepSpeed = 150; 
 
   Maze.displayPegman(startPos[0] + deltas[0],
@@ -1675,7 +1724,35 @@ Maze.scheduleCatch = function() {
   var sprite = Maze.pegmanD  + 37
 
   Maze.displayPegman(Maze.pegmanX, Maze.pegmanY, sprite);
+
+  if (BlocklyGames.LEVEL == 4) {
+    var obj = Maze.whichObject()
+
+    var object = document.getElementById("finish"+obj)
+    object.style.visibility = "hidden";
+  } else {
+    var object = document.getElementById("finish")
+    object.style.visibility = "hidden";
+  }
 };
+
+/**
+ * Returns the number of the object that the robot is in
+ */
+Maze.whichObject = function() {
+  var count = 0;
+  for (var y = 0; y < Maze.ROWS; y++) {
+    for (var x = 0; x < Maze.COLS; x++) {
+      if (Maze.map[y][x] == Maze.SquareType.FINISH) {
+        if (Maze.pegmanY == y && Maze.pegmanX == x) {
+          return count
+        }
+        count++
+      }
+    }
+  } 
+};
+
 /**
  * Schedule one of the 'look' icon's waves to appear, then disappear.
  * @param {!Element} path Element to make appear.
@@ -1891,7 +1968,6 @@ Maze.catchObject = function(id) {
 
   if (id) {
     Maze.log.push([command, id]);
-    //alert("here 0")
   }
 
   //if (BlocklyGames.LEVEL == 1) {
