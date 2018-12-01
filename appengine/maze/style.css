@@ -1,4 +1,21 @@
-@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
+/*@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');*/
+
+@font-face {
+  font-family: Quicksand-Light;
+  src: url(fonts/Quicksand-Light.ttf);
+}
+@font-face {
+  font-family: Quicksand-Regular;
+  src: url(fonts/Quicksand-Regular.ttf);
+}
+@font-face {
+  font-family: Quicksand-Medium;
+  src: url(fonts/Quicksand-Medium.ttf);
+}
+@font-face {
+  font-family: Quicksand-Bold;
+  src: url(fonts/Quicksand-Bold.ttf);
+}
 
 #blockly {
   position: fixed;
@@ -137,8 +154,7 @@ html[dir="RTL"] #pegmanButton>span {
     cursor: default;
     fill: #fff;
     font-size: 10pt;
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 500;
+    font-family: Quicksand-Medium, sans-serif;
 }
 
 .blocklyHighlightedConnectionPath {
@@ -182,6 +198,13 @@ html[dir="RTL"] #pegmanButton>span {
   top: 15px;
 }
 
+#preferencesButtonDiv {
+  z-index: 9999;
+  right: 325px;
+  position: fixed;
+  top: 15px;
+}
+
 
 #topBar a {
   color: #ddd;
@@ -195,7 +218,7 @@ body {
 #divRunButton {
   bottom: 3.5%;
   position: fixed;
-  left: 32%;
+  left: 25%;
 }
 
 #resetButton {
@@ -292,7 +315,7 @@ body {
     overflow: hidden;
     height: 0px;
     padding-top: 43%;
-    background: url(img/end.png) center top / contain no-repeat rgb(255, 255, 255);
+    background: url(img/end.gif) center top / contain no-repeat rgb(255, 255, 255);
     margin: 5% 25%;
     width: 50%;
     visibility: visible;

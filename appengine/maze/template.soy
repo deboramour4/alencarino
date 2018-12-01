@@ -62,12 +62,16 @@
 
   {call .toolbox /}
 
-  <div id="mapButtonDiv">
-      <button id="mapButton" class="primary map" title="usa isso pra voltar pra o mapa">Mapa</button>
-  </div>
+  /*<div id="preferencesButtonDiv">*/
+  /*   <button id="preferencesButton" class="primary help" title="Clique aqui para mudar as preferências.">Preferências</button>*/
+  /*</div>*/
 
   <div id="helpButtonDiv">
-     <button id="helpButton" class="primary help" title="usa isso pra ajuda">Ajuda</button>
+     <button id="helpButton" class="primary help" title="Clique aqui para ver ajuda.">Ajuda</button>
+  </div>
+
+  <div id="mapButtonDiv">
+      <button id="mapButton" class="primary map" title="Clique aqui para ver o mapa.">Mapa</button>
   </div>
 
 
@@ -147,13 +151,13 @@
           <td colspan="4">
             <center>
             {if $ij.level == 1}
-              <img src="maze/img/level_help_1.png" class="helpModalImage">
+              <img src="maze/img/helps/level_help_1.png" class="helpModalImage">
             {elseif $ij.level == 2}              
-              <img src="maze/img/level_help_2.png" class="helpModalImage">
+              <img src="maze/img/helps/level_help_2.png" class="helpModalImage">
             {elseif $ij.level == 3}
-              <img src="maze/img/level_help_3.png" class="helpModalImage">
+              <img src="maze/img/helps/level_help_3.png" class="helpModalImage">
             {elseif $ij.level == 4}
-              <img src="maze/img/level_help_4.png" class="helpModalImage">
+              <img src="maze/img/helps/level_help_4.png" class="helpModalImage">
             {/if}
             </center>
           </td>
@@ -165,8 +169,34 @@
     </div>
   </div>
 
+  <div id="dialogPreferences" class="dialogHiddenContent">
+    <ul>
+      <li>
+        <div id="clearDataButtonDiv">
+          <button id="clearDataButton" class="primary" title="Clique aqui para deletar todo o seu progresso">Reiniciar</button>
+        </div>
+      </li>
+      <li>
+        <h1>Clique aqui para deletar todo o seu progresso.</h1>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <button id="musicOnButton" class="primary" title="Liga o som">Ligar</button>
+
+        <button id="musicOffButton" class="primary" title="Desliga o som">Desligar</button> 
+      </li>
+      <li>
+        <h1>Clique aqui para ligar/desligar o som.</h1>
+      </li>
+    </ul>
+    <div style="right: 0;position: absolute;bottom: 0;">
+      {call BlocklyGames.soy.ok /}
+    </div>
+  </div>
+
   <div id="dialogEnd">
-    <img src="maze/img/end.png" class="helpModalImage">
+    <img src="maze/img/end.gif" class="helpModalImage">
     <div style="right: 0;position: absolute;bottom: 0;">
       {call BlocklyGames.soy.ok /}
     </div>

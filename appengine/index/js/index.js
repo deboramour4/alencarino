@@ -135,6 +135,7 @@ Index.clearData_ = function() {
   for (var i = 0; i < Index.APPS.length; i++) {
     for (var j = 1; j <= BlocklyGames.MAX_LEVEL; j++) {
       delete window.localStorage[Index.APPS[i] + j];
+      alert(Index.APPS[i] +j)
     }
   }
   location.reload();

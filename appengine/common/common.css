@@ -1,6 +1,6 @@
 body {
   background-color: #fff;
-  font-family: 'Quicksand', sans-serif;
+  font-family: Quicksand-Regular, sans-serif;
   margin-top: 0;
 }
 h1 {
@@ -67,9 +67,8 @@ button {
   width: 5em;
   height: 3em;
   background: url(1x1.gif) center/contain no-repeat;
-  font-family: 'QuickSand', sans-serif;
+  font-family: Quicksand-Bold, sans-serif;
   font-size: 24px;
-  font-weight: 700;
   color: #fff;
   text-align: center;
   outline: 0;
@@ -86,34 +85,34 @@ button:hover:not(:disabled) {
 }
 
 button.primary {
-  background-image: url(../maze/img/button_bg_primary.png);
+  background-image: url(../maze/img/buttons/button_bg_primary.png);
 }
 button.secondary {
-  background-image: url(../maze/img/button_bg_secondary.png);
+  background-image: url(../maze/img/buttons/button_bg_secondary.png);
 }
 button.third {
-  background-image: url(../maze/img/button_bg_third.png);
+  background-image: url(../maze/img/buttons/button_bg_third.png);
 }
 
 button.primary:hover{
-  background-image: url(../maze/img/button_bg_primary_hover.png);
+  background-image: url(../maze/img/buttons/button_bg_primary_hover.png);
 }
 button.secondary:hover{
-  background-image: url(../maze/img/button_bg_secondary_hover.png);
+  background-image: url(../maze/img/buttons/button_bg_secondary_hover.png);
 }
 button.third:hover{
-  background-image: url(../maze/img/button_bg_third_hover.png);
+  background-image: url(../maze/img/buttons/button_bg_third_hover.png);
 }
 
 
 button.primary:active{
-  background-image: url(../maze/img/button_bg_primary_active.png);
+  background-image: url(../maze/img/buttons/button_bg_primary_active.png);
 }
 button.secondary:active{
-  background-image: url(../maze/img/button_bg_secondary_active.png);
+  background-image: url(../maze/img/buttons/button_bg_secondary_active.png);
 }
 button.third:active{
-  background-image: url(../maze/img/button_bg_third_active.png);
+  background-image: url(../maze/img/buttons/button_bg_third_active.png);
 }
 
 /* Dialogs */
