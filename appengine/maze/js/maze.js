@@ -50,6 +50,7 @@ BlocklyInterface.nextLevel = function() {
 Maze.MAX_BLOCKS = [Infinity, // Level 0.
     Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity][BlocklyGames.LEVEL];
 
+
 // Crash type constants.
 Maze.CRASH_STOP = 1;
 Maze.CRASH_SPIN = 2;
@@ -90,6 +91,7 @@ Maze.HUB = {
     speaker: ['maze/img/hub/1.png','maze/img/hub/2.png'],
     street: ['maze/img/hub/1.png','maze/img/hub/2.png'],
 
+    graph: '#000',
     background: 'maze/img/hub/background.png',
     tiles: 'maze/img/hub/tiles.png',
     bgColor: '#000',
@@ -227,7 +229,7 @@ Maze.ROWS = Maze.map.length;
 Maze.COLS = Maze.map[0].length;
 
 Maze.setConstantsValues = function(e) {
-  var dpr = window.devicePixelRatio || 1
+  var dpr = 1
   Maze.SCREEN_WIDTH = window.innerWidth* dpr 
   Maze.SCREEN_HEIGHT = window.innerHeight* dpr
 
@@ -243,8 +245,8 @@ Maze.setConstantsValues = function(e) {
     Maze.MAZE_TOP_OFFSET = 0
   } else {
     Maze.SQUARE_SIZE = (Maze.SCREEN_WIDTH*0.4)/Maze.COLS;
-    Maze.PEGMAN_HEIGHT = (Maze.SCREEN_WIDTH*0.4)/Maze.COLS + 5;
-    Maze.PEGMAN_WIDTH = (Maze.SCREEN_WIDTH*0.4)/Maze.COLS - 5;
+    Maze.PEGMAN_HEIGHT = (Maze.SQUARE_SIZE*1.5) + 15;
+    Maze.PEGMAN_WIDTH = (Maze.SQUARE_SIZE*1.5) - 15;
 
     Maze.MAZE_WIDTH = Maze.SQUARE_SIZE * Maze.COLS;
     Maze.MAZE_HEIGHT = Maze.SQUARE_SIZE * Maze.ROWS;
@@ -336,8 +338,72 @@ window.onresize = function(){
   //Maze.setConstantsValues(null)
 };
 
+Maze.fullscreen = function() {
+  // if (!confirm("Quer ativar a tela cheia?")) {
+  //   return;
+  // }
+
+  var body = document.getElementsByTagName("body")[0];
+  if (body.requestFullscreen) {
+    body.requestFullscreen();
+  } else if (body.mozRequestFullScreen) { /* Firefox */
+    body.mozRequestFullScreen();
+  } else if (body.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+    body.webkitRequestFullscreen();
+  } else if (body.msRequestFullscreen) { /* IE/Edge */
+    body.msRequestFullscreen();
+  }
+}
+
 /**
- * Create and layout all the nodes for the path, scenery, Pegman, and goal.
+ * Set the music preference in navigator
+ * to "on"
+ */
+Maze.setMusicPreferences = function() {
+  if (typeof(Storage) !== "undefined") {
+
+    if (window.sessionStorage.getItem("musicState") == null) {
+      window.sessionStorage.setItem("musicState", "on"); 
+    }
+  } else {
+      alert("Não é possível configurar o som.")
+  }
+}
+Maze.setMusicPreferences()
+
+/**
+ * Set the music preference in navigator
+ * param state -> "on" or "off"
+ */
+Maze.changeMusicPreferences = function(state) {
+  if (typeof(Storage) !== "undefined") {
+    window.sessionStorage.setItem("musicState", state); 
+  } else {
+      alert("Não é possível configurar o som.")
+  }
+}
+
+/** Array with all the levels of the game and "true" if already passed
+ * that level, and "false" if not
+ * Maze.LEVELS_DONE[0] is the HUB and it's always open
+ */
+Maze.LEVELS_DONE = [true, false, false, false, false]
+
+/**
+ * Check which level is done or not
+ * return an array with booleans
+ */
+Maze.checkLevelsInStorage  = function() {
+  for (var i = 1; i <= BlocklyGames.MAX_LEVEL; i++) {
+    if (BlocklyGames.loadFromLocalStorage('maze', i)) {
+      Maze.LEVELS_DONE[i] = true;
+    }
+  }
+};
+Maze.checkLevelsInStorage()
+
+/**
+ * Create and layout all the nodes for the path, scenery, Pegman, and goal.--------------------------------------------------------------------------------
  */
 
 //Height of the top navigation bar  (if needed)
@@ -399,25 +465,26 @@ Maze.drawMap = function() {
           pegmanIcon.setAttribute('id', 'pegman');
           pegmanIcon.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
               Maze.SKIN.sprite);
-          pegmanIcon.setAttribute('height', Maze.PEGMAN_HEIGHT);
           pegmanIcon.setAttribute('width', Maze.PEGMAN_WIDTH * 41); // 49 * 45 (sprites) = 2205
+          pegmanIcon.setAttribute('height', Maze.PEGMAN_HEIGHT);
           pegmanIcon.setAttribute('x', Maze.SQUARE_SIZE * (x + 0.5) -
             Maze.PEGMAN_WIDTH/2);
           pegmanIcon.setAttribute('y', Maze.SQUARE_HEIGHT * (y + 0.5) - 
-            Maze.PEGMAN_HEIGHT/2 - 8);
+            Maze.PEGMAN_HEIGHT/2);
           pegmanIcon.setAttribute('clip-path', 'url(#pegmanClipPath)');
           svg.appendChild(pegmanIcon);
 
           clipRect.setAttribute('x', x * Maze.SQUARE_SIZE + 1);
-          clipRect.setAttribute('y', Maze.SQUARE_HEIGHT * (y + 0.5) - Maze.PEGMAN_HEIGHT/2 - 8);
+          clipRect.setAttribute('y', Maze.SQUARE_HEIGHT * (y + 0.5) - Maze.PEGMAN_HEIGHT/2);
         
         }
         if (Maze.map[y][x] == Maze.SquareTypeHUB.GROUND) {
           var ground = document.createElementNS(Blockly.SVG_NS, 'image');
           ground.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
               Maze.HUB.ground[0]);
-          ground.setAttribute('height', Maze.SQUARE_HEIGHT);
+          ground.setAttribute('id', 'ground');
           ground.setAttribute('width', Maze.SQUARE_SIZE);
+          ground.setAttribute('height', Maze.SQUARE_HEIGHT);
           svg.appendChild(ground);
 
           ground.setAttribute('x', Maze.SQUARE_SIZE * (x + 0.5) -
@@ -429,8 +496,9 @@ Maze.drawMap = function() {
           var enviroment = document.createElementNS(Blockly.SVG_NS, 'image');
           enviroment.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
               Maze.HUB.enviroment[0]);
-          enviroment.setAttribute('height', Maze.SQUARE_HEIGHT);
+          enviroment.setAttribute('id', 'enviroment');
           enviroment.setAttribute('width', Maze.SQUARE_SIZE);
+          enviroment.setAttribute('height', Maze.SQUARE_HEIGHT);
           svg.appendChild(enviroment);
 
           enviroment.setAttribute('x', Maze.SQUARE_SIZE * (x + 0.5) -
@@ -442,8 +510,9 @@ Maze.drawMap = function() {
           var speaker = document.createElementNS(Blockly.SVG_NS, 'image');
           speaker.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
               Maze.HUB.speaker[0]);
-          speaker.setAttribute('height', Maze.SQUARE_HEIGHT);
+          speaker.setAttribute('id', 'speaker');
           speaker.setAttribute('width', Maze.SQUARE_SIZE);
+          speaker.setAttribute('height', Maze.SQUARE_HEIGHT);
           svg.appendChild(speaker);
 
           speaker.setAttribute('x', Maze.SQUARE_SIZE * (x + 0.5) -
@@ -455,8 +524,9 @@ Maze.drawMap = function() {
           var street = document.createElementNS(Blockly.SVG_NS, 'image');
           street.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
               Maze.HUB.street[0]);
-          street.setAttribute('height', Maze.SQUARE_HEIGHT);
+          street.setAttribute('id', 'street');
           street.setAttribute('width', Maze.SQUARE_SIZE);
+          street.setAttribute('height', Maze.SQUARE_HEIGHT);
           svg.appendChild(street);
 
           street.setAttribute('x', Maze.SQUARE_SIZE * (x + 0.5) -
@@ -468,7 +538,7 @@ Maze.drawMap = function() {
     }
 
     // Draw the grid lines.
-    //if (Maze.SKIN.graph) {
+    if (Maze.HUB.graph) {
       var offsetX = Maze.SQUARE_SIZE;
       var offsetY = Maze.SQUARE_HEIGHT;
 
@@ -477,7 +547,7 @@ Maze.drawMap = function() {
         h_line.setAttribute('y1', k * Maze.SQUARE_HEIGHT + offsetY);
         h_line.setAttribute('x2', Maze.MAZE_WIDTH);
         h_line.setAttribute('y2', k * Maze.SQUARE_HEIGHT + offsetY);
-        h_line.setAttribute('stroke', '#000');
+        h_line.setAttribute('stroke', Maze.HUB.graph);
         h_line.setAttribute('stroke-width', 1);
         svg.appendChild(h_line);
       }
@@ -486,11 +556,11 @@ Maze.drawMap = function() {
         v_line.setAttribute('x1', k * Maze.SQUARE_SIZE + offsetX);
         v_line.setAttribute('x2', k * Maze.SQUARE_SIZE + offsetX);
         v_line.setAttribute('y2', Maze.MAZE_HEIGHT);
-        v_line.setAttribute('stroke', '#000');
+        v_line.setAttribute('stroke', Maze.HUB.graph);
         v_line.setAttribute('stroke-width', 1);
         svg.appendChild(v_line);
       }
-    //}
+    }
 
   } else {
 
@@ -763,12 +833,43 @@ Maze.init = function() {
   var defaultXml;
   if (BlocklyGames.LEVEL == 0) {
     //Default blocks in the level 0 (HUB)
-    defaultXml =
+    var lastlevelDone = 0
+    for (var i = 1; i < Maze.LEVELS_DONE.length; i++) {
+      if (Maze.LEVELS_DONE[i] == true) {
+        lastlevelDone++
+      }
+    }
+
+    if (lastlevelDone == 0) {
+      //nothing to show
+    } else if (lastlevelDone == 1) {
+      defaultXml =
       '<xml>' +
-      '  <block movable="false" type="maze_skyColor" x="-20" y="30"></block>' +
-      '  <block movable="false" type="maze_wallColor" x="-20" y="55"></block>' +
-      '  <block movable="false" type="maze_chooseToy" x="-20" y="80"></block>' +
+      '  <block movable="false" type="maze_changeGround" x="-20" y="30"><field name="STA">groundDirty</field></block>' +
       '</xml>' ;
+    } else if (lastlevelDone == 2) {
+      defaultXml =
+      '<xml>' +
+      '  <block movable="false" type="maze_changeGround" x="-20" y="30"><field name="STA">groundDirty</field></block>' +
+      '  <block movable="false" type="maze_changeEnviroment" x="-20" y="55"><field name="STA">enviromentDeforested</field></block>' +
+      '</xml>' ;
+    } else if (lastlevelDone == 3) {
+      defaultXml =
+      '<xml>' +
+      '  <block movable="false" type="maze_changeGround" x="-20" y="30"><field name="STA">groundDirty</field></block>' +
+      '  <block movable="false" type="maze_changeEnviroment" x="-20" y="55"><field name="STA">enviromentDeforested</field></block>' +
+      '  <block movable="false" type="maze_changeSpeaker" x="-20" y="80"><field name="STA">speakerOff</field></block>' +
+      '</xml>' ;
+    } else if (lastlevelDone == 4) {
+      defaultXml =
+      '<xml>' +
+      '  <block movable="false" type="maze_changeGround" x="-20" y="30"><field name="STA">groundDirty</field></block>' +
+      '  <block movable="false" type="maze_changeEnviroment" x="-20" y="55"><field name="STA">enviromentDeforested</field></block>' +
+      '  <block movable="false" type="maze_changeSpeaker" x="-20" y="80"><field name="STA">speakerOff</field></block>' +
+      '  <block movable="false" type="maze_changeStreet" x="-20" y="105"><field name="STA">streetUnpaved</field></block>' +
+      '</xml>' ;
+    }
+    
     } else {
       defaultXml = ""
       // '<xml>' +
@@ -818,13 +919,27 @@ Maze.init = function() {
     BlocklyGames.bindClick('runButton', Maze.changeButtonClick);
     BlocklyGames.bindClick('helpButton', Maze.showHelpDialog);
     BlocklyGames.bindClick('mapButton', Maze.showMapDialog);
-    //BlocklyGames.bindClick('preferencesButton', Maze.showPreferencesDialog);
+    BlocklyGames.bindClick('preferencesButton', Maze.showPreferencesDialog);
+    BlocklyGames.bindClick('clearDataButton', Maze.clearData);
+    BlocklyGames.bindClick('musicOnButton', Maze.toggleMusic);
+    BlocklyGames.bindClick('musicOffButton', Maze.toggleMusic);
   } else {
     BlocklyGames.bindClick('runButton', Maze.runButtonClick);
     BlocklyGames.bindClick('helpButton', Maze.showHelpDialog);
     BlocklyGames.bindClick('mapButton', Maze.showMapDialog);
     BlocklyGames.bindClick('resetButton', Maze.resetButtonClick);
   }
+
+  if (BlocklyGames.LEVEL == 0) {
+    if (window.sessionStorage.getItem("musicState") == "off") {
+      var musicButton = document.getElementById("musicOffButton")
+      musicButton.classList.add("musicHide")
+    } else {
+      var musicButton = document.getElementById("musicOnButton")
+      musicButton.classList.add("musicHide")
+    } 
+  }
+
 
   if (BlocklyGames.LEVEL == 10) {
     // if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
@@ -893,23 +1008,31 @@ Maze.showMapDialog = function(e){
   
 };
 
-Maze.activeButtonsMap = function(){
-  for(var i = 1; i <= BlocklyGames.LEVEL; i++) {
-    var img = document.getElementsByClassName("locked");
-    img.item(i).classList.add('not'); 
-
-    var anchor = img.item(i).previousSibling;
-    anchor.style.pointerEvents = "auto";
-    anchor.style.cursor = "pointer";
-  }
-}
 Maze.disableButtonsMap = function(){
   var img = document.getElementsByClassName("locked");
-  for(var i = 0; i < img.length; i++) {
+  for(var i = 1; i < img.length; i++) {
      var anchor = img.item(i).previousSibling;
      anchor.style.pointerEvents = "none";
      anchor.style.cursor = "default"; 
   } 
+}
+
+Maze.activeButtonsMap = function(){
+  Maze.checkLevelsInStorage()
+  var img = document.getElementsByClassName("locked");
+
+  if (img != null) {
+    for(var i = 0; i < Maze.LEVELS_DONE.length; i++) {
+      if (Maze.LEVELS_DONE[i] == true && i != Maze.LEVELS_DONE.length-1) {   
+        img.item(i+1).classList.add('not'); 
+
+        var anchor = img.item(i+1).previousSibling;
+        anchor.style.pointerEvents = "auto";
+        anchor.style.cursor = "pointer";
+      }
+    }  
+  }
+  
 }
 
 // Show help modal dialog.
@@ -925,7 +1048,7 @@ Maze.showHelpDialog = function(e){
     "overflow: hidden;"+
     "height: 0;"+
     "padding-top: 43%;"+
-    "background: url(maze/img/level_help_"+BlocklyGames.LEVEL+".png) top/contain no-repeat #fff;"+
+    "background: url(maze/img/helps/level_help_"+BlocklyGames.LEVEL+".png) top/contain no-repeat #fff;"+
     "margin: 5% 25%;"+
     "width: 50%;";
   var dialog = document.getElementById('dialog')
@@ -946,9 +1069,9 @@ Maze.showPreferencesDialog = function(e){
   var cssText =
     "overflow: hidden;"+
     "height: 0;"+
-    "padding-top: 43%;"+
-    "background: url(maze/img/level_help_1.png) top/contain no-repeat #fff;"+
-    "margin: 5% 25%;"+
+    "padding-top: 30%;"+
+    "background: url(maze/img/map_bg.png) center/contain no-repeat #d3d993;"+
+    "margin: 10% 25%;"+
     "width: 50%;";
   var dialog = document.getElementById('dialog')
   dialog.style.cssText = cssText
@@ -1219,6 +1342,8 @@ Maze.saveToStorage = function() {
  * @param {boolean} first True if an opening animation is to be played.
  */
 Maze.reset = function(first) {
+  //Maze.fullscreen()
+
   if (BlocklyGames.LEVEL == 0) {
     // Kill all tasks.
     for (var i = 0; i < Maze.pidList.length; i++) {
@@ -1420,6 +1545,53 @@ Maze.initInterpreter = function(interpreter, scope) {
   };
   interpreter.setProperty(scope, 'catchObject',
       interpreter.createNativeFunction(wrapper));
+
+  // HUB FUNCTIONS WRAPPER
+  wrapper = function(id) {
+    Maze.changeGround(0, id);
+  };
+  interpreter.setProperty(scope, 'groundDirty',
+      interpreter.createNativeFunction(wrapper));
+  wrapper = function(id) {
+    Maze.changeGround(1, id);
+  };
+  interpreter.setProperty(scope, 'groundClean',
+      interpreter.createNativeFunction(wrapper));
+
+
+  wrapper = function(id) {
+    Maze.changeEnviroment(0, id);
+  };
+  interpreter.setProperty(scope, 'enviromentDeforested',
+      interpreter.createNativeFunction(wrapper));
+  wrapper = function(id) {
+    Maze.changeEnviroment(1, id);
+  };
+  interpreter.setProperty(scope, 'enviromentForested',
+      interpreter.createNativeFunction(wrapper));
+
+
+  wrapper = function(id) {
+    Maze.changeSpeaker(0, id);
+  };
+  interpreter.setProperty(scope, 'speakerOff',
+      interpreter.createNativeFunction(wrapper));
+  wrapper = function(id) {
+    Maze.changeSpeaker(1, id);
+  };
+  interpreter.setProperty(scope, 'speakerOn',
+      interpreter.createNativeFunction(wrapper));
+
+  wrapper = function(id) {
+    Maze.changeStreet(0, id);
+  };
+  interpreter.setProperty(scope, 'streetUnpaved',
+      interpreter.createNativeFunction(wrapper));
+  wrapper = function(id) {
+    Maze.changeStreet(1, id);
+  };
+  interpreter.setProperty(scope, 'streetPaved',
+      interpreter.createNativeFunction(wrapper));
 // debora -----------------------------------------------------------------
 
   wrapper = function(id) {
@@ -1619,11 +1791,17 @@ Maze.animate = function() {
     case 'right':
       Maze.scheduleTurn(1);
       Maze.pegmanD = Maze.constrainDirection4(Maze.pegmanD + 1);
-      alert(Maze.pegmanD)
       break;
     case 'finish':
       Maze.scheduleFinish(true);
       BlocklyInterface.saveToLocalStorage();
+
+    // // Cases of HUB
+    // case 'ground_dirty':
+    //   Maze.scheduleGround(0);
+    //   break;
+    // case 'ground_clean':
+    //   Maze.scheduleGround(1);
 
       if (BlocklyGames.LEVEL >= 4) {
         Maze.showEndDialog()
@@ -1857,14 +2035,15 @@ Maze.scheduleFinish = function(sound) {
  */
 Maze.displayPegman = function(x, y, d, opt_angle) {
   var pegmanIcon = document.getElementById('pegman');
-  var pegmanYPos = Maze.SQUARE_SIZE * (y + 0.5) - Maze.PEGMAN_HEIGHT / 2 - 8 + Maze.MAZE_TOP_OFFSET
+
+  var pegmanYPos = Maze.SQUARE_SIZE * (y + 0.5) - Maze.PEGMAN_HEIGHT/2 - 8 + Maze.MAZE_TOP_OFFSET
   
   pegmanIcon.setAttribute('x',
-    x * Maze.SQUARE_SIZE - d * Maze.PEGMAN_WIDTH + 1);
+    (x * Maze.SQUARE_SIZE - d * Maze.PEGMAN_WIDTH + 1) - 15);
   pegmanIcon.setAttribute('y', pegmanYPos)
 
   var clipRect = document.getElementById('clipRect');
-  clipRect.setAttribute('x', x * Maze.SQUARE_SIZE + 1);
+  clipRect.setAttribute('x', (x * Maze.SQUARE_SIZE + 1) - 15);
   clipRect.setAttribute('y', pegmanYPos);
 
   if (opt_angle) {
@@ -1973,6 +2152,58 @@ Maze.scheduleLookStep = function(path, delay) {
     }, Maze.stepSpeed * 2);
   }, delay));
 };
+
+//MAIN FUNCTIONS OF HUB BLOCKS
+
+/**
+ * Changes the actual state of the ground
+ * @param state Direction 0->dirty, 1->clean.
+ * @param id The id of the block that changed the ground.
+ */
+Maze.changeGround = function(state, id) {
+
+  var ground = document.getElementById("ground")
+
+  ground.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
+              Maze.HUB.ground[state]);
+};
+/**
+ * Changes the actual state of the enviroment
+ * @param state Direction 0->deforest, 1->forest.
+ * @param id The id of the block that changed the enviroment.
+ */
+Maze.changeEnviroment = function(state, id) {
+
+  var enviroment = document.getElementById("enviroment")
+
+  enviroment.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
+              Maze.HUB.enviroment[state]);
+};
+/**
+ * Changes the actual state of the speaker
+ * @param state Direction 0->off, 1->on.
+ * @param id The id of the block that changed the speaker.
+ */
+Maze.changeSpeaker = function(state, id) {
+
+  var speaker = document.getElementById("speaker")
+
+  speaker.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
+              Maze.HUB.speaker[state]);
+};
+/**
+ * Changes the actual state of the street
+ * @param state Direction 0->unpaved, 1->paved.
+ * @param id The id of the block that changed the street.
+ */
+Maze.changeStreet = function(state, id) {
+
+  var street = document.getElementById("street")
+
+  street.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
+              Maze.HUB.street[state]);
+};
+
 
 /**
  * Keep the direction within 0-3, wrapping at both ends.
@@ -2216,38 +2447,51 @@ Maze.notDone = function() {
   return !correctX || !correctY || !catchedAllObjects;
 };
 
+
+/**
+ * toggleMusic OFF/ON.
+ */
+Maze.toggleMusic  = function() {
+  var musicOnButton = document.getElementById("musicOnButton")
+  var musicOffButton = document.getElementById("musicOffButton")
+
+  if (window.sessionStorage.getItem("musicState") == "on") {
+
+      musicOnButton.classList.remove("musicHide")
+      musicOffButton.classList.add("musicHide")
+
+      Maze.changeMusicPreferences("off") 
+
+    } else if (window.sessionStorage.getItem("musicState") == "off") {
+
+      musicOnButton.classList.add("musicHide")
+      musicOffButton.classList.remove("musicHide")
+
+      Maze.changeMusicPreferences("on") 
+    } else {
+      alert("Desculpe, não é possível alterar as preferências de som.")
+    }
+
+};
+
+
 // Copied from index -------------------------------------------------------
 /**
  * Clear all stored data.
- * @private
  */
-Maze.clearData_ = function() {
+Maze.clearData  = function() {
   if (!confirm("Tem certeza que quer deletar todo o seu progresso?")) {
     return;
   }
   for (var i = 1; i <= BlocklyGames.MAX_LEVEL; i++) {
     delete window.localStorage['maze' + i];
-    alert('maze' + i)
   }
+  window.sessionStorage.removeItem('musicState')
+
   location.reload();
 };
+
 //--------------------------------------------------------------------------
 window.addEventListener('load', Maze.init);
 
 
-// var storedData = false;
-// var levelsDone = [];
-// for (var i = 0; i < Index.APPS.length; i++) {
-//   levelsDone[i] = 0;
-//   for (var j = 1; j <= BlocklyGames.MAX_LEVEL; j++) {
-//     if (BlocklyGames.loadFromLocalStorage(Index.APPS[i], j)) {
-//       storedData = true;
-//       levelsDone[i]++;
-//     }
-//   }
-// }
-// if (storedData) {
-//   var clearButtonPara = document.getElementById('clearDataPara');
-//   clearButtonPara.style.visibility = 'visible';
-//   BlocklyGames.bindClick('clearData', Index.clearData_);
-// }

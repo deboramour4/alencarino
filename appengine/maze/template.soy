@@ -62,9 +62,11 @@
 
   {call .toolbox /}
 
-  /*<div id="preferencesButtonDiv">*/
-  /*   <button id="preferencesButton" class="primary help" title="Clique aqui para mudar as preferências.">Preferências</button>*/
-  /*</div>*/
+  {if $ij.level == 0}
+  <div id="preferencesButtonDiv">
+     <button id="preferencesButton" class="primary help" title="Clique aqui para mudar as preferências.">Preferências</button>
+  </div>
+  {/if}
 
   <div id="helpButtonDiv">
      <button id="helpButton" class="primary help" title="Clique aqui para ver ajuda.">Ajuda</button>
@@ -118,7 +120,7 @@
     <ul>
       <li id="mapButton1" class="buttonMap">
         <a href="?lang=en&level=0"><button class="third">Início</button></a>
-        <img src="maze/img/lock.png" class="locked">
+        <img src="maze/img/lock.png" class="not locked">
       </li>
       <li id="mapButton2" class="buttonMap">
         <a href="?lang=en&level=1"><button class="primary">Fase 1</button></a>
@@ -170,25 +172,16 @@
   </div>
 
   <div id="dialogPreferences" class="dialogHiddenContent">
-    <ul>
-      <li>
-        <div id="clearDataButtonDiv">
+    <ul class="preferences">
+      <li><div id="clearDataButtonDiv">
           <button id="clearDataButton" class="primary" title="Clique aqui para deletar todo o seu progresso">Reiniciar</button>
-        </div>
-      </li>
-      <li>
-        <h1>Clique aqui para deletar todo o seu progresso.</h1>
-      </li>
+        </div></li>
+      <li><h1>Clique aqui para deletar todo o seu progresso.</h1></li>
     </ul>
-    <ul>
-      <li>
-        <button id="musicOnButton" class="primary" title="Liga o som">Ligar</button>
-
-        <button id="musicOffButton" class="primary" title="Desliga o som">Desligar</button> 
-      </li>
-      <li>
-        <h1>Clique aqui para ligar/desligar o som.</h1>
-      </li>
+    <ul class="preferences">
+      <li><button id="musicOnButton" class="primary" title="Liga o som">Ligar</button>
+        <button id="musicOffButton" class="primary" title="Desliga o som">Desligar</button></li>
+      <li><h1>Clique aqui para ligar/desligar o som.</h1></li>
     </ul>
     <div style="right: 0;position: absolute;bottom: 0;">
       {call BlocklyGames.soy.ok /}

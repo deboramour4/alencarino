@@ -131,70 +131,81 @@ Blockly.JavaScript['maze_ifCustom'] = function(block) {
   return 'if (isTheRightOne()) {\n' + branch + '}\n';
 };
 
-
-Blockly.Blocks['maze_skyColor'] = {
+// HUB Blocks ---------------------------------------
+Blockly.Blocks['maze_changeGround'] = {
   init: function() {
-    var CORES = [['manhã', 'ceuAzul'], ['tarde', 'ceuLaranja'], ['noite', 'ceuPreto'], ['chovendo', 'ceuCinza']];
-    CORES[0][0] += ' \ud83c\udf05';
-    CORES[1][0] += ' \ud83c\udf04';
-    CORES[2][0] += ' \ud83c\udf0c';
-    CORES[3][0] += ' \ud83c\udf01';
+    var STATES = [['sujo', 'groundDirty'], ['limpo', 'groundClean']];
 
     this.setColour(10);
     this.appendDummyInput()
-        .appendField("cor do céu")
-        .appendField(new Blockly.FieldDropdown(CORES), 'COR');
+        .appendField("chão ")
+        .appendField(new Blockly.FieldDropdown(STATES), 'STA');
 
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setTooltip('Escolha a cor que você preferir para o céu da cidade.');
+    this.setTooltip('Escolha se você quer o chão da rua sujo ou limpo.');
   }
 };
-Blockly.JavaScript['maze_skyColor'] = function(block) {
-  var ceu = block.getFieldValue('COR');
-  return ceu + '(\'block_id_' + block.id + '\');\n';
+Blockly.JavaScript['maze_changeGround'] = function(block) {
+  var ground = block.getFieldValue('STA');
+  return ground + '(\'block_id_' + block.id + '\');\n';
 };
 
-Blockly.Blocks['maze_wallColor'] = {
+Blockly.Blocks['maze_changeEnviroment'] = {
   init: function() {
-    var CORES = [['vermelho', 'ceuAzul'], ['verde', 'ceuLaranja'], ['azul', 'ceuPreto'], ['branco', 'ceuCinza']];
-
+    var STATES = [['sem árvore', 'enviromentDeforested'], ['com árvores', 'enviromentForested']];
     this.setColour(197);
     this.appendDummyInput()
-        .appendField("cor das casas")
-        .appendField(new Blockly.FieldDropdown(CORES), 'COR');
+        .appendField("ambiente ")
+        .appendField(new Blockly.FieldDropdown(STATES), 'STA');
 
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setTooltip('Escolha a cor que você preferir para as paredes.');
+    this.setTooltip('Escolha se você quer que o ambiente tenha poucas árvores ou muitas árvores.');
   }
 };
-Blockly.JavaScript['maze_wallColor'] = function(block) {
-  var ceu = block.getFieldValue('COR');
-  return ceu + '(\'block_id_' + block.id + '\');\n';
+Blockly.JavaScript['maze_changeEnviroment'] = function(block) {
+  var enviroment = block.getFieldValue('STA');
+  return enviroment + '(\'block_id_' + block.id + '\');\n';
 };
 
-Blockly.Blocks['maze_chooseToy'] = {
+Blockly.Blocks['maze_changeSpeaker'] = {
   init: function() {
-    var CORES = [['', 'ceuAzul'], ['', 'ceuLaranja'], ['', 'ceuPreto'], ['', 'ceuCinza']];
-    CORES[0][0] += ' \ud83d\udcd2';
-    CORES[1][0] += ' \ud83c\udfc0';
-    CORES[2][0] += ' \ud83c\udf92';
-    CORES[3][0] += ' \ud83c\udfa9';
+    var STATES = [['desligado', 'speakerOff'], ['ligado', 'speakerOn']];
 
     this.setColour(300);
     this.appendDummyInput()
-        .appendField("segurar um")
-        .appendField(new Blockly.FieldDropdown(CORES), 'COR');
+        .appendField("som ")
+        .appendField(new Blockly.FieldDropdown(STATES), 'STA');
 
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setTooltip('Escolha algo legal para segurar.');
+    this.setTooltip('Escolha se você quer o som ligado ou desligado.');
   }
 };
-Blockly.JavaScript['maze_chooseToy'] = function(block) {
-  var ceu = block.getFieldValue('COR');
-  return ceu + '(\'block_id_' + block.id + '\');\n';
+Blockly.JavaScript['maze_changeSpeaker'] = function(block) {
+  var speaker = block.getFieldValue('STA');
+  return speaker + '(\'block_id_' + block.id + '\');\n';
+};
+
+
+Blockly.Blocks['maze_changeStreet'] = {
+  init: function() {
+    var STATES = [['terra batida', 'streetUnpaved'], ['asfalto', 'streetPaved']];
+
+    this.setColour(300);
+    this.appendDummyInput()
+        .appendField("rua com ")
+        .appendField(new Blockly.FieldDropdown(STATES), 'STA');
+
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip('Escolha se você quer quea rua esteja só com terra ou com asfalto.');
+  }
+};
+Blockly.JavaScript['maze_changeStreet'] = function(block) {
+  var street = block.getFieldValue('STA');
+  return street + '(\'block_id_' + block.id + '\');\n';
 };
 //end ------------------------------------------------------------------------------
 

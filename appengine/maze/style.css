@@ -225,6 +225,10 @@ body {
   display: none;
 }
 
+.musicHide {
+  display: none; 
+}
+
 
 .helpModalImage {
   height: 440px;
@@ -243,6 +247,23 @@ body {
 
 #dialogHelp {
   height: 100%;
+}
+
+#dialogPreferences ul {
+  position: absolute;
+  display: flex;
+}
+
+.preferences:nth-child(1) {
+  top: 10%;
+}
+.preferences:nth-child(2) {
+  top: 40%;
+}
+
+
+#dialogPreferences li {
+  list-style: none;
 }
 
 #divOK {
@@ -320,4 +341,15 @@ body {
     width: 50%;
     visibility: visible;
     z-index: 10;
+}
+
+
+.blocklyWidgetDiv .goog-menu {
+    background: #efefef;
+    border-color: #ccc;   
+    max-height: none;
+}
+
+.blocklyWidgetDiv .goog-menuitem-content {
+    font: normal 15pt Quicksand-Medium, sans-serif;
 }

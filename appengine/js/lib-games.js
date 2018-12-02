@@ -248,11 +248,11 @@ BlocklyGames.init = function() {
   }
 
   // Fixes viewport for small screens.
-  var viewport = document.querySelector('meta[name="viewport"]');
-  if (viewport && screen.availWidth < 725) {
-    viewport.setAttribute('content',
-        'width=725, initial-scale=.35, user-scalable=no');
-  }
+  // var viewport = document.querySelector('meta[name="viewport"]');
+  // if (viewport && screen.availWidth < 725) {
+  //   viewport.setAttribute('content',
+  //       'width=725, initial-scale=1.0, user-scalable=no');
+  // }
 
   // Lazy-load Google analytics.
   setTimeout(BlocklyGames.importAnalytics, 1);
