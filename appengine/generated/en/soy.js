@@ -49,7 +49,7 @@ if (goog.DEBUG) {
 
 
 BlocklyGames.soy.doneDialog = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div id="dialogDone" class="dialogHiddenContent"><div id="congratulationsText" style="font-size: large; margin: 1em;">Muito bom!<br>Est\u00E1 pronto(a) para o n\u00EDvel ' + soy.$$escapeHtml(opt_ijData.level + 1) + '?</div><div id="dialogDoneButtons" class="farSide" style="padding: 1ex 3ex 0">' + ((opt_ijData.level > 1) ? '<button id="doneMap" class="third">HUB</button>' : '') + '<button id="doneOk" class="secondary">Pr\u00F3xima</button>' + BlocklyGames.soy.ok(null, null, opt_ijData) + '</div></div>';
+  return '<div id="dialogDone" class="dialogHiddenContent"><div id="congratulationsText">Muito bom!<br>Est\u00E1 pronto(a) para o n\u00EDvel ' + soy.$$escapeHtml(opt_ijData.level + 1) + '?' + ((opt_ijData.level > 1) ? '<button id="doneMap" class="third">HUB</button>' : '') + '<button id="doneOk" class="secondary">Pr\u00F3xima</button>' + BlocklyGames.soy.ok(null, null, opt_ijData) + '</div></div>';
 };
 if (goog.DEBUG) {
   BlocklyGames.soy.doneDialog.soyTemplateName = 'BlocklyGames.soy.doneDialog';
@@ -57,7 +57,7 @@ if (goog.DEBUG) {
 
 
 BlocklyGames.soy.abortDialog = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div id="dialogAbort" class="dialogHiddenContent">Esse n\u00EDvel parece muito dif\u00EDcil. Voc\u00EA acha melhor tentar um outro e voltar depois?<div class="farSide" style="padding: 1ex 3ex 0"><button id="abortCancel" class="third">Cancelar</button><button id="abortOk" class="secondary">OK</button></div></div>';
+  return '<div id="dialogAbort" class="dialogHiddenContent">Esse n\u00EDvel parece muito dif\u00EDcil. Voc\u00EA acha melhor tentar um outro e voltar depois?<div class="farSide"><button id="abortCancel" class="third">Cancelar</button><button id="abortOk" class="secondary">OK</button></div></div>';
 };
 if (goog.DEBUG) {
   BlocklyGames.soy.abortDialog.soyTemplateName = 'BlocklyGames.soy.abortDialog';
@@ -73,7 +73,7 @@ if (goog.DEBUG) {
 
 
 BlocklyGames.soy.ok = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div id="doneCancel" class="farSide" style="padding: 1ex 3ex 0"><button class="secondary" onclick="BlocklyDialogs.hideDialog(true)">X</button></div>';
+  return '<div id="doneCancel" class="farSide"><button class="secondary" onclick="BlocklyDialogs.hideDialog(true)">X</button></div>';
 };
 if (goog.DEBUG) {
   BlocklyGames.soy.ok.soyTemplateName = 'BlocklyGames.soy.ok';

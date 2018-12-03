@@ -124,18 +124,16 @@
  */
 {template .doneDialog private="true"}
   <div id="dialogDone" class="dialogHiddenContent">
-    <div id="congratulationsText" style="font-size: large; margin: 1em;">
+    <div id="congratulationsText">
       Muito bom!<br>
       Está pronto(a) para o nível {$ij.level +1}?
-    </div>
     
-    <div id="dialogDoneButtons" class="farSide" style="padding: 1ex 3ex 0">
-    {if $ij.level > 1}
-      <button id="doneMap" class="third">HUB</button>
-    {/if}
-      <button id="doneOk" class="secondary">Próxima</button>
+      {if $ij.level > 1}
+        <button id="doneMap" class="third">HUB</button>
+      {/if}
+        <button id="doneOk" class="secondary">Próxima</button>
 
-    {call BlocklyGames.soy.ok /}
+      {call BlocklyGames.soy.ok /}
     </div>
   </div>
 {/template}
@@ -145,7 +143,7 @@
  */
 {template .abortDialog private="true"}
   <div id="dialogAbort" class="dialogHiddenContent">Esse nível parece muito difícil. Você acha melhor tentar um outro e voltar depois?
-    <div class="farSide" style="padding: 1ex 3ex 0">
+    <div class="farSide">
       <button id="abortCancel" class="third">Cancelar</button>
       <button id="abortOk" class="secondary">OK</button>
     </div>
@@ -166,7 +164,7 @@
  * OK button for dialogs.
  */
 {template .ok private="true"}
-  <div id="doneCancel" class="farSide" style="padding: 1ex 3ex 0">
+  <div id="doneCancel" class="farSide">
     <button class="secondary" onclick="BlocklyDialogs.hideDialog(true)">
       X
     </button>

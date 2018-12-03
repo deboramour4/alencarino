@@ -143,7 +143,6 @@ Index.showPreferencesDialog = function(e){
   var style = {};
 
   var cssText =
-    "overflow: hidden;"+
     "height: 0;"+
     "padding-top: 30%;"+
     "background: url(maze/img/map_bg.png) center/contain no-repeat #d3d993;"+
@@ -165,20 +164,11 @@ Index.showCreditsDialog = function(e){
   var style = {};
 
   var cssText =
-    "overflow: hidden;"+
     "height: 0;"+
-    "padding-top: 43%;"+
-    //"background: url(maze/img/helps/level_help_"+BlocklyGames.LEVEL+".png) top/contain no-repeat #fff;"+
-    "margin: 5% 25%;"+
+    "padding-top: 40%;"+
+    "background: url(maze/img/helps/level_help_4.png) top/contain no-repeat #fff;"+
+    "margin: 10% 25%;"+
     "width: 50%;";
-
-    // overflow: hidden;
-    // height: 0px;
-    // padding-top: 39%;
-    // margin: 5% 15%;
-    // width: 70%;
-    // visibility: visible;
-    // z-index: 10;
 
   var dialog = document.getElementById('dialog')
   dialog.style.cssText = cssText
@@ -188,7 +178,7 @@ Index.showCreditsDialog = function(e){
 
 // Starts the game
 Index.startGame = function(){
-  window.location.replace("maze.html?level=0");
+  window.location.replace("maze.html?level=1");
 };
 
 

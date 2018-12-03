@@ -5,7 +5,8 @@ body {
 }
 h1 {
   font-weight: normal;
-  font-size: 130%;
+  font-size: 2vw;
+  padding: 0;
 }
 h1 a {
   text-decoration: none;
@@ -73,7 +74,7 @@ button {
   height: 3em;
   background: url(1x1.gif) center/contain no-repeat;
   font-family: Quicksand-Bold, sans-serif;
-  font-size: 24px;
+  font-size: 2vw;
   color: #fff;
   text-align: center;
   outline: 0;
@@ -125,13 +126,13 @@ button.third:active{
 button.map.primary {
   background-image: url(../maze/img/buttons/button_map_primary.png);
   font-family: Pacifico-Regular, cursive;
-  font-size: 30px;
+  font-size: 2vw;
   padding-bottom: 25px;
 }
 button.map.secondary {
   background-image: url(../maze/img/buttons/button_map_secondary.png);
   font-family: Pacifico-Regular, cursive;
-  font-size: 30px;
+  font-size: 2vw;
   padding-bottom: 25px;
 }
 
@@ -226,15 +227,13 @@ button.map.secondary:active{
 
 #doneCancel {
   position: absolute;
-  top: -10%;
-  right: -10%;
+  top: -7%;
+  right: -7%;
 }
 
 #doneCancel button {
   background-image: url(../maze/img/buttons/button_map_secondary.png);
   font-family: Quicksand-Bold, cursive;
-  font-size: 30px;
-  padding-bottom: 25px;
 }
 
 #doneCancel button:hover{
@@ -248,4 +247,5 @@ button.map.secondary:active{
 #congratulationsText {
   position: absolute;
   top: 10%;
+  font-size: 2vw;
 }

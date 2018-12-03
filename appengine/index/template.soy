@@ -15,7 +15,7 @@
  */
 {template .messages}
   <div style="display: none">
-    <span id="title">{msg meaning="Games.name" desc="IBID"}Alencarino{/msg}</span>
+    <span id="title">Alencarino</span>
   </div>
 {/template}
 
@@ -58,19 +58,12 @@
         <button id="musicOffButton" class="primary" title="Desliga o som">Desligar</button></li>
       <li><h1>Clique aqui para ligar/desligar o som.</h1></li>
     </ul>
-    <div style="right: 0;position: absolute;bottom: 0;">
-      {call BlocklyGames.soy.ok /}
-    </div>
+    {call BlocklyGames.soy.ok /}
   </div>
 
 
   <div id="dialogCredits" class="dialogHiddenContent">
-    <center>
-      <img src="maze/img/helps/level_help_4.png" class="helpModalImage">
-    </center>
-    <div style="right: 0;position: absolute;bottom: 0;">
-      {call BlocklyGames.soy.ok /}
-    </div>
+    {call BlocklyGames.soy.ok /}
   </div>
 
 

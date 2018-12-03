@@ -187,17 +187,17 @@ html[dir="RTL"] #pegmanButton>span {
 
 
 #mapButtonDiv, #creditsButtonDiv {
-  z-index: 9999;
-  right: 50px;
+  z-index: 5;
+  right: 3%;
   position: fixed;
-  top: 15px;
+  top: 5%;
 }
 
 #helpButtonDiv, #preferencesButtonDiv {
-  z-index: 9999;
-  right: 185px;
+  z-index: 5;
+  right: 15%;
   position: fixed;
-  top: 15px;
+  top: 5%;
 }
 
 
@@ -309,7 +309,8 @@ body {
 
 .locked {
   position: absolute;
-  margin-left: -5em;
+  margin-left: -75%;
+  width: 50%;
 }
 .not.locked {
   display: none;
@@ -342,11 +343,11 @@ body {
 }
 
 .blocklyWidgetDiv .goog-menuitem-content {
-    font: normal 15pt Quicksand-Medium, sans-serif;
+    font: normal 1.5vw Quicksand-Medium, sans-serif;
 }
 
 #backToMenu {
-  font: normal 15pt Quicksand-Bold, cursive;
+  font: normal 1.5vw Quicksand-Bold, cursive;
   position: absolute;
   bottom: 1%;
   color: white;

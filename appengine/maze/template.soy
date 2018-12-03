@@ -178,6 +178,17 @@
         <div><img src="maze/img/help_run.png" class="mirrorImg" height=27 width=141></div>
       </td></tr></table>
     </div>
+
+    /*Cutscene dialog*/
+    <div id="dialogHelpWallFollow" class="dialogHiddenContent">
+      <table><tr><td>
+        <img src="common/help.png">
+      </td><td>&nbsp;</td><td>
+          Primeira vez por aqui, video
+
+        {call BlocklyGames.soy.ok /}
+      </td></tr></table>
+    </div>
   {elseif $ij.level == 2}
     <div id="dialogHelpReset" class="dialogHiddenContent">
       <table><tr><td>
@@ -257,18 +268,7 @@
       </td><td>
         <img src="common/help.png">
       </td></tr></table>
-    </div>
-  {elseif $ij.level == 10}
-    <div id="dialogHelpWallFollow" class="dialogHiddenContent">
-      <table><tr><td>
-        <img src="common/help.png">
-      </td><td>&nbsp;</td><td>
-        {msg meaning="Maze.helpWallFollow" desc="callout - This advises the user to solve a maze by keeping his/her left hand in contact with the wall while proceeding through it.  The final sentence is a warning that only advanced programmers should attempt this problem, as beginners tend to get frustrated."}
-          Can you solve this complicated maze? Try following the left-hand wall. Advanced programmers only!
-        {/msg}
-        {call BlocklyGames.soy.ok /}
-      </td></tr></table>
-    </div>
+    </div>   
   {/if}
 {/template}
 

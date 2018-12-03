@@ -146,13 +146,13 @@ Maze.map = [
   [0, 1, 1, 1, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0]],
 // Level 2.
- [[0, 0, 0, 3, 0, 0, 0],
+ [[0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 3, 0, 0, 0],
   [0, 0, 0, 1, 0, 0, 0],
   [0, 1, 4, 4, 4, 0, 0],
   [0, 0, 1, 1, 1, 0, 0],
   [0, 0, 4, 4, 4, 1, 0],
-  [0, 0, 1, 2, 1, 0, 0],
-  [0, 0, 0, 1, 0, 0, 0]],
+  [0, 0, 1, 2, 1, 0, 0]],
 // Level 3.
  [[0, 0, 0, 0, 0, 0, 0],
   [0, 4, 1, 1, 1, 4, 0],
@@ -242,6 +242,8 @@ Maze.setConstantsValues = function(e) {
     Maze.MAZE_WIDTH = Maze.SQUARE_SIZE * Maze.COLS;
     Maze.MAZE_HEIGHT = Maze.SQUARE_SIZE * Maze.ROWS;
 
+    Maze.ZOOM_WORKSPACE = Maze.SCREEN_WIDTH/760
+
     Maze.MAZE_TOP_OFFSET = 0
   } else {
     Maze.SQUARE_SIZE = (Maze.SCREEN_WIDTH*0.4)/Maze.COLS;
@@ -252,6 +254,7 @@ Maze.setConstantsValues = function(e) {
     Maze.MAZE_HEIGHT = Maze.SQUARE_SIZE * Maze.ROWS;
     Maze.PATH_WIDTH = Maze.SQUARE_SIZE / 3;
 
+    Maze.ZOOM_WORKSPACE = Maze.SCREEN_WIDTH/680
     Maze.MAZE_TOP_OFFSET = (Maze.SCREEN_HEIGHT/2)-(Maze.MAZE_WIDTH/2) // to centralize
   }
   
@@ -783,7 +786,7 @@ Maze.init = function() {
        'toolbox': toolbox,
        'trashcan': TOOLS_ON,
        'scrollbars':TOOLS_ON,
-       'zoom': {'startScale': 1.7}
+       'zoom': {'startScale': Maze.ZOOM_WORKSPACE}
        });
 
   BlocklyGames.workspace.getAudioManager().load(Maze.SKIN.winSound, 'win');
@@ -885,7 +888,7 @@ Maze.init = function() {
 
   //Add listeners
   BlocklyGames.workspace.addChangeListener(function() {Maze.updateCapacity();});
-  document.body.addEventListener('mousemove', Maze.updatePegSpin_, true);
+  // document.body.addEventListener('mousemove', Maze.updatePegSpin_, true);
 
   if (BlocklyGames.LEVEL == 0 ){
     BlocklyGames.bindClick('runButton', Maze.changeButtonClick);
@@ -898,6 +901,23 @@ Maze.init = function() {
     BlocklyGames.bindClick('resetButton', Maze.resetButtonClick);
   }
 
+  if (BlocklyGames.LEVEL == 1) {
+    if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
+                                          BlocklyGames.LEVEL)) {
+      // Level 10 gets an introductory modal dialog.
+      // Skip the dialog if the user has already won.
+      var content = document.getElementById('dialogHelpWallFollow');
+      var style = {
+        'width': '30%',
+        'left': '35%',
+        'top': '12em'
+      };
+      BlocklyDialogs.showDialog(content, null, false, true, style,
+          BlocklyDialogs.stopDialogKeyDown);
+      // BlocklyDialogs.startDialogKeyDown();
+      // setTimeout(BlocklyDialogs.abortOffer, 5 * 60 * 1000);
+    }
+  }
 
   if (BlocklyGames.LEVEL == 10) {
     // if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
@@ -926,12 +946,12 @@ Maze.init = function() {
 
   // Add the spinning Pegman icon to the done dialog.
   // <img id="pegSpin" src="common/1x1.gif">
-  var buttonDiv = document.getElementById('dialogDoneButtons');
-  var pegSpin = document.createElement('img');
-  pegSpin.id = 'pegSpin';
-  pegSpin.src = 'common/1x1.gif';
-  pegSpin.style.backgroundImage = 'url(' + Maze.SKIN.sprite + ')';
-  buttonDiv.parentNode.insertBefore(pegSpin, buttonDiv);
+  // var buttonDiv = document.getElementById('dialogDoneButtons');
+  // var pegSpin = document.createElement('img');
+  // pegSpin.id = 'pegSpin';
+  // pegSpin.src = 'common/1x1.gif';
+  // pegSpin.style.backgroundImage = 'url(' + Maze.SKIN.sprite + ')';
+  // buttonDiv.parentNode.insertBefore(pegSpin, buttonDiv);
 
   // Lazy-load the JavaScript interpreter.
   setTimeout(BlocklyInterface.importInterpreter, 1);
@@ -1755,34 +1775,34 @@ Maze.animate = function() {
  * @param {Event} e Mouse move event.
  * @private
  */
-Maze.updatePegSpin_ = function(e) {
-  if (document.getElementById('dialogDone').className ==
-      'dialogHiddenContent') {
-    return;
-  }
-  var pegSpin = document.getElementById('pegSpin');
-  var bBox = BlocklyDialogs.getBBox_(pegSpin);
-  var x = bBox.x + bBox.width / 2 - window.pageXOffset;
-  var y = bBox.y + bBox.height / 2 - window.pageYOffset;
-  var dx = e.clientX - x;
-  var dy = e.clientY - y;
-  var angle = Math.atan(dy / dx);
-  // Convert from radians to degrees because I suck at math.
-  angle = angle / Math.PI * 180;
-  // 0: North, 90: East, 180: South, 270: West.
-  if (dx > 0) {
-    angle += 90;
-  } else {
-    angle += 270;
-  }
-  // Divide into 16 quads.
-  var quad = Math.round(angle / 360 * 16);
-  if (quad == 16) {
-    quad = 15;
-  }
-  // Display correct Pegman sprite. //debora pq sim
-  pegSpin.style.backgroundPosition = (-quad * 41) + 'px 0px';
-};
+// Maze.updatePegSpin_ = function(e) {
+//   if (document.getElementById('dialogDone').className ==
+//       'dialogHiddenContent') {
+//     return;
+//   }
+//   var pegSpin = document.getElementById('pegSpin');
+//   var bBox = BlocklyDialogs.getBBox_(pegSpin);
+//   var x = bBox.x + bBox.width / 2 - window.pageXOffset;
+//   var y = bBox.y + bBox.height / 2 - window.pageYOffset;
+//   var dx = e.clientX - x;
+//   var dy = e.clientY - y;
+//   var angle = Math.atan(dy / dx);
+//   // Convert from radians to degrees because I suck at math.
+//   angle = angle / Math.PI * 180;
+//   // 0: North, 90: East, 180: South, 270: West.
+//   if (dx > 0) {
+//     angle += 90;
+//   } else {
+//     angle += 270;
+//   }
+//   // Divide into 16 quads.
+//   var quad = Math.round(angle / 360 * 16);
+//   if (quad == 16) {
+//     quad = 15;
+//   }
+//   // Display correct Pegman sprite. //debora pq sim
+//   pegSpin.style.backgroundPosition = (-quad * 41) + 'px 0px';
+// };
 
 /**
  * Schedule the animations for a move or turn.
@@ -1972,11 +1992,11 @@ Maze.displayPegman = function(x, y, d, opt_angle) {
   var pegmanYPos = Maze.SQUARE_SIZE * (y + 0.5) - Maze.PEGMAN_HEIGHT/2 - 8 + Maze.MAZE_TOP_OFFSET
   
   pegmanIcon.setAttribute('x',
-    (x * Maze.SQUARE_SIZE - d * Maze.PEGMAN_WIDTH + 1) - 15);
+    (x * Maze.SQUARE_SIZE - d * Maze.PEGMAN_WIDTH + 1));
   pegmanIcon.setAttribute('y', pegmanYPos)
 
   var clipRect = document.getElementById('clipRect');
-  clipRect.setAttribute('x', (x * Maze.SQUARE_SIZE + 1) - 15);
+  clipRect.setAttribute('x', (x * Maze.SQUARE_SIZE + 1));
   clipRect.setAttribute('y', pegmanYPos);
 
   if (opt_angle) {
