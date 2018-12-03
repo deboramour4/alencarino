@@ -10,8 +10,13 @@ h1 {
 h1 a {
   text-decoration: none;
 }
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
 a:hover {
-  color: #f00;
+  color: #3580AD;
 }
 .farSide {
   text-align: right;
@@ -115,6 +120,37 @@ button.third:active{
   background-image: url(../maze/img/buttons/button_bg_third_active.png);
 }
 
+
+
+button.map.primary {
+  background-image: url(../maze/img/buttons/button_map_primary.png);
+  font-family: Pacifico-Regular, cursive;
+  font-size: 30px;
+  padding-bottom: 25px;
+}
+button.map.secondary {
+  background-image: url(../maze/img/buttons/button_map_secondary.png);
+  font-family: Pacifico-Regular, cursive;
+  font-size: 30px;
+  padding-bottom: 25px;
+}
+
+button.map.primary:hover{
+  background-image: url(../maze/img/buttons/button_map_primary_hover.png);
+}
+button.map.secondary:hover{
+  background-image: url(../maze/img/buttons/button_map_secondary_hover.png);
+}
+
+
+button.map.primary:active{
+  background-image: url(../maze/img/buttons/button_map_primary_active.png);
+  padding-bottom: 0px;
+}
+button.map.secondary:active{
+  background-image: url(../maze/img/buttons/button_map_secondary_active.png);
+  padding-bottom: 0px;
+}
 /* Dialogs */
 #dialog {
   color: #000;
@@ -182,3 +218,34 @@ button.third:active{
 }
 
 
+.videoDialog {
+  top: 0;
+  position: absolute;
+  left: 0;
+}
+
+#doneCancel {
+  position: absolute;
+  top: -10%;
+  right: -10%;
+}
+
+#doneCancel button {
+  background-image: url(../maze/img/buttons/button_map_secondary.png);
+  font-family: Quicksand-Bold, cursive;
+  font-size: 30px;
+  padding-bottom: 25px;
+}
+
+#doneCancel button:hover{
+  background-image: url(../maze/img/buttons/button_map_secondary_hover.png);
+}
+#doneCancel button:active{
+  background-image: url(../maze/img/buttons/button_map_secondary_active.png);
+  padding-bottom: 0px;
+}
+
+#congratulationsText {
+  position: absolute;
+  top: 10%;
+}

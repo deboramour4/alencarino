@@ -395,11 +395,15 @@ BlocklyDialogs.showGalleryForm = function() {
  */
 BlocklyDialogs.congratulations = function() {
   var content = document.getElementById('dialogDone');
-  var style = {
-    width: '40%',
-    left: '30%',
-    top: '3em'
-  };
+  var style = {};
+
+  var cssText =
+    "height: 0;"+
+    "padding-top: 30%;"+
+    "margin: 15% 25%;"+
+    "width: 50%;";
+  var dialog = document.getElementById('dialog')
+  dialog.style.cssText = cssText
 
   // Add the user's code.
   if (BlocklyGames.workspace) {
@@ -431,19 +435,15 @@ BlocklyDialogs.congratulations = function() {
     // linesText.appendChild(document.createTextNode(text));
   }
 
-  if (BlocklyGames.LEVEL < BlocklyGames.MAX_LEVEL) {
-    var text = BlocklyGames.getMsg('Games_nextLevel')
-        .replace('%1', String(BlocklyGames.LEVEL + 1));
-  } else {
-    var text = BlocklyGames.getMsg('Games_finalLevel');
-  }
-
-  var cancel = document.getElementById('doneCancel');
-  cancel.addEventListener('click', BlocklyDialogs.hideDialog, true);
-  cancel.addEventListener('touchend', BlocklyDialogs.hideDialog, true);
   var ok = document.getElementById('doneOk');
   ok.addEventListener('click', BlocklyInterface.nextLevel, true);
   ok.addEventListener('touchend', BlocklyInterface.nextLevel, true);
+
+  if (BlocklyGames.LEVEL > 1) {
+    var map = document.getElementById('doneMap');
+    map.addEventListener('click', BlocklyDialogs.goToMap, true);
+    map.addEventListener('touchend', BlocklyDialogs.goToMap, true);
+  }
 
   BlocklyDialogs.showDialog(content, null, false, true, style,
       function() {
@@ -453,7 +453,6 @@ BlocklyDialogs.congratulations = function() {
   document.body.addEventListener('keydown',
       BlocklyDialogs.congratulationsKeyDown, true);
 
-  document.getElementById('dialogDoneText').textContent = text;
 };
 
 /**
@@ -570,6 +569,10 @@ BlocklyDialogs.gallerySubmit = function() {
   };
   xhr.send(data.join('&'));
   BlocklyDialogs.hideDialog(true);
+};
+
+BlocklyDialogs.goToMap = function() {
+  window.location.replace("maze.html?level=0");
 };
 
 // Export symbols that would otherwise be renamed by Closure compiler.

@@ -9,10 +9,11 @@ goog.provide('Index.soy');
 
 goog.require('soy');
 goog.require('soydata');
+goog.require('BlocklyGames.soy');
 
 
 Index.soy.messages = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div style="display: none"><span id="title">Blockly Games</span><span id="Index_clear">Delete all your solutions?</span></div>';
+  return '<div style="display: none"><span id="title">Alencarino</span></div>';
 };
 if (goog.DEBUG) {
   Index.soy.messages.soyTemplateName = 'Index.soy.messages';
@@ -20,16 +21,8 @@ if (goog.DEBUG) {
 
 
 Index.soy.start = function(opt_data, opt_ignored, opt_ijData) {
-  return Index.soy.messages(null, null, opt_ijData) + '<div id="header"><img id="banner" src="index/title-beta.png" height="51" width="244" alt="Blockly Games"><div id="subtitle">Games for tomorrow\'s programmers. &nbsp;' + ((opt_ijData.html) ? '<a href="about.html?lang=' + soy.$$escapeHtml(opt_ijData.lang) + '">' : '<a href="about?lang=' + soy.$$escapeHtml(opt_ijData.lang) + '">') + 'More info...</a></div></div><svg height="100%" width="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="translate(-80,-60)"><svg height="100%" width="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="none" x=80 y=60><path id="path" d="M 10,15 C 15,60 35,100 50,70 S 80,20 90,85"' + ((opt_ijData.rtl) ? 'transform="translate(100) scale(-1, 1)"' : '') + '/></svg>' + Index.soy.appLink({app: 'puzzle', x: 10, y: 15, contentText: 'Puzzle'}, null, opt_ijData) + Index.soy.appLink({app: 'maze', x: 16, y: 45, contentText: 'Maze'}, null, opt_ijData) + Index.soy.appLink({app: 'bird', x: 26, y: 69, contentText: 'Bird'}, null, opt_ijData) + Index.soy.appLink({app: 'turtle', x: 41, y: 80, contentText: 'Turtle'}, null, opt_ijData) + Index.soy.appLink({app: 'movie', x: 55, y: 61, contentText: 'Movie'}, null, opt_ijData) + Index.soy.appLink({app: 'music', x: 69, y: 43, contentText: 'Music'}, null, opt_ijData) + Index.soy.appLink({app: 'pond-tutor', x: 83, y: 55, contentText: 'Pond Tutor'}, null, opt_ijData) + Index.soy.appLink({app: 'pond-duck', x: 90, y: 85, contentText: 'Pond'}, null, opt_ijData) + '</g></svg><select id="languageMenu"></select><p id="clearDataPara" style="visibility: hidden">Want to start over?<button class="secondary" id="clearData">Clear data</span></button></p>';
+  return Index.soy.messages(null, null, opt_ijData) + '<div id="header"><img id="imgAle" src="maze/img/ale.png" title="Oi, eu sou Al\u00EA!" alt="Oi, eu sou Al\u00EA!"><img id="imgRobot" src="maze/img/ferrao.png" title="Oi, eu sou Ferr\u00E3o!" alt="Oi, eu sou Ferr\u00E3o!"><div id="startButtonDiv"><button id="startButton" class="secondary" title="Clique aqui para iniciar o jogo.">Come\u00E7ar</button></div></div><div id="preferencesButtonDiv"><button id="preferencesButton" class="primary" title="Clique aqui para mudar as prefer\u00EAncias.">Ajustes</button></div><div id="creditsButtonDiv"><button id="creditsButton" class="primary" title="Clique aqui para ver os cr\u00E9ditos.">Cr\u00E9ditos</button></div>' + BlocklyGames.soy.dialog(null, null, opt_ijData) + '<div id="dialogPreferences" class="dialogHiddenContent"><ul class="preferences"><li><div id="clearDataButtonDiv"><button id="clearDataButton" class="primary" title="Clique aqui para deletar todo o seu progresso">Reiniciar</button></div></li><li><h1>Clique aqui para deletar todo o seu progresso.</h1></li></ul><ul class="preferences"><li><button id="musicOnButton" class="primary" title="Liga o som">Ligar</button><button id="musicOffButton" class="primary" title="Desliga o som">Desligar</button></li><li><h1>Clique aqui para ligar/desligar o som.</h1></li></ul><div style="right: 0;position: absolute;bottom: 0;">' + BlocklyGames.soy.ok(null, null, opt_ijData) + '</div></div><div id="dialogCredits" class="dialogHiddenContent"><center><img src="maze/img/helps/level_help_4.png" class="helpModalImage"></center><div style="right: 0;position: absolute;bottom: 0;">' + BlocklyGames.soy.ok(null, null, opt_ijData) + '</div></div>';
 };
 if (goog.DEBUG) {
   Index.soy.start.soyTemplateName = 'Index.soy.start';
-}
-
-
-Index.soy.appLink = function(opt_data, opt_ignored, opt_ijData) {
-  return '<svg height="150" width="160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"' + ((opt_ijData.rtl) ? 'x="' + soy.$$escapeHtml(100 - opt_data.x) + '%"' : 'x="' + soy.$$escapeHtml(opt_data.x) + '%"') + 'y="' + soy.$$escapeHtml(opt_data.y) + '%"><path d="M 41.11,98.89 A 55 55 0 1 1 118.89,98.89" class="gaugeBack" id="back-' + soy.$$escapeHtml(opt_data.app) + '" /><g class="icon" id="icon-' + soy.$$escapeHtml(opt_data.app) + '"><circle cx=80 cy=60 r=50 class="iconBack" /><image xlink:href="index/' + soy.$$escapeHtml(opt_data.app) + '.png" height="100" width="100" x=30 y=10 />' + ((opt_ijData.html) ? '<a id="link-' + soy.$$escapeHtml(opt_data.app) + '" xlink:href="' + soy.$$escapeHtml(opt_data.app) + '.html?lang=' + soy.$$escapeHtml(opt_ijData.lang) + '">' : '<a xlink:href="' + soy.$$escapeHtml(opt_data.app) + '?lang=' + soy.$$escapeHtml(opt_ijData.lang) + '">') + '<circle cx=80 cy=60 r=50 class="iconBorder" /><path d="M 21.11,98.89 A 55 55 0 1 1 21.11,98.89" class="gaugeFront" id="gauge-' + soy.$$escapeHtml(opt_data.app) + '" /><text x="80" y="135">' + soy.$$escapeHtml(opt_data.contentText) + '</text></a></g></svg>';
-};
-if (goog.DEBUG) {
-  Index.soy.appLink.soyTemplateName = 'Index.soy.appLink';
 }

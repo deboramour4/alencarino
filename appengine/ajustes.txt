@@ -1,0 +1,18 @@
+- menu
+	1 imagem de bg
+	1 ale
+	1 robo
+	- botao de iniciar
+	- botao de preferencia
+	- botao credito
+		1 imagem de creditos (usando bg do fernando)
+
+- video inicial
+
+- alterar o mapa da fase 1 (atualizar)
+- no final da fase 1 -> OK, Ir para o Hub
+- animação (so na primeira vez) e tela de ajuda pro hub
+
+- a partir da fase 2 vão ser 3 botões na tela de vitoria (hub, sair, proximo)
+
+- na quarta fase a tela de vitoria leva para o hub ou cancela

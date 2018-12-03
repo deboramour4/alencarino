@@ -41,7 +41,7 @@ BlocklyInterface.nextLevel = function() {
   if (BlocklyGames.LEVEL < BlocklyGames.MAX_LEVEL) {
     window.location = window.location.protocol + '//' +
         window.location.host + window.location.pathname +
-        '?lang=' + BlocklyGames.LANG + '&level=' + (BlocklyGames.LEVEL + 1);
+        '?level=' + (BlocklyGames.LEVEL + 1);
   } else {
     BlocklyInterface.indexPage();
   }
@@ -71,7 +71,7 @@ Maze.SKINS = [
     tiles: 'maze/img/tiles.png',
     marker: 'maze/img/objects/tire.png',
     obstacle: 'maze/img/objects/obstacle.png',
-    background: 'maze/img/background@1x.png',
+    background: 'maze/img/background.png',
     objects: ['maze/img/objects/spring.png', 'maze/img/objects/compass.png', 'maze/img/objects/speaker.png', 'maze/img/objects/tire.png'],
     graph: false,
     look: '#000',
@@ -355,34 +355,6 @@ Maze.fullscreen = function() {
   }
 }
 
-/**
- * Set the music preference in navigator
- * to "on"
- */
-Maze.setMusicPreferences = function() {
-  if (typeof(Storage) !== "undefined") {
-
-    if (window.sessionStorage.getItem("musicState") == null) {
-      window.sessionStorage.setItem("musicState", "on"); 
-    }
-  } else {
-      alert("Não é possível configurar o som.")
-  }
-}
-Maze.setMusicPreferences()
-
-/**
- * Set the music preference in navigator
- * param state -> "on" or "off"
- */
-Maze.changeMusicPreferences = function(state) {
-  if (typeof(Storage) !== "undefined") {
-    window.sessionStorage.setItem("musicState", state); 
-  } else {
-      alert("Não é possível configurar o som.")
-  }
-}
-
 /** Array with all the levels of the game and "true" if already passed
  * that level, and "false" if not
  * Maze.LEVELS_DONE[0] is the HUB and it's always open
@@ -578,7 +550,7 @@ Maze.drawMap = function() {
     square.setAttribute('height', Maze.SCREEN_HEIGHT - topBarHeight);
     square.style.left = (Maze.SCREEN_WIDTH*0.6) + 'px';
     square.style.position = 'fixed';
-    square.setAttribute('fill', '#79B962');
+    square.setAttribute('fill', '#C6C987');
     square.setAttribute('stroke-width', 1);
     square.setAttribute('stroke', '#CCB');
     svg.appendChild(square);
@@ -757,7 +729,7 @@ Maze.init = function() {
 
   // Render the Soy template.
   document.body.innerHTML = Maze.soy.start({}, null,
-      {lang: BlocklyGames.LANG,
+      {lang: 'en',
        level: BlocklyGames.LEVEL,
        maxLevel: BlocklyGames.MAX_LEVEL,
        skin: Maze.SKIN_ID,
@@ -919,25 +891,11 @@ Maze.init = function() {
     BlocklyGames.bindClick('runButton', Maze.changeButtonClick);
     BlocklyGames.bindClick('helpButton', Maze.showHelpDialog);
     BlocklyGames.bindClick('mapButton', Maze.showMapDialog);
-    BlocklyGames.bindClick('preferencesButton', Maze.showPreferencesDialog);
-    BlocklyGames.bindClick('clearDataButton', Maze.clearData);
-    BlocklyGames.bindClick('musicOnButton', Maze.toggleMusic);
-    BlocklyGames.bindClick('musicOffButton', Maze.toggleMusic);
   } else {
     BlocklyGames.bindClick('runButton', Maze.runButtonClick);
     BlocklyGames.bindClick('helpButton', Maze.showHelpDialog);
     BlocklyGames.bindClick('mapButton', Maze.showMapDialog);
     BlocklyGames.bindClick('resetButton', Maze.resetButtonClick);
-  }
-
-  if (BlocklyGames.LEVEL == 0) {
-    if (window.sessionStorage.getItem("musicState") == "off") {
-      var musicButton = document.getElementById("musicOffButton")
-      musicButton.classList.add("musicHide")
-    } else {
-      var musicButton = document.getElementById("musicOnButton")
-      musicButton.classList.add("musicHide")
-    } 
   }
 
 
@@ -991,7 +949,6 @@ Maze.showMapDialog = function(e){
   var content = document.getElementById('dialogMap');
   var style = {};
   var cssText =
-    "overflow: hidden;"+
     "height: 0;"+
     "padding-top: 40%;"+
     "background: url(maze/img/map_bg.png) center/contain no-repeat #d3d993;"+
@@ -1045,9 +1002,8 @@ Maze.showHelpDialog = function(e){
   var style = {};
 
   var cssText =
-    "overflow: hidden;"+
     "height: 0;"+
-    "padding-top: 43%;"+
+    "padding-top: 38%;"+
     "background: url(maze/img/helps/level_help_"+BlocklyGames.LEVEL+".png) top/contain no-repeat #fff;"+
     "margin: 5% 25%;"+
     "width: 50%;";
@@ -1056,29 +1012,6 @@ Maze.showHelpDialog = function(e){
 
   BlocklyDialogs.showDialog(content, null, false, true, style, null);
 };
-
-// Show preferences modal dialog.
-Maze.showPreferencesDialog = function(e){
-  // Prevent double-clicks or double-taps.
-  if (BlocklyInterface.eventSpam(e)) {
-    return;
-  }
-  var content = document.getElementById('dialogPreferences');
-  var style = {};
-
-  var cssText =
-    "overflow: hidden;"+
-    "height: 0;"+
-    "padding-top: 30%;"+
-    "background: url(maze/img/map_bg.png) center/contain no-repeat #d3d993;"+
-    "margin: 10% 25%;"+
-    "width: 50%;";
-  var dialog = document.getElementById('dialog')
-  dialog.style.cssText = cssText
-
-  BlocklyDialogs.showDialog(content, null, false, true, style, null);
-};
-
 
 // Show end modal dialog.
 Maze.showEndDialog = function(){
@@ -2445,50 +2378,6 @@ Maze.notDone = function() {
 
   //alert("correctX "+correctX+"\ncorrectY "+correctY+"\ncatchedAllObjects "+catchedAllObjects)
   return !correctX || !correctY || !catchedAllObjects;
-};
-
-
-/**
- * toggleMusic OFF/ON.
- */
-Maze.toggleMusic  = function() {
-  var musicOnButton = document.getElementById("musicOnButton")
-  var musicOffButton = document.getElementById("musicOffButton")
-
-  if (window.sessionStorage.getItem("musicState") == "on") {
-
-      musicOnButton.classList.remove("musicHide")
-      musicOffButton.classList.add("musicHide")
-
-      Maze.changeMusicPreferences("off") 
-
-    } else if (window.sessionStorage.getItem("musicState") == "off") {
-
-      musicOnButton.classList.add("musicHide")
-      musicOffButton.classList.remove("musicHide")
-
-      Maze.changeMusicPreferences("on") 
-    } else {
-      alert("Desculpe, não é possível alterar as preferências de som.")
-    }
-
-};
-
-
-// Copied from index -------------------------------------------------------
-/**
- * Clear all stored data.
- */
-Maze.clearData  = function() {
-  if (!confirm("Tem certeza que quer deletar todo o seu progresso?")) {
-    return;
-  }
-  for (var i = 1; i <= BlocklyGames.MAX_LEVEL; i++) {
-    delete window.localStorage['maze' + i];
-  }
-  window.sessionStorage.removeItem('musicState')
-
-  location.reload();
 };
 
 //--------------------------------------------------------------------------

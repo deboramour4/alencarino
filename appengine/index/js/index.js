@@ -26,6 +26,8 @@
 goog.provide('Index');
 
 goog.require('BlocklyGames');
+goog.require('BlocklyInterface');
+goog.require('BlocklyDialogs');
 goog.require('Index.soy');
 
 
@@ -34,6 +36,34 @@ goog.require('Index.soy');
  */
 Index.APPS = ['puzzle', 'maze', 'bird', 'turtle', 'movie', 'music',
               'pond-tutor', 'pond-duck'];
+
+/**
+ * Set the music preference in navigator
+ * to "on"
+ */
+Index.setMusicPreferences = function() {
+  if (typeof(Storage) !== "undefined") {
+
+    if (window.sessionStorage.getItem("musicState") == null) {
+      window.sessionStorage.setItem("musicState", "on"); 
+    }
+  } else {
+      alert("Não é possível configurar o som.")
+  }
+}
+Index.setMusicPreferences()
+
+/**
+ * Set the music preference in navigator
+ * param state -> "on" or "off"
+ */
+Index.changeMusicPreferences = function(state) {
+  if (typeof(Storage) !== "undefined") {
+    window.sessionStorage.setItem("musicState", state); 
+  } else {
+      alert("Não é possível configurar o som.")
+  }
+}
 
 /**
  * Initialize Blockly and the maze.  Called on page load.
@@ -47,8 +77,25 @@ Index.init = function() {
 
   BlocklyGames.init();
 
-  var languageMenu = document.getElementById('languageMenu');
-  languageMenu.addEventListener('change', BlocklyGames.changeLanguage, true);
+  // var languageMenu = document.getElementById('languageMenu');
+  // languageMenu.addEventListener('change', BlocklyGames.changeLanguage, true);
+
+  BlocklyGames.bindClick('startButton', Index.startGame);
+  BlocklyGames.bindClick('preferencesButton', Index.showPreferencesDialog);
+  BlocklyGames.bindClick('creditsButton', Index.showCreditsDialog);
+
+  BlocklyGames.bindClick('clearDataButton', Index.clearData);
+  BlocklyGames.bindClick('musicOnButton', Index.toggleMusic);
+  BlocklyGames.bindClick('musicOffButton', Index.toggleMusic);
+
+
+  if (window.sessionStorage.getItem("musicState") == "off") {
+    var musicButton = document.getElementById("musicOffButton")
+    musicButton.classList.add("musicHide")
+  } else {
+    var musicButton = document.getElementById("musicOnButton")
+    musicButton.classList.add("musicHide")
+  } 
 
   var storedData = false;
   var levelsDone = [];
@@ -61,67 +108,12 @@ Index.init = function() {
       }
     }
   }
+
   if (storedData) {
-    var clearButtonPara = document.getElementById('clearDataPara');
-    clearButtonPara.style.visibility = 'visible';
-    BlocklyGames.bindClick('clearData', Index.clearData_);
+    // var clearButtonPara = document.getElementById('clearDataPara');
+    // clearButtonPara.style.visibility = 'visible';
+    // BlocklyGames.bindClick('clearData', Index.clearData_);
   }
-
-  function animateFactory(app, angle) {
-    return function() {
-      Index.animateGauge(app, 0, angle);
-    };
-  }
-  for (var i = 0; i < levelsDone.length; i++) {
-    var app = Index.APPS[i];
-    var denominator = i == 0 ? 1 : BlocklyGames.MAX_LEVEL;
-    var angle = levelsDone[i] / denominator * 270;
-    if (angle) {
-      setTimeout(animateFactory(app, angle), 1500);
-    } else {
-      // Remove gauge if zero, since IE renders a stub.
-      var path = document.getElementById('gauge-' + app);
-      path.parentNode.removeChild(path);
-    }
-  }
-};
-
-window.addEventListener('load', Index.init, false);
-
-/**
- * Animate a gauge from zero to a target value.
- * @param {string} app Name of application.
- * @param {number} cur Current angle of gauge in degrees.
- * @param {number} max Final angle of gauge in degrees.
- */
-Index.animateGauge = function(app, cur, max) {
-  var step = 4;
-  cur += step;
-  Index.drawGauge(app, Math.min(cur, max));
-  if (cur < max) {
-    setTimeout(function() {
-      Index.animateGauge(app, cur, max);
-    }, 10);
-  }
-};
-
-/**
- * Draw the gauge for an app.
- * @param {string} app Name of application.
- * @param {number} angle Angle of gauge in degrees.
- */
-Index.drawGauge = function(app, angle) {
-  var xOffset = 80;
-  var yOffset = 60;
-  var radius = 52.75;
-  var theta = (angle - 45) / 180 * Math.PI;
-  var x = xOffset - Math.cos(theta) * radius;
-  var y = yOffset - Math.sin(theta) * radius;
-  var flag = angle > 180 ? 1 : 0;
-  var path = document.getElementById('gauge-' + app);
-  // The 'M' constants are x and y at angle zero.
-  path.setAttribute('d',
-      ['M 42.7,97.3 A', radius, radius, 0, flag, 1, x, y].join(' '));
 };
 
 /**
@@ -140,3 +132,106 @@ Index.clearData_ = function() {
   }
   location.reload();
 };
+
+// Show preferences modal dialog.
+Index.showPreferencesDialog = function(e){
+  // Prevent double-clicks or double-taps.
+  if (BlocklyInterface.eventSpam(e)) {
+    return;
+  }
+  var content = document.getElementById('dialogPreferences');
+  var style = {};
+
+  var cssText =
+    "overflow: hidden;"+
+    "height: 0;"+
+    "padding-top: 30%;"+
+    "background: url(maze/img/map_bg.png) center/contain no-repeat #d3d993;"+
+    "margin: 10% 25%;"+
+    "width: 50%;";
+  var dialog = document.getElementById('dialog')
+  dialog.style.cssText = cssText
+
+  BlocklyDialogs.showDialog(content, null, false, true, style, null);
+};
+
+// Show credits modal dialog.
+Index.showCreditsDialog = function(e){
+  // Prevent double-clicks or double-taps.
+  if (BlocklyInterface.eventSpam(e)) {
+    return;
+  }
+  var content = document.getElementById('dialogCredits');
+  var style = {};
+
+  var cssText =
+    "overflow: hidden;"+
+    "height: 0;"+
+    "padding-top: 43%;"+
+    //"background: url(maze/img/helps/level_help_"+BlocklyGames.LEVEL+".png) top/contain no-repeat #fff;"+
+    "margin: 5% 25%;"+
+    "width: 50%;";
+
+    // overflow: hidden;
+    // height: 0px;
+    // padding-top: 39%;
+    // margin: 5% 15%;
+    // width: 70%;
+    // visibility: visible;
+    // z-index: 10;
+
+  var dialog = document.getElementById('dialog')
+  dialog.style.cssText = cssText
+
+  BlocklyDialogs.showDialog(content, null, false, true, style, null);
+};
+
+// Starts the game
+Index.startGame = function(){
+  window.location.replace("maze.html?level=0");
+};
+
+
+/**
+ * Clear all stored data.
+ */
+Index.clearData  = function() {
+  if (!confirm("Tem certeza que quer deletar todo o seu progresso?")) {
+    return;
+  }
+  for (var i = 1; i <= BlocklyGames.MAX_LEVEL; i++) {
+    delete window.localStorage['maze' + i];
+  }
+  window.sessionStorage.removeItem('musicState')
+
+  location.reload();
+};
+
+/**
+ * toggleMusic OFF/ON.
+ */
+Index.toggleMusic  = function() {
+  var musicOnButton = document.getElementById("musicOnButton")
+  var musicOffButton = document.getElementById("musicOffButton")
+
+  if (window.sessionStorage.getItem("musicState") == "on") {
+
+      musicOnButton.classList.remove("musicHide")
+      musicOffButton.classList.add("musicHide")
+
+      Index.changeMusicPreferences("off") 
+
+    } else if (window.sessionStorage.getItem("musicState") == "off") {
+
+      musicOnButton.classList.add("musicHide")
+      musicOffButton.classList.remove("musicHide")
+
+      Index.changeMusicPreferences("on") 
+    } else {
+      alert("Desculpe, não é possível alterar as preferências de som.")
+    }
+
+};
+
+
+window.addEventListener('load', Index.init, false);

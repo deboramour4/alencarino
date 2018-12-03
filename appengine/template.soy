@@ -124,15 +124,18 @@
  */
 {template .doneDialog private="true"}
   <div id="dialogDone" class="dialogHiddenContent">
-    <div style="font-size: large; margin: 1em;">{{msg meaning="Games.congratulations" desc="alert - This is displayed when the user solves the level.\n{lb}{lb}Identical|Congratulation{rb}{rb}"}}Muito bom!{{/msg}}</div>
+    <div id="congratulationsText" style="font-size: large; margin: 1em;">
+      Muito bom!<br>
+      Está pronto(a) para o nível {$ij.level +1}?
+    </div>
     
-    /*<div id="dialogLinesText" style="font-size: large; margin: 1em;"></div>*/
-    /*<pre id="containerCode"></pre>*/
-
-    <div id="dialogDoneText" style="font-size: large; margin: 1em;"></div>
     <div id="dialogDoneButtons" class="farSide" style="padding: 1ex 3ex 0">
-      <button id="doneCancel" class="third">Ok</button>
-      <button id="doneOk" class="secondary">Próximo</button>
+    {if $ij.level > 1}
+      <button id="doneMap" class="third">HUB</button>
+    {/if}
+      <button id="doneOk" class="secondary">Próxima</button>
+
+    {call BlocklyGames.soy.ok /}
     </div>
   </div>
 {/template}
@@ -163,9 +166,9 @@
  * OK button for dialogs.
  */
 {template .ok private="true"}
-  <div class="farSide" style="padding: 1ex 3ex 0">
+  <div id="doneCancel" class="farSide" style="padding: 1ex 3ex 0">
     <button class="secondary" onclick="BlocklyDialogs.hideDialog(true)">
-      {{msg meaning="Games.dialogOk" desc="IBID"}}OK{{/msg}}
+      X
     </button>
   </div>
 {/template}

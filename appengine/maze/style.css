@@ -17,14 +17,16 @@
   src: url(fonts/Quicksand-Bold.ttf);
 }
 
+@font-face {
+  font-family: Pacifico-Regular;
+  src: url(fonts/Pacifico-Regular.ttf);
+}
+
 #blockly {
   position: fixed;
   bottom: 10px;
 }
-/* debora
-#visualization {
-  position: relative;
-}*/
+
 #capacityBubble {
   position: absolute;
   left: 280px;
@@ -184,23 +186,16 @@ html[dir="RTL"] #pegmanButton>span {
 
 
 
-#mapButtonDiv {
+#mapButtonDiv, #creditsButtonDiv {
   z-index: 9999;
   right: 50px;
   position: fixed;
   top: 15px;
 }
 
-#helpButtonDiv {
+#helpButtonDiv, #preferencesButtonDiv {
   z-index: 9999;
   right: 185px;
-  position: fixed;
-  top: 15px;
-}
-
-#preferencesButtonDiv {
-  z-index: 9999;
-  right: 325px;
   position: fixed;
   top: 15px;
 }
@@ -285,33 +280,29 @@ body {
   list-style: none;
 }
 
-#dialogMap button {
-  width: 80%
-}
-
 #mapButton1 {
-  top: 25%;
-  left: 15%;
+  top: 22%;
+  left: 11%;
   position: absolute;
 }
 #mapButton2 {
   bottom: 28%;
-  left: 25%;
+  left: 20%;
   position: absolute;
 }
 #mapButton3 {
-  top: 33%;
-  right: 40%;
+  top: 30%;
+  right: 36%;
   position: absolute;
 }
 #mapButton4 {
-  top: 35%;
-  right: 11%;
+  top: 32%;
+  right: 7%;
   position: absolute;
 }
 #mapButton5 {
-  bottom: 20%;
-  right: 20%;
+  bottom: 21%;
+  right: 16%;
   position: absolute;
 }
 
@@ -352,4 +343,13 @@ body {
 
 .blocklyWidgetDiv .goog-menuitem-content {
     font: normal 15pt Quicksand-Medium, sans-serif;
+}
+
+#backToMenu {
+  font: normal 15pt Quicksand-Bold, cursive;
+  position: absolute;
+  bottom: 1%;
+  color: white;
+  right: 1%;
+  z-index: 10;
 }
