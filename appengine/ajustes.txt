@@ -16,3 +16,14 @@
 - a partir da fase 2 vão ser 3 botões na tela de vitoria (hub, sair, proximo)
 
 - na quarta fase a tela de vitoria leva para o hub ou cancela
+
+
+    position: absolute;
+    /* top: 0%; */
+    font-size: 2vw;
+    background: url(../maze/img/helps/bg.png) top/contain no-repeat;
+    height: 90%;
+    /* background-image: url(maze/img/helps/bg.png); */
+    padding: 10%;
+    /* width: 50%; */
+}

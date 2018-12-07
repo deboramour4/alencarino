@@ -7,7 +7,7 @@ html, body {
 }
 
 body {
-  background: url(../maze/img/map_bg.png) center center / contain no-repeat rgb(211, 217, 147);
+  background: url(../maze/img/menu_bg.png) center center / cover no-repeat;
 }
 
 #header {
@@ -21,10 +21,6 @@ body {
   text-align: center;
 }
 
-#startButton {
-  font-size: 3vw;
-}
-
 a {
   text-decoration: none;
 }
@@ -33,6 +29,19 @@ a:hover > text {
   fill: #666;
 }
 
-#imgAle, #imgRobot {
-  height: 50%;
+#headerImg {
+  width: 60%;
+}
+
+button#start {
+  background-image: url(../maze/img/buttons/button_start.png);
+  font-size: 3vw;
+
+}
+button#start:hover{
+  background-image: url(../maze/img/buttons/button_start_hover.png);
+}
+button#start:active{
+  background-image: url(../maze/img/buttons/button_start_active.png);
+  padding-bottom: 0px;
 }

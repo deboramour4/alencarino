@@ -49,7 +49,7 @@ if (goog.DEBUG) {
 
 
 BlocklyGames.soy.doneDialog = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div id="dialogDone" class="dialogHiddenContent"><div id="congratulationsText">Muito bom!<br>Est\u00E1 pronto(a) para o n\u00EDvel ' + soy.$$escapeHtml(opt_ijData.level + 1) + '?' + ((opt_ijData.level > 1) ? '<button id="doneMap" class="third">HUB</button>' : '') + '<button id="doneOk" class="secondary">Pr\u00F3xima</button>' + BlocklyGames.soy.ok(null, null, opt_ijData) + '</div></div>';
+  return '<div id="dialogDone" class="dialogHiddenContent"><div id="congratulationsText"><div id="congratulationsContent"><h2>Muito bom, se garantiu!</h2><p><b>Voc\u00EA desbloqueou um novo bloco no <span id="inicio">in\u00EDcio</span>!</b></p>' + ((opt_ijData.level == 1) ? '<p>A cada fase voc\u00EA libera um novo bloco l\u00E1 na tela <span id="inicio">In\u00EDcio</span>. Vamos l\u00E1 dar uma olhada como t\u00E1 ficando!</p>' : '<p>Simbora continuar programando o Ferr\u00E3o na <b>fase ' + soy.$$escapeHtml(opt_ijData.level + 1) + '</b>!</p>') + ((opt_ijData.level == 1) ? '<button id="doneMap" class="secondary">In\u00EDcio</button>' : '<button id="doneOk" class="primary">Pr\u00F3xima</button>') + ((opt_ijData.level > 1) ? '<button id="doneMap" class="secondary">In\u00EDcio</button>' : '') + '</div>' + BlocklyGames.soy.ok(null, null, opt_ijData) + '</div></div>';
 };
 if (goog.DEBUG) {
   BlocklyGames.soy.doneDialog.soyTemplateName = 'BlocklyGames.soy.doneDialog';
@@ -73,7 +73,7 @@ if (goog.DEBUG) {
 
 
 BlocklyGames.soy.ok = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div id="doneCancel" class="farSide"><button class="secondary" onclick="BlocklyDialogs.hideDialog(true)">X</button></div>';
+  return '<div id="doneCancel" class="farSide"><button class="secondary" onclick="BlocklyDialogs.hideDialog(true)"></button></div>';
 };
 if (goog.DEBUG) {
   BlocklyGames.soy.ok.soyTemplateName = 'BlocklyGames.soy.ok';

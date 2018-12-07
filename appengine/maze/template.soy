@@ -58,10 +58,11 @@
       <button id="mapButton" class="primary" title="Clique aqui para ver o mapa.">Mapa</button>
   </div>
 
+  {if $ij.level == 0}
   <div id="backToMenu">
     <a href="index.html">Voltar para o menu</a>  
   </div>
-    
+  {/if}  
 
   <div id="blockly"></div>
 
@@ -139,7 +140,7 @@
     {if $ij.level == $i}
       <div id="dialogCutscene{$i}" class="dialogHiddenContent">
         <center>
-          <video class="videoDialog" width="100%" controls>
+          <video class="videoDialog" width="100%" controls="true" autoplay="true" muted="muted">
             <source src="maze/videos/cutscene{$i}.mp4" type="video/mp4">
             <source src="maze/videos/cutscene{$i}.ogg" type="video/ogg">
             Seu navegador não suporta vídeos HTML5.
@@ -149,6 +150,18 @@
       </div>
     {/if}
   {/for}
+
+  <div id="dialogCutscene5" class="dialogHiddenContent">
+        <center>
+          <video class="videoDialog" width="100%" controls="true" autoplay="true" muted="muted">
+            <source src="maze/videos/cutscene5.mp4" type="video/mp4">
+            <source src="maze/videos/cutscene5.ogg" type="video/ogg">
+            Seu navegador não suporta vídeos HTML5.
+          </video>
+        </center>
+        {call BlocklyGames.soy.ok /}
+        <button id="doneMap" class="secondary">Início</button>
+      </div>
 
 
   {if $ij.level == 1}
@@ -176,17 +189,6 @@
         <img src="common/help.png">
       </td></tr><tr><td>
         <div><img src="maze/img/help_run.png" class="mirrorImg" height=27 width=141></div>
-      </td></tr></table>
-    </div>
-
-    /*Cutscene dialog*/
-    <div id="dialogHelpWallFollow" class="dialogHiddenContent">
-      <table><tr><td>
-        <img src="common/help.png">
-      </td><td>&nbsp;</td><td>
-          Primeira vez por aqui, video
-
-        {call BlocklyGames.soy.ok /}
       </td></tr></table>
     </div>
   {elseif $ij.level == 2}

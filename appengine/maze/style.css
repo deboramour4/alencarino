@@ -281,28 +281,28 @@ body {
 }
 
 #mapButton1 {
-  top: 22%;
-  left: 11%;
+  top: 24%;
+  left: 16%;
   position: absolute;
 }
 #mapButton2 {
   bottom: 28%;
-  left: 20%;
+  left: 24%;
   position: absolute;
 }
 #mapButton3 {
   top: 30%;
-  right: 36%;
+  right: 38%;
   position: absolute;
 }
 #mapButton4 {
-  top: 32%;
-  right: 7%;
+  top: 33%;
+  right: 12%;
   position: absolute;
 }
 #mapButton5 {
   bottom: 21%;
-  right: 16%;
+  right: 20%;
   position: absolute;
 }
 

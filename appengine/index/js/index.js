@@ -37,6 +37,7 @@ goog.require('Index.soy');
 Index.APPS = ['puzzle', 'maze', 'bird', 'turtle', 'movie', 'music',
               'pond-tutor', 'pond-duck'];
 
+Index.MUSIC = 'maze/sounds/music_bg.mp3';
 /**
  * Set the music preference in navigator
  * to "on"
@@ -80,7 +81,7 @@ Index.init = function() {
   // var languageMenu = document.getElementById('languageMenu');
   // languageMenu.addEventListener('change', BlocklyGames.changeLanguage, true);
 
-  BlocklyGames.bindClick('startButton', Index.startGame);
+  BlocklyGames.bindClick('start', Index.startGame);
   BlocklyGames.bindClick('preferencesButton', Index.showPreferencesDialog);
   BlocklyGames.bindClick('creditsButton', Index.showCreditsDialog);
 
@@ -109,11 +110,18 @@ Index.init = function() {
     }
   }
 
-  if (storedData) {
-    // var clearButtonPara = document.getElementById('clearDataPara');
-    // clearButtonPara.style.visibility = 'visible';
-    // BlocklyGames.bindClick('clearData', Index.clearData_);
-  }
+  var music = new Audio(Index.MUSIC);
+  music.play();
+  setTimeout(Index.repeatMusic, 3  * 60 * 1000); // duration of music 3 minutes
+
+};
+
+// Repeats the music when it ends
+Index.repeatMusic = function(e){
+  var music = new Audio(Index.MUSIC);
+  music.play();
+  setTimeout(Index.repeatMusic, 3 * 60 * 1000); // duration of music 3 minutes
+  console.log("playing music")
 };
 
 /**
@@ -145,7 +153,7 @@ Index.showPreferencesDialog = function(e){
   var cssText =
     "height: 0;"+
     "padding-top: 30%;"+
-    "background: url(maze/img/map_bg.png) center/contain no-repeat #d3d993;"+
+    "background: url(maze/img/helps/bg-preferences.png) center/contain no-repeat;"+
     "margin: 10% 25%;"+
     "width: 50%;";
   var dialog = document.getElementById('dialog')
@@ -166,7 +174,7 @@ Index.showCreditsDialog = function(e){
   var cssText =
     "height: 0;"+
     "padding-top: 40%;"+
-    "background: url(maze/img/helps/level_help_4.png) top/contain no-repeat #fff;"+
+    "background: url(maze/img/helps/bg-credits.png) top/contain no-repeat;"+
     "margin: 10% 25%;"+
     "width: 50%;";
 

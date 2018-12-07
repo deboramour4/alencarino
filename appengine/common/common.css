@@ -155,11 +155,7 @@ button.map.secondary:active{
 /* Dialogs */
 #dialog {
   color: #000;
-  border: 1px solid #ccc;
   position: absolute;
-  border-radius: 8px;
-  box-shadow: 5px 5px 5px #888;
-  background-color: white;
 }
 #dialogBorder {
   visibility: hidden;
@@ -232,20 +228,55 @@ button.map.secondary:active{
 }
 
 #doneCancel button {
-  background-image: url(../maze/img/buttons/button_map_secondary.png);
+  background-image: url(../maze/img/buttons/button_close.png);
   font-family: Quicksand-Bold, cursive;
 }
 
 #doneCancel button:hover{
-  background-image: url(../maze/img/buttons/button_map_secondary_hover.png);
+  background-image: url(../maze/img/buttons/button_close_hover.png);
 }
 #doneCancel button:active{
-  background-image: url(../maze/img/buttons/button_map_secondary_active.png);
+  background-image: url(../maze/img/buttons/button_close_active.png);
   padding-bottom: 0px;
 }
 
 #congratulationsText {
+  width: 100%;
+  height: 100%;
   position: absolute;
-  top: 10%;
+  top: 0;
+}
+
+#congratulationsContent {
+  padding: 15%;
+}
+
+#congratulationsContent span{
+  font-family: Pacifico-Regular, sans-serif;
+  color: #5DBCD2;
+  font-weight: 500;
+  font-size: 1.6vw;
+}
+
+#congratulationsContent h2{
   font-size: 2vw;
 }
+#congratulationsContent h3{
+  font-size: 1.5vw;
+}
+#congratulationsContent p{
+  font-size: 1.1vw;
+}
+
+#congratulationsContent #doneOk{
+  position: absolute;
+  right: 10%;
+  bottom: 12%;
+}
+
+#congratulationsContent #doneMap{
+  position: absolute;
+  right: 38%;
+  bottom: 12%;
+}
+    

@@ -125,13 +125,32 @@
 {template .doneDialog private="true"}
   <div id="dialogDone" class="dialogHiddenContent">
     <div id="congratulationsText">
-      Muito bom!<br>
-      Está pronto(a) para o nível {$ij.level +1}?
-    
-      {if $ij.level > 1}
-        <button id="doneMap" class="third">HUB</button>
+      <div id="congratulationsContent">
+        
+      
+      <h2>Muito bom, se garantiu!</h2>
+      <p><b>Você desbloqueou um novo bloco no <span id="inicio">início</span>!</b></p>
+
+      {if $ij.level == 1}
+        <p>A cada fase você libera um novo bloco lá na tela <span id="inicio">Início</span>. Vamos lá dar uma olhada como tá ficando!</p>
+      {else}
+        <p>Simbora continuar programando o Ferrão na <b>fase {$ij.level +1}</b>!</p>
       {/if}
-        <button id="doneOk" class="secondary">Próxima</button>
+      
+
+      {if $ij.level == 1}
+        <button id="doneMap" class="secondary">Início</button>
+      {else}
+        <button id="doneOk" class="primary">Próxima</button>
+      {/if}
+
+
+      {if $ij.level > 1}
+        <button id="doneMap" class="secondary">Início</button>
+      {/if}
+
+
+      </div>
 
       {call BlocklyGames.soy.ok /}
     </div>
@@ -165,8 +184,6 @@
  */
 {template .ok private="true"}
   <div id="doneCancel" class="farSide">
-    <button class="secondary" onclick="BlocklyDialogs.hideDialog(true)">
-      X
-    </button>
+    <button class="secondary" onclick="BlocklyDialogs.hideDialog(true)"></button>
   </div>
 {/template}

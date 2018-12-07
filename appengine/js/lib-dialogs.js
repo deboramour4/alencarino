@@ -232,6 +232,8 @@ BlocklyDialogs.hideDialog = function(opt_animate) {
     content.className += ' dialogHiddenContent';
     document.body.appendChild(content);
   }
+
+  console.log("Dialog hide")
 };
 
 /**
@@ -399,9 +401,11 @@ BlocklyDialogs.congratulations = function() {
 
   var cssText =
     "height: 0;"+
-    "padding-top: 30%;"+
-    "margin: 15% 25%;"+
-    "width: 50%;";
+    "padding-top: 31%;"+
+    "background: url(maze/img/helps/bg.png) top/contain no-repeat;"+
+    "margin: 10% 30%;"+
+    "width: 40%;";
+
   var dialog = document.getElementById('dialog')
   dialog.style.cssText = cssText
 
@@ -435,15 +439,17 @@ BlocklyDialogs.congratulations = function() {
     // linesText.appendChild(document.createTextNode(text));
   }
 
-  var ok = document.getElementById('doneOk');
-  ok.addEventListener('click', BlocklyInterface.nextLevel, true);
-  ok.addEventListener('touchend', BlocklyInterface.nextLevel, true);
+
 
   if (BlocklyGames.LEVEL > 1) {
-    var map = document.getElementById('doneMap');
-    map.addEventListener('click', BlocklyDialogs.goToMap, true);
-    map.addEventListener('touchend', BlocklyDialogs.goToMap, true);
+    var ok = document.getElementById('doneOk');
+    ok.addEventListener('click', BlocklyInterface.nextLevel, true);
+    ok.addEventListener('touchend', BlocklyInterface.nextLevel, true);
   }
+  var map = document.getElementById('doneMap');
+  map.addEventListener('click', BlocklyDialogs.goToMap, true);
+  map.addEventListener('touchend', BlocklyDialogs.goToMap, true);
+  
 
   BlocklyDialogs.showDialog(content, null, false, true, style,
       function() {
